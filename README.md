@@ -1,2 +1,2 @@
-# B2SLAMsemestre1
+# B2SLAM AppResto L BOUZAC - H CAILLEBOTTE - S VERCHERE
 RestoWeb projet en AP 
