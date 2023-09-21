@@ -2,6 +2,8 @@
 
 Projet du 1er semestre en B2 SLAM Atelier Professionnel.
 
+Travail de groupe : Ludovic BOUZAC, Hector CAILLEBOTTE et Sébastien VERCHERE.
+
 Professeur : Monsieur Jean-François RAMIARA
 
 
