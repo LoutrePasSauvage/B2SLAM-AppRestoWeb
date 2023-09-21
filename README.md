@@ -1,6 +1,6 @@
 # B2SLAM AppResto L BOUZAC - H CAILLEBOTTE - S VERCHERE
 
-Projet du 1er semestre en B2 SLAM Atelier Professionnel.
+Projet du 1er semestre de seconde année de BTS SIO en B2 SLAM Atelier Professionnel.
 
 Travail de groupe : Ludovic BOUZAC, Hector CAILLEBOTTE et Sébastien VERCHERE.
 
