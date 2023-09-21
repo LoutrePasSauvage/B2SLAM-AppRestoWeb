@@ -6,6 +6,7 @@ Professeur : Monsieur Jean-François RAMIARA
 
 
 CONSIGNE :
+
 === Copyright J.F. Ramiara – Tous droits réservés ===
 
 AppResto est une application de gestion de commandes dans un restaurant. Elle est découpée en deux
