@@ -55,7 +55,7 @@
     <input type='email' name='email'>
     <br>
     <p> Téléphone :</p>
-    <input type='tel' name='phone'>
+    <input type='number' name='phone'>            <!-- Check type tel -->
     <br>
     <p><input type='submit' name='submit' value='Envoyer' />&nbsp;<input type='reset' value='Réinitialiser' /></p>   
          
