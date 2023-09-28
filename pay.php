@@ -19,7 +19,6 @@
         </li>
         <li class="menu-item a-menu"><a href="index.php">Accueil</a></li>
         <li class="menu-item a-menu"><a href="connexion.php">Connexion</a></li>
-        <li class="menu-item a-menu"><a href="deconnexion.php">Déconnexion</a></li>
     </ul>
 </nav>
 
@@ -27,7 +26,7 @@
 
 <!-- formulaire carte bleu -->
 
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 25rem;margin: 10% 35% 50px 35%">
     <img class="card-img-top" src="img/logoResto.png" alt="Card image cap">
     <div class="card-body">
         <h5 class="card-title">Commande n°8451</h5>
@@ -40,9 +39,7 @@
         <li class="list-group-item"><p> Cryptogramme : <input type='number' name='crypto'> </p></li>
         <li class="list-group-item"><p> nom du titulaire : <input type='text' name='nomTitulaire'> </p></li>
     </ul>
-
-
-            <p><button type="submit" class="btn btn-primary" href="payConf.php" >Payer</button>&nbsp;<button  class="btn btn-primary" type='reset'>Réinitialiser</button></p>
+        <p><a href="payConf.php"><button type="submit" class="btn btn-primary" >Payer</button></a>&nbsp;<button  class="btn btn-primary" type='reset'>Réinitialiser</button></p>
 </div>
 
 <footer>
