@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>connexion</title>
+    <title>deconnexion</title>
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -26,25 +26,21 @@
     <section class="space">
 
     </section>
-    <h1>Connexion :</h1>
 
     <section class="space">
 
     </section>
+    <h1>Vous êtes déconnecté !</h1>
 
-    <form method="post">
-    
-    <p> Identifiant :</p>
-    <input type='text' name='id'>
-    <br>
-    <p> Mot de passe :</p>
-    <input type='password' name='password'>
-    <br>
-   
-    <br>
-    <p><input type='submit' name='submit' value='Envoyer' />&nbsp;<input type='reset' value='Réinitialiser' /></p>   
-         
+    <section class="space">
+
+    </section>
+ 
         
+    <section class="spaceback">
+
+    </section>
+
     <section class="spaceback">
 
     </section>

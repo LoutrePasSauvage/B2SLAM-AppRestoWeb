@@ -19,6 +19,7 @@
             </li>
             <li class="menu-item a-menu"><a href="index.php">Accueil</a></li>
             <li class="menu-item a-menu"><a href="connexion.php">Connexion</a></li>
+            <li class="menu-item a-menu"><a href="deconnexion.php">Déconnexion</a></li>
         </ul>
     </nav>
 

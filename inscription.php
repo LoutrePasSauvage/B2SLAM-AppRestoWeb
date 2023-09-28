@@ -19,6 +19,7 @@
             </li>
             <li class="menu-item a-menu"><a href="index.php">Accueil</a></li>
             <li class="menu-item a-menu"><a href="connexion.php">Connexion</a></li>
+            <li class="menu-item a-menu"><a href="deconnexion.php">Déconnexion</a></li>
         </ul>
     </nav>
 
@@ -54,8 +55,8 @@
     <input type='email' name='email'>
     <br>
     <p> Téléphone :</p>
-    <input type='tel' name='phone'>
-    <br>
+    <input type='number' name='phone'>
+    <br><br>
     <p><input type='submit' name='submit' value='Envoyer' />&nbsp;<input type='reset' value='Réinitialiser' /></p>   
          
         
@@ -66,8 +67,6 @@
     <footer>
         &copy Restaurant de qualité
     </footer>
-    
-
 
 </body>
 </html>
