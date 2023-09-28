@@ -19,7 +19,6 @@
         </li>
         <li class="menu-item a-menu"><a href="index.php">Accueil</a></li>
         <li class="menu-item a-menu"><a href="connexion.php">Connexion</a></li>
-        <li class="menu-item a-menu"><a href="deconnexion.php">Déconnexion</a></li>
     </ul>
 </nav>
 
@@ -27,7 +26,7 @@
 
 <!-- formulaire carte bleu -->
 
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 25rem;margin: 10% 35% 50px 35%">
     <img class="card-img-top" src="img/logoResto.png" alt="Card image cap">
     <div class="card-body">
         <h5 class="card-title">Commande n°8451</h5>
