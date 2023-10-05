@@ -15,12 +15,14 @@
             if($password == $password_confirm)
             {                   
                 //$new_user = "INSERT INTO _user(login, password, email) VALUES (:login, :password, :email)";
-                
-                $new_user = new Database(db_connect(), 2, "INSERT INTO _user(login, password, email) VALUES (:login, :password, :email)", [
-                    ":login" => $login,
-                    ":password" => $password,
-                    ":email" => $email
-                ]);
+                $objetConnexion = db_connect();
+                $db = new Database($objetConnexion);
+
+            $db->InsertDb("INSERT INTO _user(login, password, email) VALUES (:login, :password, :email)", [
+                ":login" => $login,
+                ":password" => $password,
+                ":email" => $email
+            ]);
                 //2 --> insert
 
                 /*

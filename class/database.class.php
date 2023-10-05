@@ -3,31 +3,17 @@
 class Database
 {
     private PDO $dbh;
-    private string $sql = "";
-    private array $balises = array();
-    private int $method = 0;
 
-    function __construct(PDO $pDO, int $method, string $sql, array $balises)
+
+    function __construct(PDO $pDO)
     {
         $this->dbh = $pDO;
-        $this->sql = $sql;
-        $this->method = $method;
-        $this->balises = $balises;
-
-        if ($method == 1)
-            $this->SelectDb();
-        if ($method == 2)
-            $this->InsertDb();
-        if ($method == 3)
-            $this->UpdateDb();
-        if ($method == 4)
-            $this->DeleteDb();
     }
 
-    public function SelectDb()
+    public function SelectDb(string $sql)
     {
         try {
-            $sth = $this->dbh->prepare($this->sql);
+            $sth = $this->dbh->prepare($sql);
             $sth->execute();
             $row = $sth->fetchAll();
             return $row;
@@ -36,32 +22,32 @@ class Database
         }
     }
 
-    public function InsertDb()
+    public function InsertDb(string $sql, array $champs)
     {
         try {
-            $sth = $this->dbh->prepare($this->sql);
-            $sth->execute($this->balises);
+            $sth = $this->dbh->prepare($sql);
+            $sth->execute($champs);
             $nb = $sth->rowcount();
         } catch (PDOException $e) {
             die("<p>Erreur lors de la requête INSERT SQL : " . $e->getMessage() . "</p>");
         }
 
     }
-    public function UpdateDb()
+    public function UpdateDb(string $sql, array $champs)
     {
         try {
-            $sth = $this->dbh->prepare($this->sql);
-            $sth->execute($this->balises);
+            $sth = $this->dbh->prepare($sql);
+            $sth->execute($champs);
             $nb = $sth->rowcount();
         } catch (PDOException $e) {
             die("<p>Erreur lors de la requête UPDATE SQL : " . $e->getMessage() . "</p>");
         }
     }
 
-    public function DeleteDb()
+    public function DeleteDb(string $sql)
     {
         try {
-            $sth = $this->dbh->prepare($this->sql);
+            $sth = $this->dbh->prepare($sql);
             $sth->execute();
             $nb = $sth->rowcount();
         } catch (PDOException $e) {

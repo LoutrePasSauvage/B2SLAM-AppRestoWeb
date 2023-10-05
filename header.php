@@ -6,7 +6,7 @@
 </head>
 
 
-<body style=" height: 100vh; width: auto; background-color: #141f25; align-items: center; justify-content: center;">
+<body style="background-color: #141f25;">
 
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
