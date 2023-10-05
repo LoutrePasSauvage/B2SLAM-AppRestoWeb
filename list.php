@@ -42,118 +42,126 @@ background-color: #141f25; align-items: center; justify-content: center;">
         </div>
     </nav>
     <div class="container">
-    
+
         <div class="row">
 
-           <div class="col align-self-start">
-            <div class="text-white">
-            <h1>Liste des produits</h1>
-        </div>
-            <div class="card mb-3" style="max-width: 640px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img src="logoResto.png" class="card-img" alt="pizza">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body" style="width: 350px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                                <button type="button" class="btn btn-success">Commander</button>
-                        </div>
-                    </div>
+            <div class="col align-self-start">
+                <div class="text-white">
+                    <h1>Liste des produits</h1>
                 </div>
-            </div>
-            <div class="card mb-3" style="max-width: 640px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img src="logoResto.png" class="card-img" alt="pizza">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body" style="width: 350px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                                <button type="button" class="btn btn-success">Commander</button>
+                <div class="card mb-3" style="max-width: 640px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="logoResto.png" class="card-img" alt="pizza">
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-3" style="max-width: 640px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <img src="logoResto.png" class="card-img" alt="pizza">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body" style="width: 350px;">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
+                        <div class="col-md-8">
+                            <div class="card-body" style="width: 350px;">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to
+                                    additional content. This content is a little bit longer.</p>
                                 <button type="button" class="btn btn-success">Commander</button>
                             </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="card mb-3" style="max-width: 640px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="logoResto.png" class="card-img" alt="pizza">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body" style="width: 350px;">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to
+                                    additional content. This content is a little bit longer.</p>
+                                <button type="button" class="btn btn-success">Commander</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3" style="max-width: 640px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="logoResto.png" class="card-img" alt="pizza">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body" style="width: 350px;">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural
+                                    lead-in to
+                                    additional content. This content is a little bit longer.</p>
+                                <button type="button" class="btn btn-success">Commander</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col align-self-start">
-            <div class="text-white">    <h1> Liste des comandes</h1></div>
-        
+                <div class="text-white">
+                    <h1> Liste des comandes</h1>
+                </div>
 
-               <div class="box">
-                <div class="col align-self-start">
-                    <div class="card mb-2" style="max-width: 640px;">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="logoResto.png" class="card-img" alt="pizza">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body" style="width: 350px;">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.</p>
+
+                <div class="box">
+                    <div class="col align-self-start">
+                        <div class="card mb-2" style="max-width: 640px;">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="logoResto.png" class="card-img" alt="pizza">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body" style="width: 350px;">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">This is a wider card with supporting text below as a
+                                            natural lead-in to
+                                            additional content. This content is a little bit longer.</p>
                                         <button type="button" class="btn btn-danger">Supprimer</button>
                                     </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card mb-2" style="max-width: 640px;">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="logoResto.png" class="card-img" alt="pizza">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body" style="width: 350px;">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.</p>
+                        <div class="card mb-2" style="max-width: 640px;">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="logoResto.png" class="card-img" alt="pizza">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body" style="width: 350px;">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">This is a wider card with supporting text below as a
+                                            natural lead-in to
+                                            additional content. This content is a little bit longer.</p>
                                         <button type="button" class="btn btn-danger">Supprimer</button>
                                     </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card mb-2" style="max-width: 640px;">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="logoResto.png" class="card-img" alt="pizza">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body" style="width: 350px;">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.</p>
+                        <div class="card mb-2" style="max-width: 640px;">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="logoResto.png" class="card-img" alt="pizza">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body" style="width: 350px;">
+                                        <h5 class="card-title">Card title</h5>
+                                        <p class="card-text">This is a wider card with supporting text below as a
+                                            natural lead-in to
+                                            additional content. This content is a little bit longer.</p>
                                         <button type="button" class="btn btn-danger">Supprimer</button>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-               </div>
-               <h1>Prix Total HT : 8.8 $</h1>
-               <h1>Prix Total TVA : 9.8 $</h1>
+                <h1>Prix Total HT : 8.8 $</h1>
+                <h1>Prix Total TVA : 9.8 $</h1>
 
             </div>
-            </div>
         </div>
+    </div>
     </div>
 
 
@@ -165,5 +173,4 @@ background-color: #141f25; align-items: center; justify-content: center;">
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
-
 </html>
