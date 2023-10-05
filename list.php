@@ -25,16 +25,14 @@ background-color: #141f25; align-items: center; justify-content: center;">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse top_nav" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto ">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Home</a>
-                        <hr class="hr_nav">
+                <ul class="navbar-nav" style="padding-left: 90%;">
+                    <li class="nav-item"><a href="#" class="nav-link">Acceuil</a>    
                     </li>
-                    <li class="nav-item "><a href="#" class="nav-link">About Us</a>
+                    <li class="nav-item "><a href="#" class="nav-link">Liste des produits</a>
                     </li>
-                    <li class="nav-item "><a href="#" class="nav-link">Support</a>
+                    <li class="nav-item "><a href="#" class="nav-link">Se connecter</a>
                     </li>
-                    <li class="nav-item "><a href="#" class="nav-link">Contact Us</a>
+                    <li class="nav-item "><a href="#" class="nav-link">Se déconnecter</a>
                     </li>
                 </ul>
 
@@ -60,7 +58,7 @@ background-color: #141f25; align-items: center; justify-content: center;">
                                 <p class="card-text">This is a wider card with supporting text below as a natural
                                     lead-in to
                                     additional content. This content is a little bit longer.</p>
-                                <button type="button" class="btn btn-success">Commander</button>
+                                <button type="button" class="btn btn-success">Ajouter</button>
                             </div>
                         </div>
                     </div>
@@ -76,7 +74,7 @@ background-color: #141f25; align-items: center; justify-content: center;">
                                 <p class="card-text">This is a wider card with supporting text below as a natural
                                     lead-in to
                                     additional content. This content is a little bit longer.</p>
-                                <button type="button" class="btn btn-success">Commander</button>
+                                <button type="button" class="btn btn-success">Ajouter</button>
                             </div>
                         </div>
                     </div>
@@ -92,7 +90,7 @@ background-color: #141f25; align-items: center; justify-content: center;">
                                 <p class="card-text">This is a wider card with supporting text below as a natural
                                     lead-in to
                                     additional content. This content is a little bit longer.</p>
-                                <button type="button" class="btn btn-success">Commander</button>
+                                <button type="button" class="btn btn-success">Ajouter</button>
                             </div>
                         </div>
                     </div>
@@ -156,9 +154,12 @@ background-color: #141f25; align-items: center; justify-content: center;">
                         </div>
                     </div>
                 </div>
+                <button type="button" class="btn btn-success">Commander</button>
+                <button type="button" class="btn btn-warning">Annuler</button>
+                <div class="text-white">
                 <h1>Prix Total HT : 8.8 $</h1>
                 <h1>Prix Total TVA : 9.8 $</h1>
-
+                </div>
             </div>
         </div>
     </div>
