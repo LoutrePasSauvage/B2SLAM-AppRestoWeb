@@ -5,27 +5,23 @@ class Database
     private PDO $dbh;
     private string $sql = "";
     private array $balises = array();
+    private int $method = 0;
 
-
-    function __construct(PDO $pDO, string $method, string $sql, array $balises)
+    function __construct(PDO $pDO, int $method, string $sql, array $balises)
     {
         $this->dbh = $pDO;
         $this->sql = $sql;
+        $this->method = $method;
         $this->balises = $balises;
 
-        switch (strtolower($method)) {
-            case "select":
-                $this->SelectDb();
-            case "insert":
-                $this->InsertDb();
-            case "update":
-                $this->UpdateDb();
-            case "delete":
-                $this->DeleteDb();
-            default:
-                die("Erreur: Type de Requête inexistante !");
-
-        }
+        if ($method == 1)
+            $this->SelectDb();
+        if ($method == 2)
+            $this->InsertDb();
+        if ($method == 3)
+            $this->UpdateDb();
+        if ($method == 4)
+            $this->DeleteDb();
     }
 
     public function SelectDb()
@@ -44,9 +40,7 @@ class Database
     {
         try {
             $sth = $this->dbh->prepare($this->sql);
-            print_r($this->balises);
             $sth->execute($this->balises);
-            
             $nb = $sth->rowcount();
         } catch (PDOException $e) {
             die("<p>Erreur lors de la requête INSERT SQL : " . $e->getMessage() . "</p>");
@@ -71,7 +65,7 @@ class Database
             $sth->execute();
             $nb = $sth->rowcount();
         } catch (PDOException $e) {
-            die("<p>Erreur lors de la requête UPDATE SQL : " . $e->getMessage() . "</p>");
+            die("<p>Erreur lors de la requête DELETE SQL : " . $e->getMessage() . "</p>");
         }
     }
 

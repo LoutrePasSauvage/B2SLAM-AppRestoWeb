@@ -1,10 +1,10 @@
 <?php
 include_once "class/database.class.php";
 include "db_connect.php";
-$pizza = "pizza!";
+
 $objetConnexion = db_connect();
-$insert = new Database($objetConnexion, "insert", "INSERT INTO commande VALUES (idProduit=:idProduit, libelle=:libelle,prixHT=:prixHT,descProduit=:descProduit);", 
-[':idProduit' => 1, ':libelle' => $pizza, ':prixHT' => 6.8, ':descProduit' => $pizza]);
+$insert = new Database($objetConnexion, 2, "INSERT INTO produit (idProduit, libelle, prixHT, descProduit) VALUES (NULL, :libelle, :prixHT, :descProduit);", 
+[':libelle' => "pizza", ':prixHT' => 6.8, ':descProduit' => "pizza"]);
 
 ?>
 
@@ -12,43 +12,11 @@ $insert = new Database($objetConnexion, "insert", "INSERT INTO commande VALUES (
 <html lang="fr">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="main.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
     <title>Liste des produits</title>
-</head>
 
-<body style=" height: 100vh;
-width: auto;
-background-color: #141f25; align-items: center; justify-content: center;">
-
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img width='30%' height='30%' src="logoResto.png"></a>
-
-            <button class="navbar-toggler" style="margin-right:5px !important;" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse top_nav" id="navbarSupportedContent">
-                <ul class="navbar-nav" style="padding-left: 90%;">
-                    <li class="nav-item"><a href="#" class="nav-link">Acceuil</a>    
-                    </li>
-                    <li class="nav-item "><a href="#" class="nav-link">Liste des produits</a>
-                    </li>
-                    <li class="nav-item "><a href="#" class="nav-link">Se connecter</a>
-                    </li>
-                    <li class="nav-item "><a href="#" class="nav-link">Se déconnecter</a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </nav>
+<?php
+    include('header.php');
+?>
     <div class="container">
 
         <div class="row">
