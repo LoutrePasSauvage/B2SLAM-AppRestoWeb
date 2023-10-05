@@ -1,3 +1,13 @@
+<?php
+include_once "class/database.class.php";
+include "db_connect.php";
+$pizza = "pizza!";
+$objetConnexion = db_connect();
+$insert = new Database($objetConnexion, "insert", "INSERT INTO commande VALUES (idProduit=:idProduit, libelle=:libelle,prixHT=:prixHT,descProduit=:descProduit);", 
+[':idProduit' => 1, ':libelle' => $pizza, ':prixHT' => 6.8, ':descProduit' => $pizza]);
+
+?>
+
 <!doctype html>
 <html lang="fr">
 
