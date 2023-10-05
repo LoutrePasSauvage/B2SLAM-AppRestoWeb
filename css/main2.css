@@ -1,0 +1,42 @@
+li
+{
+    list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6, p, form
+{
+    text-align:center;
+}
+
+body {
+    width: auto;
+    background-color: white;
+    justify-content: normal;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* 100% de la hauteur de la vue (viewport height) */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Fait en sorte que le contenu principal prenne l'espace disponible */
+}
+
+header{
+    background-color: #12222b;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #12222b;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    position: fixed;
+    bottom: 0; /* Fixe le footer en bas de la fenêtre */
+    width: 100%; /* 100% de la largeur de la fenêtre */
+}
