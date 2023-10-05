@@ -1,50 +1,34 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-<body>
+    <title>Accueil</title>
 
-    <nav>
-        <ul class="menu">
-            <li class="menu-item">
-                <a href="index.php">
-                    <img class="logoResto" src="img/logoResto.png" width=20%/>
-                </a>
-            </li>
-            <li class="menu-item a-menu"><a href="index.php">Accueil</a></li>
-            <li class="menu-item a-menu"><a href="connexion.php">Connexion</a></li>
-            <li class="menu-item a-menu"><a href="deconnexion.php">Déconnexion</a></li>
-        </ul>
-    </nav>
+<?php
+    include('header.php');
+?>
 
     <section class="space">
 
     </section>
 
-    <h1>Ceci est la page d'accueil</h1>
+    <h1 class='w'>RestoWeb</h1>
+    <br>
+    <h5 class = "w"><strong>&#10023 &#9866 &#9866 &#9866 &#10023</strong></h5>
+    <br>
+    <p class='w'>&#10095&#10095&#10095 1 clic pour choisir et 1 clic pour commander : &#10094&#10094&#10094<br>la commande est déjà chez vous !</p>
 
     <section class="space">
 
     </section>
 
-    <h2>Inscription :</h2>
+    <h2 class='w'>Inscription :</h2>
 
-    <p>Cliquez <a class="here" href="inscription.php">ici</a> pour vous inscrire</p>
+    <p class='w'>Cliquez <a class="here" href="inscription.php">ici</a> pour vous inscrire</p>
 
-    <h2>Connexion :</h2>
+    <h2 class='w'>Connexion :</h2>
 
-    <p>Cliquez <a class="here" href="connexion.php">ici</a> pour vous connecter</p>
+    <p class='w'>Cliquez <a class="here" href="connexion.php">ici</a> pour vous connecter</p>
 
-
-    <section class="spaceback">
-
-    </section>
 
     <section class="spaceback">
 
@@ -58,14 +42,10 @@
 
     </section>
 
-    <footer>
-        &copy Restaurant de qualité
-    </footer>
-</body>
-</html>
+    <section class="spaceback">
 
-<!--Js for boot strap-->
+    </section>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<?php
+    include('footer.php');
+?>
