@@ -1,34 +1,65 @@
+<?php
+    include('db_connect.php');
+    include('ini.php');
+
+    $submit = isset($_POST['submit']);    
+
+    if($submit) 
+    {
+        $login = isset($_POST['login']) ? $_POST['login'] : '';
+        $password = isset($_POST['password']) ? $_POST['password'] : '';
+        $password_confirm = isset($_POST['password_confirm']) ? $_POST['password_confirm'] : '';
+        $email = isset($_POST['email']) ? $_POST['email'] : '';
+        try 
+        {
+            if($password == $password_confirm)
+            {                   
+                //$new_user = "INSERT INTO _user(login, password, email) VALUES (:login, :password, :email)";
+                
+                $new_user = new Database(db_connect(), 2, "INSERT INTO _user(login, password, email) VALUES (:login, :password, :email)", [
+                    ":login" => $login,
+                    ":password" => $password,
+                    ":email" => $email
+                ]);
+                //2 --> insert
+
+                /*
+                $db=db_connect();
+                $req = $db->prepare($new_user, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+                $req->execute([
+                    ":login" => $login,
+                    ":password" => $password,
+                    ":email" => $email
+                ]);
+                $req->fetchAll();
+                */
+            }
+            else
+            {
+                echo "<p class ='w'>Les mots de passes ne correspondent pas</p>";
+            }
+        } 
+        catch (PDOException $error) 
+        {
+            die("<p class ='w u'>Erreur inscription (SQL) : ".$error->getMessage()."</p>");
+        }
+    } 
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>inscription</title>
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-<body>
 
-    <nav>
-        <ul class="menu">
-            <li class="menu-item">
-                <a href="index.php">
-                    <img class="logoResto" src="img/logoResto.png" width=20%/>
-                </a>
-            </li>
-            <li class="menu-item a-menu"><a href="index.php">Accueil</a></li>
-            <li class="menu-item a-menu"><a href="connexion.php">Connexion</a></li>
-            <li class="menu-item a-menu"><a href="deconnexion.php">Déconnexion</a></li>
-        </ul>
-    </nav>
+<?php
+    include('header.php');
+?>
 
     <section class="space">
 
     </section>
 
 
-    <h1>Inscription :</h1>
+    <h1 class='u w'>Inscription :</h1>
 
     <section class="space">
 
@@ -36,43 +67,24 @@
 
     <form method="post">
     
-    <p> Nom :</p>
-    <input type='text' name='nom'>
+    <p class='w'> Identifiant :</p>
+    <input type='text' name='login' id='login'>
     <br>
-    <p> Prénom :</p>
-    <input type='text' name='prenom'>
+    <p class='w'> Mot de passe :</p>
+    <input type='password' name='password' id='password'>
     <br>
-    <p> Identifiant :</p>
-    <input type='text' name='id'>
+    <p class='w'> Confirmer mot de passe :</p>
+    <input type='password' name='password_confirm' id='password_confirm'>
     <br>
-    <p> Mot de passe :</p>
-    <input type='password' name='password'>
-    <br>
-    <p> Confirmer mot de passe :</p>
-    <input type='password' name='password_confirm'>
-    <br>
-    <p> e-mail :</p>
-    <input type='email' name='email'>
-    <br>
-    <p> Téléphone :</p>
-    <input type='number' name='phone'>
+    <p class='w'> e-mail :</p>
+    <input type='email' name='email' id='email'>
     <br><br>
     <p><input type='submit' name='submit' value='Envoyer' />&nbsp;<input type='reset' value='Réinitialiser' /></p>   
          
-        
     <section class="spaceback">
 
     </section>
 
-    <footer>
-        &copy Restaurant de qualité
-    </footer>
-
-</body>
-</html>
-
-<!--Js for boot strap-->
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<?php
+    include('footer.php');
+?>
