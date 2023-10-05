@@ -12,7 +12,7 @@
 
 <body style="height: 100vh; width: auto; background-color: #141f25; align-items: center; justify-content: center;">
 
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar-nav navbar-dark bg-dark ">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><img width='30%' height='30%' src="logoResto.png"></a>
 
@@ -22,6 +22,7 @@
             </button>
             <div class="collapse navbar-collapse top_nav" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto">
+                    
                     <li class="nav-item">
                         <a href="#" class="nav-link">Home</a>
                         <hr class="hr_nav">
