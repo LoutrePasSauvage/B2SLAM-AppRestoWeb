@@ -1,7 +1,6 @@
 <?php
     include('db_connect.php');
     include('ini.php');
-
     $submit = isset($_POST['submit']);    
 
     if($submit) 
@@ -23,6 +22,7 @@
                 ":password" => $password,
                 ":email" => $email
             ]);
+            header("Location: connexion.php");
                 //2 --> insert
 
                 /*

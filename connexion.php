@@ -11,7 +11,9 @@ $submit = isset($_POST['submit']);
 
 // Vérifie le user
 if ($submit) {
-    $sql = "select * from _user where login= :login and password= :password";
+
+    $sql = "select * from _user where login=:login and password=:password";
+
     try {
         $params = array(
             ':login' => $login,

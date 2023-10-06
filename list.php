@@ -1,19 +1,27 @@
 <?php
 include_once "class/database.class.php";
 include "db_connect.php";
-
+session_start();
 $objetConnexion = db_connect();
 $db = new Database($objetConnexion);
 
 //récupération des produits 
+
+$user = $_SESSION["user"];
+
 $produits = $db->SelectDb("SELECT * FROM produit;");
 
 //récupération du formulaire pour un INSERT dans commande 
 
 
+$submit = isset($_POST['submit']) ? $_POST['submit'] : "";
+$productID = isset($_POST['productID']) ? $_POST['productID'] : "";
+if($submit) {
 
+$db->InsertDb("INSERT INTO `commande` (`idCommande`, `idEtat`, `_date`, `totalCommande`, `typeConso`, `idUser`) VALUES (NULL, idEtat=:idEtat, _date=:_date, totalCommande=:totalCommande, typeConso=:typeConso, idUser=:idUser);", 
+[":idEtat" => "0", ":_date" => "2023-10-06", ":totalCommande" => "20", ":typeConso" => "extérieur", ":idUser" => $user['idUser']]);
+}
 
-//$db->InsertDb("INSERT INTO commande () VALUES ();", ["" => ]);
 
 ?>
 
@@ -34,9 +42,13 @@ $produits = $db->SelectDb("SELECT * FROM produit;");
                 <div class="text-white">
                     <h1>Liste des produits</h1>
                 </div>
+               
              <?php
+         
                 foreach($produits as $row) { echo 
-                    '<div class="card mb-3" style="max-width: 640px;">
+                    '
+                    <form method="POST">
+                    <div class="card mb-3" style="max-width: 640px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
                             <img src="logoResto.png" class="card-img" alt="pizza">
@@ -46,13 +58,16 @@ $produits = $db->SelectDb("SELECT * FROM produit;");
                                 <h5 class="card-title">'.$row['libelle'].'</h5>
                                 <p class="card-text">'.$row['descProduit'].'</p>
                                 <p class="font-weight-bold">'.$row['prixHT'].' €</p>
-                                <button type="button" class="btn btn-success">Ajouter</button>
+                                <input type="hidden"  name="productID" value="'.$row['idProduit'].'">
+                                <input type="submit" value="Ajouter" name="submit" class="btn btn-success"/>
                             </div>
                         </div>
                     </div>
-                </div>';
+                </div>
+                </form>';
             }
                 ?>
+               
             </div>
             <div class="col align-self-start">
                 <div class="text-white">
@@ -78,7 +93,7 @@ $produits = $db->SelectDb("SELECT * FROM produit;");
                                     </div>
                                 </div>
                             </div>
-                        </div>        ';
+                        </div>';
                         } ?>
                         
                     </div>
