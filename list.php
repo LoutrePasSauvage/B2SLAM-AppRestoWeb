@@ -18,7 +18,7 @@ $annuler = isset($_POST['annuler']) ? $_POST['annuler'] : "";
 
 if($commander) {
 
-    header("Location: commande.php");
+    header("Location: pay.php");
 
 }
 

@@ -1,0 +1,124 @@
+body
+{
+    font-family: Lucida Console;
+    padding:auto;
+    margin:auto;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.here 
+{
+    box-shadow: inset 0 0 0 0 rgb(173, 150, 22);
+    color: rgb(173, 150, 22);
+    margin: 0 -.25rem;
+    padding: 0 .25rem;
+    transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.here:hover 
+{
+    box-shadow: inset 100px 0 0 0 rgb(173, 150, 22);
+    color: white;
+}
+
+.w
+{
+    color:white;
+}
+
+.u
+{
+    text-decoration: underline;
+}
+
+.b
+{
+    font-weight: bold;
+}
+
+li
+{
+    list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6, p, form
+{
+    text-align:center;
+}
+
+.space
+{
+    padding-top: 15vh;
+}
+
+.spaceback
+{
+    padding-bottom: 20vh;
+}
+
+/*
+footer
+{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color:#12222b;
+  color: white;
+  font-weight: bold;
+  text-align:center;
+}
+*/
+
+.menu
+{
+    display:flex;
+    justify-content: flex;
+    align-items: center;
+    padding:0.6rem 0;
+    width:100%;
+    position:fixed;
+    background-color: #131e24;    /*#131e24   #12222b*/
+    z-index:500;  /*pour eviter qu'il se fasse écraser par d'autres éléments comme les timeline*/
+}
+
+.menu-item
+{
+    margin-right: 2rem;
+}
+
+.menu-item:first-child
+{
+    margin-right: auto;
+    margin-left: 2rem;
+}
+
+.menu-item a
+{
+    color: white;
+    position: relative;
+    text-decoration: none;
+}
+  
+.a-menu a::before 
+{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    border-radius: 4px;
+    background-color: white;
+    bottom: 0;
+    left: 0;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .3s ease-in-out;
+}
+  
+.a-menu a:hover::before 
+{
+    transform-origin: left;
+    transform: scaleX(1);
+}
