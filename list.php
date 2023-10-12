@@ -40,10 +40,10 @@ if ($user) {
     $commandes = $db->SelectDb("SELECT * FROM commande WHERE id_user=:idUser;", [":idUser" => $user['id_user']]);
     $lignes =  $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user;", [":id_user" => $user['id_user']]);
     
-    
+    //Recup total ht de la commande grace au TRIGGER lors du SELECT
     $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user;", [":id_user" => $user['id_user']]);
     
-    $total_ht = 0;
+    $total_ht = 0; //comme l'utilisateur peut avoir plusieurs ligne de commandes je lui fait un total
     foreach($total_lignes as $value) {
         $total_ht += $value['total_ligne_ht'];
 
@@ -157,6 +157,7 @@ if ($ajouter) {
                         </form>
                         ';
                         } ?>
+
 
                     </div>
                 </div>
