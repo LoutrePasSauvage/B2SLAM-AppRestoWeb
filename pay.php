@@ -43,17 +43,18 @@ if ($user) {
                 </h4>
 
                 <ul class="list-group mb-3">
+                    <span>Commande N° <?= $lignes[0]['id_commande'] ?> </span>
                     <?php foreach ($lignes as $row) {
                         $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
                     echo "<li class=' list-group-item d-flex justify-content-between lh-sm'>
                         <div>
-                            <h6 class='my-0'> <i class='fa-solid fa-utensils fa-sm'></i> &ensp; &ensp; " . $the_product[0]['libelle']."</h6>
+                            <h6 class='my-0'> <i class='fa-solid fa-utensils fa-sm'></i> &ensp;" . $the_product[0]['libelle']."</h6>
                             <small class='text-muted'>". $the_product[0]['descProduit'] ." </small>
                         </div>
                         <span class='text-muted'> ". $the_product[0]['prix_ht'] ." € </span>
                     </li>"; }?>
                     <li class='list-group-item d-flex justify-content-between'>
-                        <span>Total (en €)</span>
+                        <span>Total (en eur)</span>
                         <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande']*0.05;  ?> €</strong>
                     </li>
                 </ul>
