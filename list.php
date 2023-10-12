@@ -84,8 +84,9 @@ if ($ajouter) {
 <html lang="fr">
 
 <head>
+<div class="text-dark">
     <title>Liste des produits</title>
-
+</div>
     <?php
     include('header.php');
     ?>
@@ -94,7 +95,7 @@ if ($ajouter) {
         <div class="row">
 
             <div class="col align-self-start">
-                <div class="text-white">
+                <div class="text-dark">
                     <h1>Liste des produits</h1>
                 </div>
 
@@ -165,7 +166,7 @@ if ($ajouter) {
                 <input type="submit" name="commander" class="btn btn-success" value="Commander">
                 <input type="submit" name="annuler" class="btn btn-warning" value="Annuler">
                 </form>
-                <div class="text-white">
+                <div class="text-dark">
                     <h1>Prix Total HT : <?php echo $_SESSION["total_commande"]; ?> $</h1>
                     <h1>Prix Total TVA : <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"]*0.05; echo $_SESSION['totalTVA']?> $</h1>
                 </div>
