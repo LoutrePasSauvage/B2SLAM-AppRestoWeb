@@ -4,17 +4,16 @@ class Database
 {
     private PDO $dbh;
 
-
     function __construct(PDO $pDO)
     {
         $this->dbh = $pDO;
     }
 
-    public function SelectDb(string $sql)
+    public function SelectDb(string $sql, ?array $champs)
     {
         try {
             $sth = $this->dbh->prepare($sql);
-            $sth->execute();
+            $sth->execute($champs);
             $row = $sth->fetchAll();
             return $row;
         } catch (PDOException $e) {
@@ -33,7 +32,7 @@ class Database
         }
 
     }
-    public function UpdateDb(string $sql, array $champs)
+    public function UpdateDb(string $sql, ?array $champs)
     {
         try {
             $sth = $this->dbh->prepare($sql);
@@ -44,11 +43,11 @@ class Database
         }
     }
 
-    public function DeleteDb(string $sql)
+    public function DeleteDb(string $sql, ?array $champs)
     {
         try {
             $sth = $this->dbh->prepare($sql);
-            $sth->execute();
+            $sth->execute($champs);
             $nb = $sth->rowcount();
         } catch (PDOException $e) {
             die("<p>Erreur lors de la requête DELETE SQL : " . $e->getMessage() . "</p>");

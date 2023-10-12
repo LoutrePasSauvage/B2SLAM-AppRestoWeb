@@ -1,6 +1,6 @@
 <?php
 function db_connect() {
-    $dsn = 'mysql:host=localhost;dbname=restoWeb';  // contient le nom du serveur et de la base
+    $dsn = 'mysql:host=localhost;dbname=db_restoweb';  // contient le nom du serveur et de la base
     $user = 'root';
     $password = '';
     try {

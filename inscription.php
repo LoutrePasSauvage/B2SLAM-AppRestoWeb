@@ -17,7 +17,7 @@
                 $objetConnexion = db_connect();
                 $db = new Database($objetConnexion);
 
-            $db->InsertDb("INSERT INTO _user(login, password, email) VALUES (:login, :password, :email)", [
+            $db->InsertDb("INSERT INTO user(login, password, email) VALUES (:login, :password, :email)", [
                 ":login" => $login,
                 ":password" => $password,
                 ":email" => $email
