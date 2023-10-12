@@ -16,16 +16,7 @@ $supprimer = isset($_POST['supprimer']) ? $_POST['supprimer'] : "";
 $commander = isset($_POST['commander']) ? $_POST['commander'] : "";
 $annuler = isset($_POST['annuler']) ? $_POST['annuler'] : "";
 
-if($commander) {
 
-    header("Location: pay.php");
-
-}
-
-if($annuler) {
-
-
-}
 
 
 $deleteID = isset($_POST['deleteID']) ? $_POST['deleteID'] : "";
@@ -59,6 +50,17 @@ if ($supprimer) {
     header("Refresh:0");
 }
 
+if($commander) {
+
+    header("Location: pay.php");
+
+}
+
+if($annuler) {
+
+    //$db->DeleteDb("")
+
+}
 
 if ($ajouter) {
 
