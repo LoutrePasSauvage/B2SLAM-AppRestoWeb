@@ -13,16 +13,26 @@ $user = $_SESSION["user"];
 
 $ajouter = isset($_POST['ajouter']) ? $_POST['ajouter'] : "";
 $supprimer = isset($_POST['supprimer']) ? $_POST['supprimer'] : "";
+$commander = isset($_POST['commander']) ? $_POST['commander'] : "";
+$annuler = isset($_POST['annuler']) ? $_POST['annuler'] : "";
+
+if($commander) {
+
+    header("Location: commande.php");
+
+}
+
+if($annuler) {
 
 
-
+}
 
 
 $deleteID = isset($_POST['deleteID']) ? $_POST['deleteID'] : "";
 $productID = isset($_POST['productID']) ? $_POST['productID'] : "";
 echo $deleteID;
 if (!$user) {
-    echo "<p> Vous n'êtes pas connecté ! </p>";
+    header("Location: connexion.php");
 }
 
 if ($user) {
@@ -31,9 +41,6 @@ if ($user) {
     $lignes =  $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user;", [":id_user" => $user['id_user']]);
     
     
-    $totalHT = $db->SelectDb("SELECT SUM(ligne.total_ligne_ht) as totalHT FROM ligne, commande WHERE ligne.id_commande=:id_commande AND id_user=:id_user;", [":id_user" => $user['id_user'], ":id_commande" =>  $commandes[0]["id_commande"]]);
-    
-
     $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user;", [":id_user" => $user['id_user']]);
     
     $total_ht = 0;
@@ -49,8 +56,6 @@ if ($user) {
 if ($supprimer) {
     $db->DeleteDb("DELETE FROM ligne WHERE id_ligne=:deleteID", [":deleteID" => $deleteID]);
     $delete_c = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_ligne = :id_ligne", [":id_user" => $user['id_user'], ":id_ligne" => $deleteID+1]);
-    print_r($delete_c);
-    //$db->DeleteDb("DELETE FROM commande WHERE id_commande=:deleteID", [":deleteID" => $delete_c[0]['id_commande']]);
     header("Refresh:0");
 }
 
@@ -63,10 +68,7 @@ if ($ajouter) {
         "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, :date, :total_commande, :type_conso);",
         [":id_etat" => "1", ":date" => date('Y-m-d'), ":total_commande" => $_SESSION['totalHT'], ":type_conso" => 'extérieur', ":id_user" => $user['id_user']]
     );
-    sleep(1);
-    // INSERT ligne 
-
- 
+   // INSERT ligne 
         $db->InsertDb(
             "INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_ligne_ht`) VALUES (NULL, :id_commande, :id_produit, :qte, NULL);",
             [":id_commande" => $commandes[0]["id_commande"],  ":id_produit" => $productID, ":qte" => '1']
@@ -158,11 +160,13 @@ if ($ajouter) {
 
                     </div>
                 </div>
-                <button type="button" class="btn btn-success">Commander</button>
-                <button type="button" class="btn btn-warning">Annuler</button>
+                <form method="POST">
+                <input type="submit" name="commander" class="btn btn-success" value="Commander">
+                <input type="submit" name="annuler" class="btn btn-warning" value="Annuler">
+                </form>
                 <div class="text-white">
                     <h1>Prix Total HT : <?php echo $_SESSION["total_commande"]; ?> $</h1>
-                    <h1>Prix Total TVA : <?php echo $_SESSION["total_commande"] + $_SESSION["total_commande"]*0.05; ?> $</h1>
+                    <h1>Prix Total TVA : <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"]*0.05; echo $_SESSION['totalTVA']?> $</h1>
                 </div>
             </div>
         </div>
