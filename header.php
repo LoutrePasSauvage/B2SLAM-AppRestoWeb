@@ -6,7 +6,7 @@
 </head>
 
 
-<body style="background-color: #141f25;">
+<body style="background-color: white;">
 
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
