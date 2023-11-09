@@ -3,14 +3,29 @@ include "db_connect.php";
 // Connexion à la base de données
 $dbh = db_connect();
 
-// Récupère le contenu du formulaire
-$login = isset($_POST['login']) ? $_POST['login'] : '';
-$password = isset($_POST['password']) ? $_POST['password'] : '';
+$messages = array();  // Message d'erreur
 
 $submit = isset($_POST['submit']);
 
 // Vérifie le user
 if ($submit) {
+
+    // Récupère le contenu du formulaire
+    $login = isset($_POST['login']) ? $_POST['login'] : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
+
+    //verifie si le login est vide
+    if (empty(trim($login))) {
+        $messages[] = "le login est obligatoire";
+    }
+    //verifie si le mdp est vide
+    if (empty(trim($password))) {
+        $messages[] = "le mot de passe est obligatoire";
+    }
+    //verifie si le mdp est valide
+    if (!$password || !$login) {
+        $messages[] = "le login ou le mot de passe n'est pas valide : $login";
+    }
 
     $sql = "select * from user where login=:login and password=:password";
 
@@ -42,21 +57,25 @@ if ($submit) {
     <title>connexion</title>
 
     <?php
-    include "header.php";
+        include "header.php";
     ?>
 
 
 
-<h1>Connexion :</h1>
+<h1 class="space">Connexion :</h1>
 
-<section class="space">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" >
+    <?php
+    if (count($messages) > 0) {
 
-</section>
-
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-    <p>login<br /><input type="text" name="login" id="login" value="<?= $login ?>" required></p>
-    <p>Mot De Passe<br /><input type="password" name="password" id="password" required></p>
-    <button class="btn btn-default btn-lg active" type="submit" name="submit" value="submit">Connexion</button>
+        foreach ($messages as $message) {
+            echo "<h6 class='alert alert-danger' >" . $message . "</h6>";
+        }
+    }
+    ?>
+    <p>login<br /><input type="text" name="login" id="login" ></p>
+    <p>Mot De Passe<br /><input type="password" name="password" id="password" ></p>
+    <button class=" btn btn-default btn-lg active" type="submit" name="submit" value="submit">Connexion</button>
 </form>
 
 <?php
