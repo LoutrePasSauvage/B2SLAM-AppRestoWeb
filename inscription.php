@@ -25,6 +25,29 @@
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             $messages[] = "l'email n'est pas valide : $email";
         }
+        // le mdp est obligatoire
+        if (empty(trim($password))) {
+            $messages[] = "le mot de passe est obligatoire";
+        }
+        if (empty(trim($password_confirm))) {
+            $messages[] = "le mot de passe est obligatoire";
+        }
+        // le mdp est doit avoir plus de 8 caractères
+        if (strlen($password) < 8) {
+            $messages[] = "le mot de passe doit avoir plus de 8 caractères";
+        }
+        // le mdp doit avoir un caractère spécial
+        if (!preg_match('/[^a-z0-9]+/i', $password)) {
+            $messages[] = "le mot de passe doit avoir un caractère spécial";
+        }
+        // le mdp doit avoir un chiffre
+        if (!preg_match('/[0-9]+/', $password)) {
+            $messages[] = "le mot de passe doit avoir un chiffre";
+        }
+        // le mdp doit avoir une lettre
+        if (!preg_match('/[a-z]+/i', $password)) {
+            $messages[] = "le mot de passe doit avoir une lettre";
+        }
     }
 // Pas de message : inscrit !
         if (empty($messages)) {
