@@ -1,4 +1,4 @@
-    <footer style = 'display: flex; justify-content: center; padding: 10px; background-color:#12222b; color: white; font-weight: bold; text-align:center;'>
+    <footer class="sticky-bottom mt-5" style = 'display: flex; justify-content: center; padding: 10px; background-color:#12222b; color: white; font-weight: bold; text-align:center;'>
         &copy Restaurant de qualité
     </footer>
 
