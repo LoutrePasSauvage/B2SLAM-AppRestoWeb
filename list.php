@@ -21,7 +21,16 @@ $productID = isset($_POST['productID']) ? $_POST['productID'] : "";
 
 $typeConso = isset($_POST["typeconsommation"]) ? $_POST["typeconsommation"] : "0";
 
-$_SESSION['typeConso'] = $typeConso;
+
+if ($typeConso == 1) {
+    $_SESSION['typeConso'] = "à emporter";
+} else {
+    $_SESSION['typeConso'] = "sur place";
+}
+
+
+
+
 
 if (!$user) {
     header("Location: connexion.php");
@@ -31,6 +40,7 @@ if ($user) {
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
     $commandes = $db->SelectDb("SELECT * FROM commande WHERE id_user=:idUser;", [":idUser" => $user['id_user']]);
     $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user;", [":id_user" => $user['id_user']]);
+    //print_r($commandes);
 
     //Recup total ht de la commande grace au TRIGGER lors du SELECT
     $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user;", [":id_user" => $user['id_user']]);
@@ -38,11 +48,8 @@ if ($user) {
     $total_ht = 0; //comme l'utilisateur peut avoir plusieurs ligne de commandes je lui fait un total
     foreach ($total_lignes as $value) {
         $total_ht += $value['total_ligne_ht'];
-
     }
     $_SESSION["total_commande"] = $total_ht;
-
-    print_r($total_lignes);
 }
 //récupération du formulaire pour un INSERT dans commande 
 
@@ -61,13 +68,17 @@ if ($commander) {
     );
 
     header("Location: pay.php");
-
 }
 
 if ($annuler) {
 
-    //$db->DeleteDb("")
 
+    if (!empty($lignes[0]['id_commande'])) {
+        $db->DeleteDb(
+            "DELETE FROM ligne WHERE :id_commande",
+            [":id_commande" => $lignes[0]['id_commande']]
+        );
+    }
 }
 
 if ($ajouter) {
@@ -114,7 +125,7 @@ if ($ajouter) {
 
                 foreach ($produits as $row) {
                     echo
-                        '
+                    '
                     <form method="POST">
                     <div class="card mb-3" style="max-width: 640px;">
                     <div class="row no-gutters">
@@ -149,7 +160,7 @@ if ($ajouter) {
                                 "SELECT type_conso FROM `commande`, user WHERE commande.id_commande = :id_commande AND user.id_user = :id_user;",
                                 [":id_commande" => $row["id_commande"], ":id_user" => $user["id_user"]]
                             );
-                            print_r($typeconso);
+
                             $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
                             echo ' 
                             <form method="POST">
@@ -180,7 +191,7 @@ if ($ajouter) {
                     </div>
                 </div>
                 <form method="POST">
-           
+
                     <input type="checkbox" value="1" name="typeconsommation">éxterieur</input>
                     <input type="checkbox" value="0" name="typeconsommation">intérieur</input>
                     <input type="submit" name="commander" class="btn btn-success" value="Commander">
@@ -192,15 +203,11 @@ if ($ajouter) {
                     </h1>
                     <h1>Prix Total TVA :
                         <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"] * 0.05;
-                        echo $_SESSION['totalTVA'].'$'.PHP_EOL;
-                        if($typeConso == 1) {
-                            echo '<p>En extérieur </p>';
-                        } else {
-                            echo '<p> En Intérieur </p>';
-                        }
+                        echo $_SESSION['totalTVA'] . '$' . PHP_EOL;
+
                         ?>
 
-                        
+
                     </h1>
                 </div>
             </div>
@@ -209,9 +216,7 @@ if ($ajouter) {
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>
 
 </html>
