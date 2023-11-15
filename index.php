@@ -7,9 +7,7 @@
     include('header.php');
 ?>
 
-    <section class="space">
 
-    </section>
 
     <h1 class='w'>RestoWeb</h1>
     <br>
@@ -17,9 +15,6 @@
     <br>
     <p class='w'>&#10095&#10095&#10095 1 clic pour choisir et 1 clic pour commander : &#10094&#10094&#10094<br>la commande est déjà chez vous !</p>
 
-    <section class="space">
-
-    </section>
 
     <h2 class='w'>Inscription :</h2>
 
@@ -27,24 +22,8 @@
 
     <h2 class='w'>Connexion :</h2>
 
-    <p class='w'>Cliquez <a class="here" href="connexion.php">ici</a> pour vous connecter</p>
+    <p class='w pb-5'>Cliquez <a class="here" href="connexion.php">ici</a> pour vous connecter</p>
 
-
-    <section class="spaceback">
-
-    </section>
-
-    <section class="spaceback">
-
-    </section>
-
-    <section class="spaceback">
-
-    </section>
-
-    <section class="spaceback">
-
-    </section>
 
 <?php
     include('footer.php');
