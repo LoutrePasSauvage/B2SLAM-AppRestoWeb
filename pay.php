@@ -68,6 +68,17 @@ if (isset($_POST['submit'])) {
     if (strlen($cc_cvv) < 3) {
         $messagesCVV[] = "le cvv doit avoir 3 chiffres";
     }
+    if (!preg_match('/^[0-9]*$/', $cc_cvv)) {
+        $messagesCVV[] = "le cvv doit être composé de chiffres";
+    }
+    if (strlen($cc_number) > 16) {
+        $messagesNumber[] = "le numéro de la carte doit avoir 16 chiffres maximum";
+    }
+    if ($cc_expiration < date("Y-m")) {
+        $messagesExpiration[] = "la date d'expiration doit être supérieur à la date actuelle";
+    }
+
+
     if (empty($messagesName) && empty($messagesNumber) && empty($messagesExpiration) && empty($messagesCVV)) {
         if ($cc_number == "0000000000000000") {
             header("Location: payPasConfirm.php");
@@ -106,14 +117,14 @@ if (isset($_POST['submit'])) {
                     } ?>
                     <li class='list-group-item d-flex justify-content-between'>
                         <span>Total TTC (en eur)</span>
-                        <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande'] * 0.05; ?> €  <?php echo $_SESSION['typeConso']; ?> </strong>
+                        <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande'] * 0.05; ?> €</strong>
                     </li>
                 </ul>
 
             </div>
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">adresse de payement</h4>
-                <form class="needs-validation" method="post">
+                <form class="needs-validation" method="post" id="paymentForm">
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label">Utilisateur</label>
@@ -164,7 +175,9 @@ if (isset($_POST['submit'])) {
                             }
                             ?>
                             <input name="cc_number" type="number" class="form-control" id="cc_number"
-                                   value="<?= $cc_number ?>"> //Faire 0000 0000 0000 0000 pour payement pas confirmé
+                                   value="<?= $cc_number ?>">
+                            <p class="text-info"><i class="fas fa-level-up-alt fa-rotate-90"></i> &ensp; Faire 0000 0000
+                                0000 0000 pour payement pas confirmé</p>
                         </div>
 
                         <div class="col-md-3">
@@ -197,8 +210,12 @@ if (isset($_POST['submit'])) {
 
                     <hr class="my-4">
 
-                    <button class="w-25 btn btn-primary btn-lg" type="submit" name="submit" id="submit">Payer</button>
+                    <button class="w-25 btn btn-primary btn-lg" type="submit" name="submit"
+                            onclick="confirmerPaiement()">Payer
+                    </button>
+
                     <button class="w-25 btn btn-secondary btn-lg" type="button" onclick="location.href='list.php'">
+
                         Annuler
                     </button>
                 </form>
@@ -209,3 +226,13 @@ if (isset($_POST['submit'])) {
     include "footer.php";
 
     ?>
+
+    <script>
+        function confirmerPaiement() {
+            var confirmer = confirm("Confirmez-vous le paiement ?");
+            if (confirmer) {
+                // Si l'utilisateur clique sur OK, le formulaire sera soumis
+                document.getElementById("paymentForm").submit();
+            }
+        }
+    </script>
