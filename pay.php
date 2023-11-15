@@ -94,10 +94,11 @@ if (isset($_POST['submit'])) {
                             <small class='text-muted'>". $the_product[0]['descProduit'] ." </small>
                         </div>
                         <span class='text-muted'> ". $the_product[0]['prix_ht'] ." € </span>
+                        
                     </li>"; }?>
                     <li class='list-group-item d-flex justify-content-between'>
                         <span>Total TTC (en eur)</span>
-                        <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande']*0.05;  ?> €</strong>
+                        <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande']*0.05;  ?> €  <?php echo $_SESSION['typeConso']; ?>  </strong>
                     </li>
                 </ul>
 
