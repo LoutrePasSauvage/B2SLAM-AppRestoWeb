@@ -77,6 +77,7 @@ if (empty($_SESSION["user"])) {
                     <li class='list-group-item d-flex justify-content-between'>
                         <span>Total (en eur)</span>
                         <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande']*0.05;  ?> €</strong>
+                        <span> <?= $_SESSION['typeConso'] ?></span>
                     </li>
                 </ul>
 
