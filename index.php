@@ -7,8 +7,6 @@
     include('header.php');
 ?>
 
-    <section class="space"></section>
-
     <h1 class='w'>RestoWeb</h1>
     <br>
     <h5 class = "w"><strong>&#10023 &#9866 &#9866 &#9866 &#10023</strong></h5>
@@ -24,8 +22,7 @@
 
     <p class='w pb-5'>Cliquez <a class="here" href="connexion.php">ici</a> pour vous connecter</p>
 
-    <section class="spaceback"></section>
-
+   
 <?php
     include('footer.php');
 ?>
