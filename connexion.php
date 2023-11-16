@@ -64,39 +64,38 @@ if ($submit) {
 
 
 
-<h1 class="space">Connexion :</h1>
+    <h1 class='w'>Connexion :</h1>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" >
-    <?php
-    if (count($messages) > 0) {
-
-        foreach ($messages as $message) {
-            echo "<h6 class='alert alert-danger' >" . $message . "</h6>";
-        }
-    }
-    ?>
-    <p>login<br />
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" >
         <?php
-        if (count($messagesid) > 0) {
+        if (count($messages) > 0) {
 
-            foreach ($messagesid as $message) {
-                echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
+            foreach ($messages as $message) {
+                echo "<h6 class='alert alert-danger' >" . $message . "</h6>";
             }
         }
-        ?><input type="text" name="login" id="login" ></p>
-    <p>Mot De Passe<br />
-        <?php
-        if (count($messagesMDP) > 0) {
+        ?>
+        <p>Login<br />
+            <?php
+            if (count($messagesid) > 0) {
 
-            foreach ($messagesMDP as $message) {
-                echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
+                foreach ($messagesid as $message) {
+                    echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
+                }
             }
-        }
-        ?><input type="password" name="password" id="password" ></p>
-    <button class=" btn btn-default btn-lg active" type="submit" name="submit" value="submit">Connexion</button>
-</form>
+            ?><input type="text" name="login" id="login" ></p>
+        <p>Mot de passe<br />
+            <?php
+            if (count($messagesMDP) > 0) {
+
+                foreach ($messagesMDP as $message) {
+                    echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
+                }
+            }
+            ?><input type="password" name="password" id="password" ></p>
+        <button class=" btn btn-default btn-lg active" type="submit" name="submit" value="submit">Connexion</button>
+    </form>
 
 <?php
-
-include "footer.php";
+    include "footer.php";
 ?>
