@@ -1,0 +1,24 @@
+=== INSTALLATION DE L'APPLICATION ===
+
+
+1/ Installer l'intégralité du projet
+
+2/ Le dossier principal de l'application sera à déposer dans un sous-dossier de htdocs tel que :
+   
+   ./xampp/htdocs/projets/B2SLAM-AppResto-L-BOUZAC---H-CAILLEBOTTE---S-VERCHERE
+
+   Ici, projets est sous-dossier.
+
+3/ Sur la page phpMyAdmin (de xampp) : créer une nouvelle base de donnée nommée db_restoweb avec l'encodage utf8_general_ci
+
+4/ Exécuter le code SQL : db_restoweb.sql contenu dans le dossier data_db (dans l'application) dans la base de donnée.
+
+5/ Vous pouvez vous connecter avec le compte de test :
+   login : a
+   password : a
+
+   Sur l'url :
+
+   http://localhost/projets/B2SLAM-AppResto-L-BOUZAC---H-CAILLEBOTTE---S-VERCHERE-main/index.php
+
+6/ L'installation est terminée !
