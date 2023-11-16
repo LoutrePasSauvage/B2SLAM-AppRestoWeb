@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 12 oct. 2023 à 15:51
--- Version du serveur : 10.4.28-MariaDB
--- Version de PHP : 8.0.28
+-- Généré le : jeu. 16 nov. 2023 à 10:42
+-- Version du serveur : 10.4.24-MariaDB
+-- Version de PHP : 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,32 +34,32 @@ CREATE TABLE `commande` (
   `date` datetime NOT NULL DEFAULT current_timestamp(),
   `total_commande` decimal(10,2) DEFAULT 0.00,
   `type_conso` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `commande`
 --
 
 INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES
-(163, 3, 1, '2023-10-12 00:00:00', 0.00, 0),
+(163, 3, 1, '2023-10-12 00:00:00', '0.00', 0),
 (164, 3, 1, '2023-10-12 00:00:00', NULL, 0),
-(165, 3, 1, '2023-10-12 00:00:00', 25.00, 0),
-(166, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(167, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(168, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(169, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(170, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(171, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(172, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(173, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(174, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(175, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(176, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(177, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(178, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(179, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(180, 3, 1, '2023-10-12 00:00:00', 79.50, 0),
-(181, 3, 1, '2023-10-12 00:00:00', 79.50, 0);
+(165, 3, 1, '2023-10-12 00:00:00', '25.00', 0),
+(166, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(167, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(168, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(169, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(170, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(171, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(172, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(173, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(174, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(175, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(176, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(177, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(178, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(179, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(180, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
+(181, 3, 1, '2023-10-12 00:00:00', '79.50', 0);
 
 -- --------------------------------------------------------
 
@@ -73,76 +73,122 @@ CREATE TABLE `ligne` (
   `id_produit` int(11) NOT NULL,
   `qte` int(11) NOT NULL DEFAULT 0,
   `total_ligne_ht` decimal(10,2) NOT NULL DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `ligne`
 --
 
 INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_ligne_ht`) VALUES
-(295, 163, 1, 1, 12.50),
-(297, 163, 2, 1, 14.00),
-(298, 163, 4, 1, 10.50);
+(295, 163, 1, 1, '12.50'),
+(297, 163, 2, 1, '14.00'),
+(298, 163, 4, 1, '10.50');
 
 --
 -- Déclencheurs `ligne`
 --
 DELIMITER $$
 CREATE TRIGGER `after_ligne_insert` AFTER INSERT ON `ligne` FOR EACH ROW BEGIN
-    set @total_commande = 0;
-    set @type_conso = 0;
-    set @tva = 0;
-    -- Lit la commande
-    SELECT type_conso INTO @type_conso FROM commande where commande.id_commande = NEW.id_commande;
-    -- Détermine le taux de TVA
-    IF @type_conso=1 THEN SET @tva=1.055; END IF;
-    IF @type_conso=2 THEN SET @tva=1.1; END IF;
-    -- Calcule le total HT des lignes de la commande
-    SELECT sum(total_ligne_ht) INTO @total_commande FROM ligne WHERE ligne.id_commande = NEW.id_commande;
-    -- Calcule le total TTC
-    SET @total_commande=@total_commande*@tva;
-    --  Met à jour le total commande 
-    UPDATE commande SET total_commande=@total_commande where commande.id_commande = NEW.id_commande;
-  END
+DECLARE f_total_commande INT;
+DECLARE f_type_conso INT;
+DECLARE TVA INT;
+
+-- Affectation type consommation
+SELECT type_conso INTO f_type_conso
+FROM commande
+WHERE commande.id_commande = NEW.id_commande;
+
+-- Calcul taux TVA
+IF f_type_conso = 1
+THEN
+	SET TVA = 1.055;
+END IF;
+
+IF f_type_conso = 2
+THEN
+	SET TVA = 1.1;
+END IF;
+
+-- Calcule total HT des lignes de la commande
+SELECT SUM(total_ligne_ht) INTO f_total_commande
+FROM ligne
+WHERE ligne.id_commande = NEW.id_commande;
+
+ 	-- Calcul total TTC
+SET f_total_commande = f_total_commande * TVA;
+
+-- Mise à jour total commande
+UPDATE commande SET total_commande=f_total_commande
+WHERE commande.id_commande = NEW.id_commande;
+ 
+END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `after_ligne_update` AFTER UPDATE ON `ligne` FOR EACH ROW BEGIN
-    set @total_commande = 0;
-    set @type_conso = 0;
-    set @tva = 0;
-    -- Lit la commande
-    SELECT type_conso INTO @type_conso FROM commande where commande.id_commande = NEW.id_commande;
-    -- Détermine le taux de TVA
-    IF @type_conso=1 THEN SET @tva=1.055; END IF;
-    IF @type_conso=2 THEN SET @tva=1.1; END IF;
-    -- Calcule le total HT des lignes de la commande
-    SELECT sum(total_ligne_ht) INTO @total_commande FROM ligne WHERE ligne.id_commande = NEW.id_commande;
-    -- Calcule le total TTC
-    SET @total_commande=@total_commande*@tva;
-    --  Met à jour le total commande 
-    UPDATE commande SET total_commande=@total_commande where commande.id_commande = NEW.id_commande;
-  END
+DECLARE f_total_commande INT;
+DECLARE f_type_conso INT;
+DECLARE TVA INT;
+
+-- Affectation type consommation
+SELECT type_conso INTO f_type_conso
+FROM commande
+WHERE commande.id_commande = NEW.id_commande;
+
+-- Calcul taux TVA
+IF f_type_conso = 1
+THEN
+	SET TVA = 1.055;
+END IF;
+
+IF f_type_conso = 2
+THEN
+	SET TVA = 1.1;
+END IF;
+
+-- Calcule total HT des lignes de la commande
+SELECT SUM(total_ligne_ht) INTO f_total_commande
+FROM ligne
+WHERE ligne.id_commande = NEW.id_commande;
+
+ 	-- Calcul total TTC
+SET f_total_commande = f_total_commande * TVA;
+
+-- Mise à jour total commande
+UPDATE commande SET total_commande=f_total_commande
+WHERE commande.id_commande = NEW.id_commande;
+ 
+END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `before_ligne_insert` BEFORE INSERT ON `ligne` FOR EACH ROW BEGIN
-    set @prix_ht = 0;
-    -- Lit le prix du produit
-    SELECT prix_ht INTO @prix_ht FROM produit WHERE produit.id_produit = NEW.id_produit; 
-    --  Calcule le total ligne 
-    SET NEW.total_ligne_ht = @prix_ht * NEW.qte;
-  END
+DECLARE f_prixht INT;
+
+	-- Affectation du prix hors taxe
+SELECT prix_ht INTO f_prixht 
+FROM produit 
+WHERE produit.id_produit = NEW.id_produit; 
+	
+	-- Calcul total ligne
+SET NEW.total_ligne_ht = f_prixht * NEW.qte;
+ 
+END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `before_ligne_update` BEFORE UPDATE ON `ligne` FOR EACH ROW BEGIN
-    set @prix_ht = 0;
-    -- Lit le prix du produit
-    SELECT prix_ht INTO @prix_ht FROM produit WHERE produit.id_produit = NEW.id_produit; 
-    --  Calcule le total ligne 
-    SET NEW.total_ligne_ht = @prix_ht * NEW.qte;
-  END
+DECLARE f_prixht INT;
+
+	-- Affectation du prix hors taxe
+SELECT prix_ht INTO f_prixht 
+FROM produit 
+WHERE produit.id_produit = NEW.id_produit; 
+	
+	-- Calcul total ligne
+SET NEW.total_ligne_ht = f_prixht * NEW.qte;
+ 
+END
 $$
 DELIMITER ;
 
@@ -157,23 +203,23 @@ CREATE TABLE `produit` (
   `libelle` varchar(255) NOT NULL,
   `prix_ht` decimal(10,2) NOT NULL,
   `descProduit` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `produit`
 --
 
 INSERT INTO `produit` (`id_produit`, `libelle`, `prix_ht`, `descProduit`) VALUES
-(1, 'pizza Margherita', 12.50, NULL),
-(2, 'pizza Chorizo', 14.00, NULL),
-(3, 'assiette de charcuterie', 12.50, NULL),
-(4, 'assiette de fromages', 10.50, NULL),
-(5, 'hamburger viande', 7.50, NULL),
-(6, 'hamburger vegan', 9.00, NULL),
-(7, 'hot dog', 5.00, NULL),
-(8, 'empanadas poulet', 11.00, NULL),
-(9, 'empanadas thon', 9.00, NULL),
-(10, 'portion de frites', 5.00, NULL);
+(1, 'pizza Margherita', '12.50', NULL),
+(2, 'pizza Chorizo', '14.00', NULL),
+(3, 'assiette de charcuterie', '12.50', NULL),
+(4, 'assiette de fromages', '10.50', NULL),
+(5, 'hamburger viande', '7.50', NULL),
+(6, 'hamburger vegan', '9.00', NULL),
+(7, 'hot dog', '5.00', NULL),
+(8, 'empanadas poulet', '11.00', NULL),
+(9, 'empanadas thon', '9.00', NULL),
+(10, 'portion de frites', '5.00', NULL);
 
 -- --------------------------------------------------------
 
@@ -186,7 +232,7 @@ CREATE TABLE `user` (
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `user`
