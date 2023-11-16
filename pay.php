@@ -29,8 +29,11 @@ if ($user) {
     $login = $user['login'];
     $email = $user['email'];
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
-    $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user;", [":id_user" => $user['id_user']]);
-}
+    if( $_SESSION['id_commande']) {
+    $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" =>  $_SESSION['id_commande']]);
+    }
+
+ }
 
 if (empty($_SESSION["user"])) {
     header("Location: index.php");
