@@ -35,7 +35,7 @@ if ($user) {
     $commandes = $db->SelectDb("SELECT * FROM commande WHERE id_user=:idUser;", [":idUser" => $user['id_user']]);
     $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user;", [":id_user" => $user['id_user']]);
     //print_r($commandes);
-
+    $_SESSION['id_commande'] = $commandes[0]["id_commande"];
     //Recup total ht de la commande grace au TRIGGER lors du SELECT
     $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user;", [":id_user" => $user['id_user']]);
 

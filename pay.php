@@ -18,6 +18,7 @@ $db = new Database($objetConnexion);
 $user = $_SESSION["user"];
 
 $productID = isset($_POST['productID']) ? $_POST['productID'] : "";
+$submit = isset($_POST['submit']) ? $_POST["submit"] :"";
 //$typeConso = isset($_POST['typeConso']) ? $_POST['typeConso'] : "";
 
 if (!$user) {
@@ -81,8 +82,11 @@ if (isset($_POST['submit'])) {
 
     if (empty($messagesName) && empty($messagesNumber) && empty($messagesExpiration) && empty($messagesCVV)) {
         if ($cc_number == "0000000000000000") {
+            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat"=>1]);
+       
             header("Location: payPasConfirm.php");
         } else {
+            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat" => 0]);
             header("Location: payConf.php");
         }
     }
@@ -117,7 +121,7 @@ if (isset($_POST['submit'])) {
                     } ?>
                     <li class='list-group-item d-flex justify-content-between'>
                         <span>Total TTC (en eur)</span>
-                        <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande'] * 0.05; ?> €</strong>
+                        <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande'] * 0.05; ?> € <?php $_SESSION['typeConso'] ?></strong>
                     </li>
                 </ul>
 
