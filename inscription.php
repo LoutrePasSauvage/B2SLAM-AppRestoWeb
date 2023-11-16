@@ -13,7 +13,7 @@
         $password_confirm = isset($_POST['password_confirm']) ? $_POST['password_confirm'] : '';
         $email = isset($_POST['email']) ? $_POST['email'] : '';
         // Filtrage
-        $login = filter_var($login, FILTER_SANITIZE_STRING);
+        //$login = filter_var($login, FILTER_SANITIZE_STRING);
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
         // le nom est obligatoire
         if (empty(trim($login))) {
