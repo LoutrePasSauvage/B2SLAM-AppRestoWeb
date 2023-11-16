@@ -82,11 +82,11 @@ if (isset($_POST['submit'])) {
 
     if (empty($messagesName) && empty($messagesNumber) && empty($messagesExpiration) && empty($messagesCVV)) {
         if ($cc_number == "0000000000000000") {
-            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat"=>1]);
+            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat"=>0]);
        
             header("Location: payPasConfirm.php");
         } else {
-            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat" => 0]);
+            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat" => 1]);
             header("Location: payConf.php");
         }
     }
@@ -121,12 +121,9 @@ if (isset($_POST['submit'])) {
                     } ?>
                     <li class='list-group-item d-flex justify-content-between'>
                         <span>Total TTC (en eur)</span>
-<<<<<<< HEAD
+
                         <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande'] * 0.05; ?> € <?php $_SESSION['typeConso'] ?></strong>
-=======
-                        <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande'] * 0.05; ?> €</strong>
-                        <span> <?= $_SESSION['typeConso'] ?></span>
->>>>>>> 025e931905f1fc32f23f7cfcd81f18981eb8adaf
+
                     </li>
                 </ul>
 
