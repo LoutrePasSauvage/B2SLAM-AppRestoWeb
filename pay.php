@@ -88,11 +88,9 @@ if (isset($_POST['submit'])) {
 
     if (empty($messagesName) && empty($messagesNumber) && empty($messagesExpiration) && empty($messagesCVV)) {
         if ($cc_number == "0000000000000000") {
-            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat"=>1]);
        
             header("Location: payPasConfirm.php");
         } else {
-            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat" => 2]);
             header("Location: payConf.php");
         }
     }

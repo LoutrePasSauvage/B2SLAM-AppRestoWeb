@@ -32,10 +32,9 @@ if ($user) {
         $_SESSION['typeConso'] = "sur place";
     }
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
-    $commandes = $db->SelectDb("SELECT * FROM commande WHERE id_user=:idUser;", [":idUser" => $user['id_user']]);
-    $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user;", [":id_user" => $user['id_user']]);
-    //print_r($commandes);
+    $commandes = $db->SelectDb("SELECT * FROM commande, user WHERE user.id_user = commande.id_user AND commande.id_user=:idUser;", [":idUser" => $user['id_user']]);
     if(!empty( $commandes[0]["id_commande"])) {
+    $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
     $_SESSION['id_commande'] = $commandes[0]["id_commande"];
     }
     //Recup total ht de la commande grace au TRIGGER lors du SELECT
@@ -151,7 +150,10 @@ if ($ajouter) {
                 </div>
                 <div class="box">
                     <div class="col align-self-start">
-                        <?php foreach ($lignes as $row) {
+                        
+                        <?php 
+                        if(!empty($lignes)) {
+                        foreach ($lignes as $row) {
 
                             $typeconso = $db->SelectDb(
                                 "SELECT type_conso FROM `commande`, user WHERE commande.id_commande = :id_commande AND user.id_user = :id_user;",
@@ -183,7 +185,11 @@ if ($ajouter) {
                         </div>
                         </form>
                         ';
-                        } ?>
+                        } 
+                    } else {
+                      
+                    }
+                    ?>
 
 
                     </div>
