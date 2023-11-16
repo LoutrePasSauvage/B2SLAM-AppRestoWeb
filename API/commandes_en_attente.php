@@ -10,9 +10,13 @@
 
         $sql_commande_attente = "SELECT * FROM commande WHERE id_etat = :id_etat";
 
-        $commande_attente = $db->SelectDb($sql_commande_attente, [":id_etat"=>0]);
-        //id etat : 0 --> Attente
-        //id etat : 1 --> terminé
+        $commande_attente = $db->SelectDb($sql_commande_attente, [":id_etat"=>1]);
+        /*
+            En attente      -> 1
+            En préparation  -> 2
+            abandonnée      -> 3
+            prête           -> 4
+        */
 
 
         /*
