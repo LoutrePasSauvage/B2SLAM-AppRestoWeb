@@ -24,34 +24,38 @@ if ($submit) {
     if (empty(trim($password))) {
         $messagesMDP[] = "le mot de passe est obligatoire";
     }
-    //verifie si le mdp est valide
+
+    // Vérifie si le login et le mot de passe sont valides
     if (!$password || !$login) {
         $messages[] = "le login ou le mot de passe n'est pas valide : $login";
     }
 
-    $sql = "select * from user where login=:login and password=:password";
-
+    $sql = "SELECT * FROM user WHERE login=:login";
     try {
-        $params = array(
-            ':login' => $login,
-            ':password' => $password
-        );
+        $params = array(':login' => $login);
         $sth = $dbh->prepare($sql);
         $sth->execute($params);
         $user = $sth->fetch(PDO::FETCH_ASSOC);
+
         if ($user) {
-            session_start();
-            $_SESSION['user'] = $user;
-            header("Location: list.php");
-            exit();
+            if (password_verify($password, $user['password'])) {
+                session_start();
+                $_SESSION['user'] = $user;
+                header("Location: list.php");
+                exit();
+            } else {
+                $messages[] = "Login ou mot de passe incorrect";
+            }
         } else {
-            $message = "Login ou mot de passe incorrect";
+            $messages[] = "Login ou mot de passe incorrect";
         }
     } catch (PDOException $ex) {
         die("Erreur lors de la requête SQL : " . $ex->getMessage());
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="fr">
