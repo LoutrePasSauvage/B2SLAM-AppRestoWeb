@@ -1,0 +1,6 @@
+4 états d'une commande :
+
+En attente      -> 1
+En préparation  -> 2
+abandonnée      -> 3
+prête           -> 4
