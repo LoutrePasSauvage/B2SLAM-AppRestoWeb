@@ -21,22 +21,16 @@ $productID = isset($_POST['productID']) ? $_POST['productID'] : "";
 
 $typeConso = isset($_POST["typeconsommation"]) ? $_POST["typeconsommation"] : "0";
 
-
-if ($typeConso == 1) {
-    $_SESSION['typeConso'] = "à emporter";
-} else {
-    $_SESSION['typeConso'] = "sur place";
-}
-
-
-
-
-
 if (!$user) {
     header("Location: connexion.php");
 }
 
 if ($user) {
+    if ($typeConso == 1) {
+        $_SESSION['typeConso'] = "à emporter";
+    } else {
+        $_SESSION['typeConso'] = "sur place";
+    }
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
     $commandes = $db->SelectDb("SELECT * FROM commande WHERE id_user=:idUser;", [":idUser" => $user['id_user']]);
     $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user;", [":id_user" => $user['id_user']]);
@@ -124,13 +118,14 @@ if ($ajouter) {
                 <?php
 
                 foreach ($produits as $row) {
+                  
                     echo
                     '
                     <form method="POST">
                     <div class="card mb-3" style="max-width: 640px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="images/'.$row['libelle'].'.jpeg" class="card-img" alt="pizza">
+                            <img src="images/'.$row['libelle'].'.jpg" class="card-img" alt="pizza">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body" style="width: 350px;">
@@ -167,7 +162,7 @@ if ($ajouter) {
                             <div class="card mb-2" style="max-width: 640px;">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
-                                    <img src="logoResto.png" class="card-img" alt="pizza">
+                                    <img src="images/'.$the_product[0]['libelle'].'.jpg" class="card-img" alt="pizza">
                                 </div>
                                 <div class="col-md-8">
                                 <div class="card-body" style="width: 350px;">
