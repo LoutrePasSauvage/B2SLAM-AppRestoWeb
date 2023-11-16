@@ -1,0 +1,125 @@
+Triggers
+
+---------------------------------------------------------------------------------------------------------------------------
+
+before_ligne_insert
+
+DELIMITER |
+CREATE OR REPLACE TRIGGER before_ligne_insert BEFORE INSERT
+ON ligne FOR EACH ROW 
+BEGIN
+  DECLARE f_prixht INT;
+
+  -- Affectation du prix hors taxe
+  SELECT prix_ht INTO f_prixht 
+  FROM produit 
+  WHERE produit.id_produit = NEW.id_produit; 
+	
+	-- Calcul total ligne
+  SET NEW.total_ligne_ht = f_prixht * NEW.qte;
+ 
+END |
+DELIMITER ;
+
+
+before_ligne_update
+
+DELIMITER |
+CREATE OR REPLACE TRIGGER before_ligne_update BEFORE UPDATE
+ON ligne FOR EACH ROW 
+BEGIN
+  DECLARE f_prixht INT;
+
+	-- Affectation du prix hors taxe
+  SELECT prix_ht INTO f_prixht 
+  FROM produit 
+  WHERE produit.id_produit = NEW.id_produit; 
+	
+	-- Calcul total ligne
+  SET NEW.total_ligne_ht = f_prixht * NEW.qte;
+ 
+END |
+DELIMITER ;
+
+
+after_ligne_insert
+
+DELIMITER |
+CREATE OR REPLACE TRIGGER after_ligne_insert AFTER INSERT
+ON ligne FOR EACH ROW 
+BEGIN
+  DECLARE f_total_commande INT;
+  DECLARE f_type_conso INT;
+  DECLARE TVA INT;
+
+  -- Affectation type consommation
+  SELECT type_conso INTO f_type_conso
+  FROM commande
+  WHERE commande.id_commande = NEW.id_commande;
+
+  -- Calcul taux TVA
+  IF f_type_conso = 1
+  THEN
+    SET TVA = 1.055;
+  END IF;
+
+  IF f_type_conso = 2
+  THEN
+	  SET TVA = 1.1;
+  END IF;
+
+  -- Calcule total HT des lignes de la commande
+  SELECT SUM(total_ligne_ht) INTO f_total_commande
+  FROM ligne
+  WHERE ligne.id_commande = NEW.id_commande;
+
+ 	-- Calcul total TTC
+  SET f_total_commande = f_total_commande * TVA;
+
+  -- Mise à jour total commande
+  UPDATE commande SET total_commande=f_total_commande
+  WHERE commande.id_commande = NEW.id_commande;
+ 
+END |
+DELIMITER ;
+
+after_ligne_update
+
+DELIMITER |
+CREATE OR REPLACE TRIGGER after_ligne_update AFTER UPDATE
+ON ligne FOR EACH ROW 
+BEGIN
+  DECLARE f_total_commande INT;
+  DECLARE f_type_conso INT;
+  DECLARE TVA INT;
+
+  -- Affectation type consommation
+  SELECT type_conso INTO f_type_conso
+  FROM commande
+  WHERE commande.id_commande = NEW.id_commande;
+
+  -- Calcul taux TVA
+  IF f_type_conso = 1
+  THEN
+  	SET TVA = 1.055;
+  END IF;
+
+  IF f_type_conso = 2
+  THEN
+  	SET TVA = 1.1;
+  END IF;
+
+  -- Calcule total HT des lignes de la commande
+  SELECT SUM(total_ligne_ht) INTO f_total_commande
+  FROM ligne
+  WHERE ligne.id_commande = NEW.id_commande;
+
+ 	-- Calcul total TTC
+  SET f_total_commande = f_total_commande * TVA;
+
+  -- Mise à jour total commande
+  UPDATE commande SET total_commande=f_total_commande
+  WHERE commande.id_commande = NEW.id_commande;
+ 
+END |
+DELIMITER ;
