@@ -36,6 +36,12 @@ if (empty($_SESSION["user"])) {
     header("Location: index.php");
 }
 
+if(isset($_POST['annuler'])) {
+    $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat"=>3]);
+       
+    header('Location: list.php');
+}
+
 //fait une validation pour la carte de credit
 if (isset($_POST['submit'])) {
     $cc_name = isset($_POST['cc_name']) ? $_POST['cc_name'] : '';
@@ -82,11 +88,11 @@ if (isset($_POST['submit'])) {
 
     if (empty($messagesName) && empty($messagesNumber) && empty($messagesExpiration) && empty($messagesCVV)) {
         if ($cc_number == "0000000000000000") {
-            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat"=>0]);
+            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat"=>1]);
        
             header("Location: payPasConfirm.php");
         } else {
-            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat" => 1]);
+            $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat" => 2]);
             header("Location: payConf.php");
         }
     }
@@ -220,10 +226,10 @@ if (isset($_POST['submit'])) {
                             onclick="confirmerPaiement()">Payer
                     </button>
 
-                    <button class="w-25 btn btn-secondary btn-lg" type="button" onclick="location.href='list.php'">
-
-                        Annuler
-                    </button>
+                    <form method="POST">
+                    <input type="hidden"  name="annuler" value="annuler">
+                    <input value="Annuler" class="w-25 btn btn-secondary btn-lg"  type="submit"  />
+                    </form>
                 </form>
             </div>
         </div>
