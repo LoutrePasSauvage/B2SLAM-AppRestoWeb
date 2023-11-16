@@ -164,6 +164,7 @@ if ($ajouter) {
                                 <div class="col-md-4">
                                     <img src="images/'.$the_product[0]['libelle'].'.jpg" class="card-img" alt="pizza">
                                 </div>
+                                
                                 <div class="col-md-8">
                                 <div class="card-body" style="width: 350px;">
                                 <h5 class="card-title"> ' . $the_product[0]['libelle'] . '</h5>
