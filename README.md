@@ -24,13 +24,6 @@ C'est un client lourd en Java/Swing qui permet au restaurateur de gérer les com
 
 Les deux applications serviront pour les situations professionnelles à présenter à l'épreuve E5 du BTS. Chaque candidat apportera ses propres situations même si les applications ont été développées collectivement. Les applications et la documentation seront à fournir pour l'épreuve (préparation et déroulement).
 
-=== Acces drive ===
-
-https://drive.google.com/drive/folders/15XsZQoOQyBvuKnWNvqUTtuGEGxEva7b4
-
-=== Acces Trello ===
-
-https://trello.com/b/XABrlGy9/projet-restoweb
 ## Lien Drive
 
 https://drive.google.com/drive/folders/15XsZQoOQyBvuKnWNvqUTtuGEGxEva7b4
