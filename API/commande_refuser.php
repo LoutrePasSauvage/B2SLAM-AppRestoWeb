@@ -2,6 +2,12 @@
 
 include_once "../db_connect.php";
 include_once "../class/database.class.php";
+/*
+            En attente      -> 1
+            En préparation  -> 2
+            refusé          -> 3
+            prête           -> 4
+        */
 
 try {
     $json = "";
@@ -21,10 +27,10 @@ try {
 
         // Utilisation d'une vérification d'exécution de la requête UPDATE
         if ($commandeUpdate->execute([
-            ":id_Etat" => 4,
+            ":id_Etat" => 3,
             ":id_Commande" => $_GET['id_commande']
         ])) {
-            $json = json_encode("Commande acceptée", JSON_PRETTY_PRINT);
+            $json = json_encode("Commande refusee", JSON_PRETTY_PRINT);
         } else {
             // Fournit un message d'erreur en cas d'échec de la requête UPDATE
             $json = json_encode(["error" => "Erreur lors de la mise à jour de la commande."], JSON_PRETTY_PRINT);
@@ -37,11 +43,5 @@ try {
     echo $json;
 } catch (PDOException $ex) {
     // Capture les erreurs liées à la base de données
-    die("Erreur lors de la requête SQL : " . $ex->getMessage());
+    die("Erreur lors de la requete SQL : " . $ex->getMessage());
 }
-/*
-            En attente      -> 1
-            En préparation  -> 2
-            abandonnée      -> 3
-            prête           -> 4
-        */
