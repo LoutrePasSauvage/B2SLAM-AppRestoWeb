@@ -33,16 +33,19 @@ if ($user) {
     }
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
     $commandes = $db->SelectDb("SELECT * FROM commande, user WHERE user.id_user = commande.id_user AND commande.id_user=:idUser;", [":idUser" => $user['id_user']]);
-    if(!empty( $commandes[0]["id_commande"])) {
-    $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
-    $_SESSION['id_commande'] = $commandes[0]["id_commande"];
-    }
-    //Recup total ht de la commande grace au TRIGGER lors du SELECT
-    $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user;", [":id_user" => $user['id_user']]);
+    if (!empty($commandes[0]["id_commande"])) {
+        $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
+        $_SESSION['id_commande'] = $commandes[0]["id_commande"];
 
+        //Recup total ht de la commande grace au TRIGGER lors du SELECT
+        $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
+    }
     $total_ht = 0; //comme l'utilisateur peut avoir plusieurs ligne de commandes je lui fait un total
-    foreach ($total_lignes as $value) {
-        $total_ht += $value['total_ligne_ht'];
+
+    if (!empty($total_lignes)) {
+        foreach ($total_lignes as $value) {
+            $total_ht += $value['total_ligne_ht'];
+        }
     }
     $_SESSION["total_commande"] = $total_ht;
 }
@@ -119,14 +122,14 @@ if ($ajouter) {
                 <?php
 
                 foreach ($produits as $row) {
-                  
+
                     echo
-                    '
+                        '
                     <form method="POST">
                     <div class="card mb-3" style="max-width: 640px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="images/'.$row['libelle'].'.jpg" class="card-img" alt="pizza">
+                            <img src="images/' . $row['libelle'] . '.jpg" class="card-img" alt="pizza">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body" style="width: 350px;">
@@ -150,23 +153,23 @@ if ($ajouter) {
                 </div>
                 <div class="box">
                     <div class="col align-self-start">
-                        
-                        <?php 
-                        if(!empty($lignes)) {
-                        foreach ($lignes as $row) {
 
-                            $typeconso = $db->SelectDb(
-                                "SELECT type_conso FROM `commande`, user WHERE commande.id_commande = :id_commande AND user.id_user = :id_user;",
-                                [":id_commande" => $row["id_commande"], ":id_user" => $user["id_user"]]
-                            );
+                        <?php
+                        if (!empty($lignes)) {
+                            foreach ($lignes as $row) {
 
-                            $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
-                            echo ' 
+                                $typeconso = $db->SelectDb(
+                                    "SELECT type_conso FROM `commande`, user WHERE commande.id_commande = :id_commande AND user.id_user = :id_user;",
+                                    [":id_commande" => $row["id_commande"], ":id_user" => $user["id_user"]]
+                                );
+
+                                $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
+                                echo ' 
                             <form method="POST">
                             <div class="card mb-2" style="max-width: 640px;">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
-                                    <img src="images/'.$the_product[0]['libelle'].'.jpg" class="card-img" alt="pizza">
+                                    <img src="images/' . $the_product[0]['libelle'] . '.jpg" class="card-img" alt="pizza">
                                 </div>
 
                                 <div class="col-md-8">
@@ -185,11 +188,9 @@ if ($ajouter) {
                         </div>
                         </form>
                         ';
+                            }
                         } 
-                    } else {
-                      
-                    }
-                    ?>
+                        ?>
 
 
                     </div>
@@ -207,7 +208,7 @@ if ($ajouter) {
                     </h1>
                     <h1>Prix Total TVA :
                         <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"] * 0.05;
-                        echo $_SESSION['totalTVA'].PHP_EOL;
+                        echo $_SESSION['totalTVA'] . PHP_EOL;
                         ?> €
 
 
@@ -219,7 +220,9 @@ if ($ajouter) {
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     </body>
 
 </html>
