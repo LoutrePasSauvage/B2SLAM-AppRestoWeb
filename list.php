@@ -34,7 +34,7 @@ if ($user) {
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
     $commandes = $db->SelectDb("SELECT * FROM commande, user WHERE user.id_user = commande.id_user AND commande.id_user=:idUser;", [":idUser" => $user['id_user']]);
     if (!empty($commandes[0]["id_commande"])) {
-        $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
+        $lignes = $db->SelectDb("SELECT id_ligne,id_commande,id_produit,qte,total_ligne_ht FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
         $_SESSION['id_commande'] = $commandes[0]["id_commande"];
 
         //Recup total ht de la commande grace au TRIGGER lors du SELECT
@@ -155,41 +155,79 @@ if ($ajouter) {
                     <div class="col align-self-start">
 
                         <?php
+                        $show = true;
+                        $liste_ids = array();
+                     
+                        $previousID = null;
+                        $array_id_produits = array();
+                        $the_product[] = array();
+                        $typeconso[] = array();
+
                         if (!empty($lignes)) {
                             foreach ($lignes as $row) {
+                                $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
+
+                                $array_id_produits[] = $the_product[0]['libelle'];
+                            }
+
+                            $array_id_produits = array_replace($array_id_produits, array_fill_keys(array_keys($array_id_produits, null), ''));
+
+                            $array_id_produits = array_count_values($array_id_produits);
+                            foreach ($lignes as $row) {
+                               
+
+                                if($row['id_produit'] != $previousID) {
+                                    $show = true;
+                                } elseif($row['id_produit'] == $previousID || $_SESSION["liste_ids"]) {
+                                    $show = false;
+                                }
+                                $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
 
                                 $typeconso = $db->SelectDb(
                                     "SELECT type_conso FROM `commande`, user WHERE commande.id_commande = :id_commande AND user.id_user = :id_user;",
                                     [":id_commande" => $row["id_commande"], ":id_user" => $user["id_user"]]
                                 );
-
-                                $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
-                                echo ' 
-                            <form method="POST">
-                            <div class="card mb-2" style="max-width: 640px;">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    <img src="images/' . $the_product[0]['libelle'] . '.jpg" class="card-img" alt="pizza">
-                                </div>
-
-                                <div class="col-md-8">
-                                <div class="card-body" style="width: 350px;">
-                                <h5 class="card-title"> ' . $the_product[0]['libelle'] . '</h5>
-                                <p class="font-weight-bold"> </p>
-                                
-                                <h5 class="card-title"> Commande N°' . $row['id_commande'] . '</h5>
-                                
-                                 <p class="card-text">' . $the_product[0]['libelle'] . '</p>
-                                            <input type="hidden"  name="deleteID" value="' . $row['id_ligne'] . '">
-                                        <input type="submit" value="Supprimer" name="supprimer" class="btn btn-danger"/>
+                             if($show) {
+                                    echo '
+                                <form method="POST">
+                                <div class="card mb-2" style="max-width: 640px;">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="images/' . $the_product[0]['libelle'] . '.jpg" class="card-img" alt="pizza">
+                                    </div>
+    
+                                    <div class="col-md-8">
+                                    <div class="card-body" style="width: 350px;">
+                                    <h5 class="card-title"> ' . $the_product[0]['libelle'] . '</h5>
+                                    <p class="font-weight-bold"> </p>
+                                    <h5 class="card-title"> Nombre produits ' . $array_id_produits[$the_product[0]['libelle']] . '</h5>
+                                    <h5 class="card-title"> Commande N°' . $row['id_commande'] . '</h5>
+                                    
+                                     <p class="card-text">' . $the_product[0]['libelle'] . '</p>
+                                                <input type="hidden"  name="deleteID" value="' . $row['id_ligne'] . '">
+                                            <input type="submit" value="Supprimer" name="supprimer" class="btn btn-danger"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        </form>
-                        ';
+                            </form>
+                            ';
+
+                             }
+                                
+                                $_SESSION["liste_ids"] =  $liste_ids;
+                                print_r($_SESSION["liste_ids"]);
+                                $previousID = $row['id_produit'];
+
                             }
-                        } 
+
+
+
+
+
+                        }
+                        //print_r($array_id_produits);
+                        // print_r($array_id_produits);
                         ?>
 
 
