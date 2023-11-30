@@ -111,42 +111,45 @@
 
     <form method="post">
     <p class='w'> Identifiant :</p>
+    <input type='text' name='login' id='login'><br>
         <?php
         if (count($messageslogin) > 0) {
-
+            echo "<p class='btn alert-warning' >";
             foreach ($messageslogin as $message) {
-                echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
+                echo $message . "<br>";
             }
+            echo "</p>";
         }
         ?>
-    <input type='text' name='login' id='login'>
-    <br>
-    <p class='w'> Mot de passe :</p>
-        <?php
-        if (count($messagesMDP) > 0) {
 
-            foreach ($messagesMDP as $message) {
-                echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
-            }
-        }
-        ?>
+    <p class='w'> Mot de passe :</p>
     <input type='password' name='password' id='password'>
     <br>
+        <?php
+        if (count($messagesMDP) > 0) {
+            echo "<p class='btn alert-warning' >";
+            foreach ($messagesMDP as $message) {
+                echo $message . "<br>";
+            }
+            echo "</p>";
+        }
+        ?>
     <p class='w'> Confirmer mot de passe :</p>
     <input type='password' name='password_confirm' id='password_confirm'>
     <br>
-    <p class='w'> e-mail :</p><?php
+    <p class='w'> e-mail :</p>
+    <input type='email' name='email' id='email'>
+        <br>
+        <?php
         if (count($messagesMail) > 0) {
-
+            echo "<p class='btn alert-warning' >";
             foreach ($messagesMail as $message) {
-                echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
+                echo $message . "<br>";
             }
+            echo "</p>";
         }
         ?>
-
-    <input type='email' name='email' id='email'>
-    <br><br>
-    <p><input class="btn btn-default btn-lg active" type='submit' name='submit' value='Envoyer' />&nbsp;&nbsp;<input class="btn btn-danger btn-lg active" type='reset' value='Réinitialiser' /></p>
+        <p><input class="btn btn-default btn-lg active" type='submit' name='submit' value='Envoyer' />&nbsp;&nbsp;<input class="btn btn-danger btn-lg active" type='reset' value='Réinitialiser' /></p>
 
 
 <?php
