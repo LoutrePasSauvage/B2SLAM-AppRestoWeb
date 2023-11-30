@@ -7,13 +7,13 @@
     $messagesMail = array();  // Message d'erreur e-mail
     $messagesMDP = array();  // Message d'erreur MDP
 
+
     if($submit) {
         $login = isset($_POST['login']) ? $_POST['login'] : '';
         $password = isset($_POST['password']) ? $_POST['password'] : '';
         $password_confirm = isset($_POST['password_confirm']) ? $_POST['password_confirm'] : '';
         $email = isset($_POST['email']) ? $_POST['email'] : '';
         // Filtrage
-        //$login = filter_var($login, FILTER_SANITIZE_STRING);
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
         // le nom est obligatoire
         if (empty(trim($login))) {
@@ -34,13 +34,13 @@
         if (empty(trim($password_confirm))) {
             $messagesMDP[] = "le mot de passe est obligatoire";
         }
-        // le mdp est doit avoir plus de 8 caractères
-        if (strlen($password) < 8) {
+        // le mdp est doit avoir plus de 12 caractères
+        if (strlen($password) < 12) {
             $messagesMDP[] = "le mot de passe doit avoir plus de 8 caractères";
         }
-        // le mdp doit avoir un caractère spécial
-        if (!preg_match('/[^a-z0-9]+/i', $password)) {
-            $messagesMDP[] = "le mot de passe doit avoir un caractère spécial";
+        // Le mot de passe doit avoir un caractère spécial
+        if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
+            $messagesMDP[] = "Le mot de passe doit avoir un caractère spécial.";
         }
         // le mdp doit avoir un chiffre
         if (!preg_match('/[0-9]+/', $password)) {
@@ -57,7 +57,7 @@
         }
 
 // Pas de message : inscrit !
-        if (empty($messageslogin && $messagesMail && $messagesMDP)) {
+        if (empty($messageslogin) && empty($messagesMail) && empty($messagesMDP)) {
             try {
                     //$new_user = "INSERT INTO _user(login, password, email) VALUES (:login, :password, :email)";
                     $objetConnexion = db_connect();
@@ -69,19 +69,6 @@
                         ":email" => $email
                     ]);
                     header("Location: connexion.php");
-                    //2 --> insert
-
-                    /*
-                    $db=db_connect();
-                    $req = $db->prepare($new_user, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-                    $req->execute([
-                        ":login" => $login,
-                        ":password" => $password,
-                        ":email" => $email
-                    ]);
-                    $req->fetchAll();
-                    */
-
             } catch (Exception $error) {
                 die("<p class ='w u'>Erreur inscription (SQL) : " . $error->getMessage() . "</p>");
             }
