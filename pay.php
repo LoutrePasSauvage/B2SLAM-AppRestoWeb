@@ -18,7 +18,7 @@ $db = new Database($objetConnexion);
 $user = $_SESSION["user"];
 
 $productID = isset($_POST['productID']) ? $_POST['productID'] : "";
-$submit = isset($_POST['submit']) ? $_POST["submit"] :"";
+$submit = isset($_POST['submit']) ? $_POST["submit"] : "";
 //$typeConso = isset($_POST['typeConso']) ? $_POST['typeConso'] : "";
 
 if (!$user) {
@@ -29,8 +29,8 @@ if ($user) {
     $login = $user['login'];
     $email = $user['email'];
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
-    if( $_SESSION['id_commande']) {
-        $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" =>  $_SESSION['id_commande']]);
+    if ($_SESSION['id_commande']) {
+        $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande']]);
     }
 
 }
@@ -41,7 +41,7 @@ if (empty($_SESSION["user"])) {
 
 //retour a la list.php si commande est annuler
 if (isset($_POST['Annuler'])) {
-    $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat"=>3]);
+    $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat" => 3]);
 
     header("Location: list.php");
 }
@@ -50,7 +50,8 @@ if (isset($_POST['Annuler'])) {
 if (isset($_POST['submit'])) {
     $cc_name = isset($_POST['cc_name']) ? $_POST['cc_name'] : '';
     $cc_number = isset($_POST['cc_number']) ? $_POST['cc_number'] : '';
-    $cc_expiration = isset($_POST['cc_expiration']) ? $_POST['cc_expiration'] : '';
+    $cc_expirationMM = isset($_POST['cc_expirationMM']) ? $_POST['cc_expirationMM'] : '';
+    $cc_expirationYY = isset($_POST['cc_expirationYY']) ? $_POST['cc_expirationYY'] : '';
     $cc_cvv = isset($_POST['cc_cvv']) ? $_POST['cc_cvv'] : '';
 
     if (empty($cc_name)) {
@@ -59,7 +60,7 @@ if (isset($_POST['submit'])) {
     if (empty(trim($cc_number))) {
         $messagesNumber[] = "le numéro de la carte est obligatoire";
     }
-    if (empty(trim($cc_expiration))) {
+    if (empty(trim($cc_expirationMM)) && empty(trim($cc_expirationYY))) {
         $messagesExpiration[] = "la date d'expiration est obligatoire";
     }
     if (empty(trim($cc_cvv))) {
@@ -68,8 +69,11 @@ if (isset($_POST['submit'])) {
     if (strlen($cc_number) < 16) {
         $messagesNumber[] = "le numéro de la carte doit avoir 16 chiffres";
     }
-    if (strlen($cc_expiration) < 4) {
-        $messagesExpiration[] = "la date d'expiration doit avoir 4 chiffres";
+    if (strlen($cc_expirationMM) < 2 || strlen($cc_expirationMM) > 2) {
+        $messagesExpiration[] = "Le mois doit etre écrit en 2 chiffres";
+    }
+    if (strlen($cc_expirationYY) < 4 || strlen($cc_expirationYY) > 4) {
+        $messagesExpiration[] = "L'année doit etre écrit en 4 chiffres";
     }
     if (strlen($cc_cvv) < 3) {
         $messagesCVV[] = "le cvv doit avoir 3 chiffres";
@@ -80,8 +84,17 @@ if (isset($_POST['submit'])) {
     if (strlen($cc_number) > 16) {
         $messagesNumber[] = "le numéro de la carte doit avoir 16 chiffres maximum";
     }
-    if ($cc_expiration < date("Y-m")) {
-        $messagesExpiration[] = "la date d'expiration doit être supérieur à la date actuelle";
+    if (strlen($cc_expirationMM) == 2 && strlen($cc_expirationYY) == 4) {
+        $cc_expirationMM = intval($cc_expirationMM);
+        $cc_expirationYY = intval($cc_expirationYY);
+        $date = getdate();
+        $annee = $date['year'];
+        $mois = $date['mon'];
+        if ($cc_expirationYY < $annee) {
+            $messagesExpiration[] = "la date d'expiration est dépassée";
+        } elseif ($cc_expirationYY == $annee && $cc_expirationMM < $mois) {
+            $messagesExpiration[] = "la date d'expiration est dépassée";
+        }
     }
 
 
@@ -104,7 +117,6 @@ if (isset($_POST['submit'])) {
     <?php
     include('header.php');
     ?>
-
     <main style="padding: 12%">
 
         <div class="row g-5">
@@ -128,7 +140,7 @@ if (isset($_POST['submit'])) {
                         <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande'] * 0.05; ?> € </strong>
                     </li>
                     <li class='list-group-item d-flex justify-content-between'>
-                        <?= "Votre commande est ". $_SESSION['typeConso'] ?>
+                        <?= "Votre commande est " . $_SESSION['typeConso'] ?>
                     </li>
                 </ul>
 
@@ -163,73 +175,88 @@ if (isset($_POST['submit'])) {
                     <div class="row gy-3">
                         <div class="col-md-6">
                             <label for="cc_name" class="form-label">Nom de la carte</label>
+                            <input name="cc_name" type="text" class="form-control" id="cc_name" value="<?= $cc_name ?>">
                             <?php
                             if (count($messagesName) > 0) {
-
+                                echo "<p class='btn alert-warning' >";
                                 foreach ($messagesName as $message) {
-                                    echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
+                                    echo $message . '<br>';
                                 }
+                                "</p>";
                             }
                             ?>
-                            <input name="cc_name" type="text" class="form-control" id="cc_name" value="<?= $cc_name ?>">
-
                         </div>
 
                         <div class="col-md-6">
                             <label for="cc_number" class="form-label">Numero carte de crédit</label>
+
+                            <input name="cc_number" type="number" class="form-control" id="cc_number"
+                                   value="<?= $cc_number ?>">
                             <?php
                             if (count($messagesNumber) > 0) {
 
+                                echo "<p class='btn alert-warning' >";
                                 foreach ($messagesNumber as $message) {
-                                    echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
+                                    echo $message . '<br>';
                                 }
+                                "</p>";
                             }
                             ?>
-                            <input name="cc_number" type="number" class="form-control" id="cc_number"
-                                   value="<?= $cc_number ?>">
-                            <p class="text-info"><i class="fas fa-level-up-alt fa-rotate-90"></i> &ensp; Faire 0000 0000
-                                0000 0000 pour payement pas confirmé</p>
+                            <p class="text-info"><i class="fas fa-level-up-alt fa-rotate-90"></i> &ensp; Faire <em
+                                        class="text-secondary">0000 0000
+                                    0000 0000</em> pour payement pas confirmé ou <em class="text-secondary">1234 1234
+                                    1234 1234</em> pour confirmé le payement.</p>
                         </div>
-
-                        <div class="col-md-3">
+                        <div class="row-cols ">
                             <label for="cc_expiration" class="form-label">Expiration</label>
-                            <?php
-                            if (count($messagesExpiration) > 0) {
+                            <div class="row w-50 mx-auto">
+                                <input name="cc_expirationMM" type="number" class="col form-control"
+                                       id="cc_expirationMM" placeholder="Mois"
+                                       value="<?= $cc_expirationMM ?>">
+                                <input name="cc_expirationYY" type="number" class="col form-control"
+                                       id="cc_expirationYY" placeholder="Année"
+                                       value="<?= $cc_expirationYY ?>">
+                            </div>
 
-                                foreach ($messagesExpiration as $message) {
-                                    echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
-                                }
+
+                        <?php
+                        if (count($messagesExpiration) > 0) {
+
+                            echo "<p class='btn alert-warning' >";
+                            foreach ($messagesExpiration as $message) {
+                                echo $message . '<br>';
                             }
-                            ?>
-                            <input name="cc_expiration" type="month" class="form-control" id="cc_expiration"
-                                   value="<?= $cc_expiration ?>">
-                        </div>
-
-                        <div class="col-md-3">
-                            <label for="cc_cvv" class="form-label">CVV</label>
-                            <?php
-                            if (count($messagesCVV) > 0) {
-
-                                foreach ($messagesCVV as $message) {
-                                    echo "<p class='btn alert-warning' >" . $message . "</p> <br>";
-                                }
-                            }
-                            ?>
-                            <input name="cc_cvv" type="number" class="form-control" id="cc_cvv" value="<?= $cc_cvv ?>">
-                        </div>
+                            "</p>";
+                        }
+                        ?>
                     </div>
 
-                    <hr class="my-4">
-
-                    <button class="w-25 btn btn-primary btn-lg" type="submit" name="submit"
-                            onclick="confirmerPaiement()">Payer
-                    </button>
-
-                    <form method="POST">
-                        <button class="w-25 btn btn-check btn-lg" type="submit" name="Annuler">Annuler</button>
-                    </form>
-                </form>
+                    <div class="col-md-3">
+                        <label for="cc_cvv" class="form-label">CVV</label>
+                        <input name="cc_cvv" type="number" class="form-control" id="cc_cvv" value="<?= $cc_cvv ?>">
+                        <?php
+                        if (count($messagesCVV) > 0) {
+                            echo "<p class='btn alert-warning' >";
+                            foreach ($messagesCVV as $message) {
+                                echo $message . '<br>';
+                            }
+                            "</p>";
+                        }
+                        ?>
+                    </div>
             </div>
+
+            <hr class="my-4">
+
+            <button class="w-25 btn btn-primary btn-lg" type="submit" name="submit"
+                    onclick="confirmerPaiement()">Payer
+            </button>
+
+            <form method="POST">
+                <button class="w-25 btn btn-check btn-lg" type="submit" name="Annuler">Annuler</button>
+            </form>
+            </form>
+        </div>
         </div>
     </main>
     <?php
