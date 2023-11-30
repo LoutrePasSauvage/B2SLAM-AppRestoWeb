@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 16 nov. 2023 à 10:42
+-- Généré le : jeu. 30 nov. 2023 à 11:40
 -- Version du serveur : 10.4.24-MariaDB
 -- Version de PHP : 8.1.6
 
@@ -41,25 +41,10 @@ CREATE TABLE `commande` (
 --
 
 INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES
-(163, 3, 1, '2023-10-12 00:00:00', '0.00', 0),
-(164, 3, 1, '2023-10-12 00:00:00', NULL, 0),
-(165, 3, 1, '2023-10-12 00:00:00', '25.00', 0),
-(166, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(167, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(168, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(169, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(170, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(171, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(172, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(173, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(174, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(175, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(176, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(177, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(178, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(179, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(180, 3, 1, '2023-10-12 00:00:00', '79.50', 0),
-(181, 3, 1, '2023-10-12 00:00:00', '79.50', 0);
+(192, 4, 3, '2023-11-30 00:00:00', NULL, 0),
+(193, 4, 1, '2023-11-30 00:00:00', '26.00', 0),
+(194, 4, 1, '2023-11-30 00:00:00', '26.00', 0),
+(195, 4, 1, '2023-11-30 00:00:00', '27.00', 1);
 
 -- --------------------------------------------------------
 
@@ -80,9 +65,8 @@ CREATE TABLE `ligne` (
 --
 
 INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_ligne_ht`) VALUES
-(295, 163, 1, 1, '12.50'),
-(297, 163, 2, 1, '14.00'),
-(298, 163, 4, 1, '10.50');
+(305, 192, 3, 1, '13.00'),
+(306, 192, 2, 1, '14.00');
 
 --
 -- Déclencheurs `ligne`
@@ -239,9 +223,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `login`, `password`, `email`) VALUES
-(1, 'jef', '$2y$10$OPEElGC0F4PghGraYRFl7OmH57cnVWvApKYF/oWDRmEkj8PVhiwBu', 'jef@m2l.fr'),
-(2, 'Legrosmangeur', 'miam1234', 'yermushy@gmail.com'),
-(3, 'yermushy31', '1234567', 'yermushy@gmail.com');
+(4, 'a', '$2y$10$PzJDRtXjIeDHwSuoN24gAO8mA8xO5ENC5ci352fzWvpl4Y7RGQC4q', 'a@a.fr');
 
 --
 -- Index pour les tables déchargées
@@ -283,13 +265,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_commande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
+  MODIFY `id_commande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
 
 --
 -- AUTO_INCREMENT pour la table `ligne`
 --
 ALTER TABLE `ligne`
-  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=299;
+  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=307;
 
 --
 -- AUTO_INCREMENT pour la table `produit`
@@ -301,7 +283,7 @@ ALTER TABLE `produit`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Contraintes pour les tables déchargées
