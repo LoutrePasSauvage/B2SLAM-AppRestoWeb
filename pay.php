@@ -226,7 +226,7 @@ if (isset($_POST['submit'])) {
                     </button>
 
                     <form method="POST">
-                        <button class="w-25 btn btn-warning btn-lg" type="submit" name="Annuler">Annuler</button>
+                        <button class="w-25 btn btn-check btn-lg" type="submit" name="Annuler">Annuler</button>
                     </form>
                 </form>
             </div>
