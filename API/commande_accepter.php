@@ -21,7 +21,7 @@ try {
 
         // Utilisation d'une vérification d'exécution de la requête UPDATE
         if ($commandeUpdate->execute([
-            ":id_Etat" => 4,
+            ":id_Etat" => 2,
             ":id_Commande" => $_GET['id_commande']
         ])) {
             $json = json_encode("Commande acceptée", JSON_PRETTY_PRINT);
