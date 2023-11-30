@@ -125,8 +125,10 @@ if (isset($_POST['submit'])) {
                     <li class='list-group-item d-flex justify-content-between'>
                         <span>Total TTC (en eur)</span>
 
-                        <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande'] * 0.05; ?> € <?php $_SESSION['typeConso'] ?></strong>
-
+                        <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande'] * 0.05; ?> € </strong>
+                    </li>
+                    <li class='list-group-item d-flex justify-content-between'>
+                        <?= "Votre commande est ". $_SESSION['typeConso'] ?>
                     </li>
                 </ul>
 
