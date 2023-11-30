@@ -39,10 +39,11 @@ if (empty($_SESSION["user"])) {
     header("Location: index.php");
 }
 
-if (isset($_POST['annuler'])) {
+//retour a la list.php si commande est annuler
+if (isset($_POST['Annuler'])) {
     $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat"=>3]);
 
-    header("Location: index.php");
+    header("Location: list.php");
 }
 
 //fait une validation pour la carte de credit
@@ -223,7 +224,7 @@ if (isset($_POST['submit'])) {
                     </button>
 
                     <form method="POST">
-                        <input value="Annuler" class="w-25 btn btn-secondary btn-lg"  type="submit"  />
+                        <button class="w-25 btn btn-warning btn-lg" type="submit" name="Annuler">Annuler</button>
                     </form>
                 </form>
             </div>
