@@ -30,10 +30,10 @@ if ($user) {
     $email = $user['email'];
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
     if( $_SESSION['id_commande']) {
-    $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" =>  $_SESSION['id_commande']]);
+        $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" =>  $_SESSION['id_commande']]);
     }
 
- }
+}
 
 if (empty($_SESSION["user"])) {
     header("Location: index.php");
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 
     if (empty($messagesName) && empty($messagesNumber) && empty($messagesExpiration) && empty($messagesCVV)) {
         if ($cc_number == "0000000000000000") {
-       
+
             header("Location: payPasConfirm.php");
         } else {
             header("Location: payConf.php");
