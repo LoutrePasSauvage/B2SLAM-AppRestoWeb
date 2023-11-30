@@ -22,3 +22,9 @@
    http://localhost/projets/B2SLAM-AppResto-L-BOUZAC---H-CAILLEBOTTE---S-VERCHERE-main/index.php
 
 6/ L'installation est terminée !
+
+
+7/
+Afin de bénéficier de la meilleure expérience :
+Je vous suggère de créer un nouveau compte dans la page inscription pour savourer l'expérience d'un nouveau client.
+Le compte de test "a" a déjà une commande en attente pour l'exemple.
