@@ -61,8 +61,8 @@ if ($supprimer) {
 if ($commander) {
 
     $db->InsertDb(
-        "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, :date, :total_commande, :type_conso);",
-        [":id_etat" => "1", ":date" => date('Y-m-d'), ":total_commande" => $_SESSION['total_commande'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
+        "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
+        [":id_etat" => "1", ":total_commande" => $_SESSION['total_commande'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
     );
 
     header("Location: pay.php");
