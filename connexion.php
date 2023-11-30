@@ -76,22 +76,29 @@ if ($submit) {
         }
     }
     ?>
-    <p>Login<br />
-        <?php
-        if (count($messagesid) > 0) {
-            foreach ($messagesid as $message) {
-                echo "<p class='btn alert-warning'>" . htmlspecialchars($message) . "</p> <br>";
-            }
+    <p>Login<br /></p>
+        <input type="text" name="login" id="login"><br>
+    <?php
+    if (count($messagesid) > 0) {
+        echo "<p class='btn alert-warning'>";
+        foreach ($messagesid as $message) {
+            echo htmlspecialchars($message) . "<br>";
         }
-        ?><input type="text" name="login" id="login"></p>
-    <p>Mot de passe<br />
-        <?php
-        if (count($messagesMDP) > 0) {
-            foreach ($messagesMDP as $message) {
-                echo "<p class='btn alert-warning'>" . htmlspecialchars($message) . "</p> <br>";
-            }
+        echo "</p>";
+    }
+    ?>
+    <p>Mot de passe</p>
+        <input type="password" name="password" id="password"><br>
+    <?php
+    if (count($messagesMDP) > 0) {
+        echo "<p class='btn alert-warning'>";
+        foreach ($messagesMDP as $message) {
+            echo htmlspecialchars($message) . "<br>";
         }
-        ?><input type="password" name="password" id="password"></p>
+        echo "</p>";
+    }
+    ?>
+    <br>
     <button class="btn btn-default btn-lg active" type="submit" name="submit" value="submit">Connexion</button>
 </form>
 
