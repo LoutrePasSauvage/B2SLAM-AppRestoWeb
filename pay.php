@@ -52,11 +52,6 @@ if (isset($_POST['submit'])) {
     $cc_expiration = isset($_POST['cc_expiration']) ? $_POST['cc_expiration'] : '';
     $cc_cvv = isset($_POST['cc_cvv']) ? $_POST['cc_cvv'] : '';
 
-    //$cc_name = filter_var($cc_name, FILTER_SANITIZE_STRING);
-    //$cc_number = filter_var($cc_number, FILTER_SANITIZE_STRING);
-    //$cc_expiration = filter_var($cc_expiration, FILTER_SANITIZE_STRING);
-    //$cc_cvv = filter_var($cc_cvv, FILTER_SANITIZE_STRING);
-
     if (empty($cc_name)) {
         $messagesName[] = "le nom de la carte est obligatoire";
     }
@@ -228,8 +223,7 @@ if (isset($_POST['submit'])) {
                     </button>
 
                     <form method="POST">
-                    <input type="hidden"  name="annuler" value="annuler">
-                    <input value="Annuler" class="w-25 btn btn-secondary btn-lg"  type="submit"  />
+                        <input value="Annuler" class="w-25 btn btn-secondary btn-lg"  type="submit"  />
                     </form>
                 </form>
             </div>
