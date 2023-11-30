@@ -39,10 +39,10 @@ if (empty($_SESSION["user"])) {
     header("Location: index.php");
 }
 
-if(isset($_POST['annuler'])) {
+if (isset($_POST['annuler'])) {
     $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat"=>3]);
-       
-    header('Location: list.php');
+
+    header("Location: index.php");
 }
 
 //fait une validation pour la carte de credit
