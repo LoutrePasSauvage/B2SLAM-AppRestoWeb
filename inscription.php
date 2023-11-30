@@ -13,25 +13,31 @@
         $password = isset($_POST['password']) ? $_POST['password'] : '';
         $password_confirm = isset($_POST['password_confirm']) ? $_POST['password_confirm'] : '';
         $email = isset($_POST['email']) ? $_POST['email'] : '';
+
         // Filtrage
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
         // le nom est obligatoire
-        if (empty(trim($login))) {
+        if (empty(trim($login))) 
+        {
             $messageslogin[] = "le login est obligatoire";
         }
         // l'email est obligatoire
-        if (empty(trim($email))) {
+        if (empty(trim($email))) 
+        {
             $messagesMail[] = "l'email est obligatoire";
         }
         // l'email est valide
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) 
+        {
             $messagesMail[] = "l'email n'est pas valide : $email";
         }
         // le mdp est obligatoire
-        if (empty(trim($password))) {
+        if (empty(trim($password))) 
+        {
             $messagesMDP[] = "le mot de passe est obligatoire";
         }
-        if (empty(trim($password_confirm))) {
+        if (empty(trim($password_confirm))) 
+        {
             $messagesMDP[] = "le mot de passe est obligatoire";
         }
         // le mdp est doit avoir plus de 12 caractères
@@ -39,20 +45,33 @@
             $messagesMDP[] = "le mot de passe doit avoir plus de 8 caractères";
         }
         // Le mot de passe doit avoir un caractère spécial
-        if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
+        if (!preg_match('/\W/', $password)) 
+        {
             $messagesMDP[] = "Le mot de passe doit avoir un caractère spécial.";
         }
         // le mdp doit avoir un chiffre
-        if (!preg_match('/[0-9]+/', $password)) {
+        if (!preg_match('/[0-9]/', $password)) 
+        {
             $messagesMDP[] = "le mot de passe doit avoir un chiffre";
         }
-        // le mdp doit avoir une lettre
-        if (!preg_match('/[a-z]+/i', $password)) {
-            $messagesMDP[] = "le mot de passe doit avoir une lettre";
+        // le mdp doit avoir une minuscule
+        if (!preg_match('/[a-z]/', $password)) 
+        {
+            $messagesMDP[] = "le mot de passe doit avoir une minuscule";
         }
-        if ($password == $password_confirm) {
+
+        // le mdp doit avoir une majuscule
+        if (!preg_match('/[A-Z]/', $password)) 
+        {
+            $messagesMDP[] = "le mot de passe doit avoir une minuscule";
+        }
+
+        if ($password == $password_confirm) 
+        {
             $password = password_hash($password, PASSWORD_DEFAULT);
-        } else {
+        } 
+        else 
+        {
             $messagesMDP[] = "les mots de passe ne sont pas identiques";
         }
 
