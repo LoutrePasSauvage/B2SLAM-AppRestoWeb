@@ -92,8 +92,12 @@ if (isset($_POST['submit'])) {
         $mois = $date['mon'];
         if ($cc_expirationYY < $annee) {
             $messagesExpiration[] = "la date d'expiration est dépassée";
-        } elseif ($cc_expirationYY == $annee && $cc_expirationMM < $mois) {
+        }
+        if ($cc_expirationYY == $annee && $cc_expirationMM < $mois) {
             $messagesExpiration[] = "la date d'expiration est dépassée";
+        }
+        if ($cc_expirationMM < 1 || $cc_expirationMM > 12) {
+            $messagesExpiration[] = "le mois doit etre compris entre 1 et 12";
         }
     }
 
