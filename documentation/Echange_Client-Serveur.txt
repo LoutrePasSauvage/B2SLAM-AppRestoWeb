@@ -43,7 +43,7 @@ On aura donc le fichier json d'une commande X terminée.
 ### commande_terminer.php : ###
 
 L'url pour accéder au fichier :
-http://localhost/projets/B2SLAM-AppResto-L-BOUZAC---H-CAILLEBOTTE---S-VERCHERE-main/api/commande_terminer.php?id_commande=X
+http://localhost/projets/B2SLAM-AppResto-L-BOUZAC---H-CAILLEBOTTE---S-VERCHERE/API/commande_terminer.php?id_commande=X
 
 X : id de la commande en question
 Pour tester la fonctionnalité du programme, attribuez à X la valeur de l'id d'une commande ayant un état "en préparation", ici ça sera id_etat = 2
@@ -61,7 +61,7 @@ On aura donc le fichier json d'une commande X terminée.
 ### commandes_en_attente.php : ###
 
 L'url pour accéder au fichier :
-http://localhost/projets/B2SLAM-AppResto-L-BOUZAC---H-CAILLEBOTTE---S-VERCHERE-main/API/commandes_en_attente.php
+http://localhost/projets/B2SLAM-AppResto-L-BOUZAC---H-CAILLEBOTTE---S-VERCHERE/API/commandes_en_attente.php
 
 Ce programme listera toutes les commandes en attentes.
 C'est-à-dire l'état en attente, donc champ id_etat = 1 dans la table commande. 
