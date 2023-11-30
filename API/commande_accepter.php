@@ -10,12 +10,12 @@ try {
     // Pour Firefox et le formatage
     header("Content-Type: application/json");
 
-    $sql = "SELECT * FROM commande WHERE id_etat = 2 AND id_commande = :id_commande";
+    $sql = "SELECT * FROM commande WHERE id_etat = 1 AND id_commande = :id_commande";
     $db = new Database($dbh);
     $row = $db->SelectDb($sql, [":id_commande" => $_GET['id_commande']]);
 
     // Check if $row is not empty before accessing its elements
-    if (!empty($row) && isset($row[0]['id_etat']) && $row[0]['id_etat'] == 2) {
+    if (!empty($row) && isset($row[0]['id_etat']) && $row[0]['id_etat'] == 1) {
         // Utilisation d'une requête préparée pour l'UPDATE
         $commandeUpdate = $dbh->prepare("UPDATE commande SET id_etat = :id_Etat WHERE id_commande = :id_Commande");
 
@@ -30,7 +30,7 @@ try {
             $json = json_encode(["error" => "Erreur lors de la mise à jour de la commande."], JSON_PRETTY_PRINT);
         }
     } else {
-        // Si l'état n'est pas 2 ou $row est vide, retourne un message d'erreur
+        // Si l'état n'est pas 1 ou $row est vide, retourne un message d'erreur
         $json = json_encode(["error" => "La commande n'est pas dans l'etat approprie pour etre mise a jour."], JSON_PRETTY_PRINT);
     }
 
