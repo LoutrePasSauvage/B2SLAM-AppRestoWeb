@@ -155,7 +155,7 @@ if ($ajouter) {
                     <div class="col align-self-start">
 
                         <?php
-                        $show = true;
+                        $show = false;
                         $liste_ids = array();
                      
                         $previousID = null;
@@ -174,11 +174,11 @@ if ($ajouter) {
 
                             $array_id_produits = array_count_values($array_id_produits);
                             foreach ($lignes as $row) {
-                               
+                                $liste_ids[] = $row['id_produit'];
 
-                                if($row['id_produit'] != $previousID) {
+                                if(!in_array($row['id_produit'], $_SESSION["liste_ids"])) {
                                     $show = true;
-                                } elseif($row['id_produit'] == $previousID || $_SESSION["liste_ids"]) {
+                                } elseif($row['id_produit'] == $previousID) {
                                     $show = false;
                                 }
                                 $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
@@ -215,9 +215,9 @@ if ($ajouter) {
 
                              }
                                 
-                                $_SESSION["liste_ids"] =  $liste_ids;
-                                print_r($_SESSION["liste_ids"]);
-                                $previousID = $row['id_produit'];
+                          
+                            $_SESSION["liste_ids"] =  $liste_ids;
+                            $previousID = $row['id_produit'];
 
                             }
 
