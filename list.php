@@ -235,8 +235,18 @@ if ($ajouter) {
                 </div>
                 <form method="POST">
 
-                    <input type="checkbox" value="1" name="typeconsommation">éxterieur</input>
-                    <input type="checkbox" value="0" name="typeconsommation">intérieur</input>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="0" name="typeconsommation" id="typeconsommation" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Sur place
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="1" name="typeconsommation" id="typeconsommation">
+                        <label class="form-check-label" for="flexRadioDefault2" >
+                            à emporter
+                        </label>
+                    </div>
                     <input type="submit" name="commander" class="btn btn-success" value="Commander">
                     <input type="submit" name="annuler" class="btn btn-warning" value="Annuler">
                 </form>
