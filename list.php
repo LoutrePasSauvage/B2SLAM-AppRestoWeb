@@ -156,8 +156,9 @@ if ($ajouter) {
 
                         <?php
                         $show = false;
-                        $liste_ids = array();
-                     
+
+                        $liste_ids[] = array();
+                        $_SESSION["liste_ids"] =  $liste_ids;
                         $previousID = null;
                         $array_id_produits = array();
                         $the_product[] = array();
@@ -175,12 +176,13 @@ if ($ajouter) {
                             $array_id_produits = array_count_values($array_id_produits);
                             foreach ($lignes as $row) {
                                 $liste_ids[] = $row['id_produit'];
-
+                                if(!empty($liste_ids)) {
                                 if(!in_array($row['id_produit'], $_SESSION["liste_ids"])) {
                                     $show = true;
                                 } elseif($row['id_produit'] == $previousID) {
                                     $show = false;
                                 }
+                            }
                                 $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
 
                                 $typeconso = $db->SelectDb(
