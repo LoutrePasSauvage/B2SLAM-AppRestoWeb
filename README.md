@@ -1,7 +1,7 @@
 
-# AppRestoWeb
+# AppRestoWeb ![Logo](design/logoRestoNoBg.png)
 
-![Logo](design/logoRestoNoBg.png)
+
 
 Projet de seconde année de BTS SIO en B2 SLAM Atelier Professionnel. 
 
