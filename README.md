@@ -73,7 +73,7 @@ Exécuter le code SQL contenu dans
     B2SLAM-AppRestoWeb/data_db/db_restoweb.sql
 ```
 
-[Raccourci](data_db/db_restoweb.sql)
+fichier : [db_restoweb.sql](data_db/db_restoweb.sql)
 
 | **Installation terminée !** |
 
@@ -101,6 +101,8 @@ Par défaut, vous pouvez vous connecter, depuis la page d'accueil, avec le compt
     http://localhost/projets/B2SLAM-AppRestoWeb/connexion.php
 ```
 
+fichier : [connexion.php](connexion.php)
+
 #### 1.2 / Inscription
 
 Pour accéder au site en tant que nouveau client, Référez-vous au bouton d'inscription de la page d'accueil et suivez les instructions.
@@ -110,6 +112,8 @@ Pour accéder au site en tant que nouveau client, Référez-vous au bouton d'ins
 ```
     http://localhost/projets/B2SLAM-AppRestoWeb/inscription.php
 ```
+
+fichier : [inscription.php](inscription.php)
 
 #### 2/ Commander & Payer
 
@@ -155,9 +159,20 @@ Une fois le paiement confirmé, vous serez dirigé vers l'URL suivante :
 Cette page affiche les informations de votre commande.
 Vous pouvez ensuite revenir sur la page d'accueil en cliquant sur le bouton **Revenir à la page d'accueil**.
 
+fichiers : 
+
+ - [list.php](list.php)
+ - [pay.php](pay.php)
+ - [payConf.php](payConf.php)
+ - [payPasConfirm.php](payPasConfirm.php)
+
+
 #### 3/ Déconnexion
 
 Vous pouvez vous déconnecter en cliquant sur le bouton **Se déconnecter** qui est dans le menu déroulant en haut à droite d'une page.
+
+fichier :
+[deconnexion.php](deconnexion.php)
 
 
 ## > RestoSwing
@@ -207,7 +222,7 @@ Pour accepter, refuser ou terminer : le serveur mettra à jour l'état de la com
 
 Vous trouverez les fichiers suivants dans le dossier **API**.
 
-#### **commandes_en_attente.php :**
+#### **[commandes_en_attente.php](API/commandes_en_attente.php) :**
 
 L'url pour accéder au fichier :
 ```
@@ -217,7 +232,7 @@ L'url pour accéder au fichier :
 Ce programme génèrera un fichier **json** listant toutes les commandes en attentes.
 C'est-à-dire l'état en "attente", donc le champ **id_etat = 1** dans la table **commande**. 
 
-#### **commande_accepter.php :**
+#### **[commande_accepter.php](API/commande_accepter.php) :**
 
 L'url pour accéder au fichier : 
 
@@ -238,7 +253,7 @@ Le programme va sélectionner une commande **X** qui était en préparation pour
 Ce programme généra un fichier **json** de la commande **X** avec le nouvel état (ici acceptée).
 
 
-#### **commande_refuser.php :**
+#### **[commande_refuser.php](API/commande_refuser.php) :**
 
 L'url pour accéder au fichier : 
 ```
@@ -258,7 +273,7 @@ Le programme va sélectionner une commande **X** qui était en préparation pour
 Ce programme généra un fichier **json** de la commande **X** avec le nouvel état (ici refusée ou abandonnée).
 
 
-#### **commande_terminer.php :**
+#### **[commande_terminer.php](API/commande_terminer.php) :**
 
 L'url pour accéder au fichier :
 ```
