@@ -40,7 +40,7 @@ if ($user) {
         //Recup total ht de la commande grace au TRIGGER lors du SELECT
         $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
     }
-    $total_ht = 0; //comme l'utilisateur peut avoir plusieurs ligne de commandes je lui fait un total
+    $total_ht = 0.0; //comme l'utilisateur peut avoir plusieurs ligne de commandes je lui fait un total
 
     if (!empty($total_lignes)) {
         foreach ($total_lignes as $value) {
@@ -62,7 +62,7 @@ if ($commander) {
 
     $db->InsertDb(
         "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
-        [":id_etat" => "1", ":total_commande" => $_SESSION['total_commande'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
+        [":id_etat" => "1", ":total_commande" => $_SESSION['totalTVA'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
     );
 
     header("Location: pay.php");
@@ -77,24 +77,21 @@ if ($annuler) {
             [":id_commande" => $lignes[0]['id_commande']]
         );
     }
+
+    header("Refresh: 0");
 }
 
 if ($ajouter) {
 
     // INSERT ligne
-    if (empty($commandes[0]["id_commande"])) {
-        $db->InsertDb(
-            "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, :date, :total_commande, :type_conso);",
-            [":id_etat" => "1", ":date" => date('Y-m-d'), ":total_commande" => $_SESSION['total_commande'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
-        );
-    } else {
+    if (!empty($commandes[0]["id_commande"])) {
         $db->InsertDb(
             "INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_ligne_ht`) VALUES (NULL, :id_commande, :id_produit, :qte, NULL);",
             [":id_commande" => $commandes[0]["id_commande"], ":id_produit" => $productID, ":qte" => '1']
         );
     }
 
-    header("Refresh:0");
+    header("Refresh: 0");
 }
 
 
@@ -149,20 +146,22 @@ if ($ajouter) {
             </div>
             <div class="col align-self-start">
                 <div class="text-dark">
-                    <h1> Liste des comandes</h1>
+                    <h1> Liste des commandes</h1>
                 </div>
                 <div class="box">
                     <div class="col align-self-start">
 
                         <?php
+
                         $show = false;
+                        $previousID = null;
 
                         $liste_ids[] = array();
-                        $_SESSION["liste_ids"] =  $liste_ids;
-                        $previousID = null;
                         $array_id_produits = array();
                         $the_product[] = array();
                         $typeconso[] = array();
+
+                        $_SESSION["liste_ids"] =  $liste_ids;
 
                         if (!empty($lignes)) {
                             foreach ($lignes as $row) {
@@ -222,16 +221,10 @@ if ($ajouter) {
                             $previousID = $row['id_produit'];
 
                             }
-
-
-
-
-
                         }
                         //print_r($array_id_produits);
                         // print_r($array_id_produits);
                         ?>
-
 
                     </div>
                 </div>
@@ -256,13 +249,13 @@ if ($ajouter) {
                     <h1>Prix Total HT :
                         <?php echo $_SESSION["total_commande"]; ?> €
                     </h1>
-                    <h1>Prix Total TVA :
-                        <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"] * 0.05;
-                        echo $_SESSION['totalTVA'] . PHP_EOL;
-                        ?> €
+                    <!--<h1>Prix Total TVA :
+                        <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"] * 0.05;?>
+                       
+                         
 
 
-                    </h1>
+                    </h1>-->
                 </div>
             </div>
         </div>

@@ -42,7 +42,6 @@ if (empty($_SESSION["user"])) {
 //retour a la list.php si commande est annuler
 if (isset($_POST['Annuler'])) {
     $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat" => 3]);
-
     header("Location: list.php");
 }
 
@@ -104,7 +103,7 @@ if (isset($_POST['submit'])) {
 
     if (empty($messagesName) && empty($messagesNumber) && empty($messagesExpiration) && empty($messagesCVV)) {
         if ($cc_number == "0000000000000000") {
-
+            
             header("Location: payPasConfirm.php");
         } else {
             header("Location: payConf.php");
@@ -141,7 +140,7 @@ if (isset($_POST['submit'])) {
                     <li class='list-group-item d-flex justify-content-between'>
                         <span>Total TTC (en eur)</span>
 
-                        <strong><?= $_SESSION['total_commande'] + $_SESSION['total_commande'] * 0.05; ?> € </strong>
+                        <strong><?= $_SESSION['totalTVA'] ?> € </strong>
                     </li>
                     <li class='list-group-item d-flex justify-content-between'>
                         <?= "Votre commande est " . $_SESSION['typeConso'] ?>
