@@ -147,7 +147,7 @@ $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `before_ligne_insert` BEFORE INSERT ON `ligne` FOR EACH ROW BEGIN
-DECLARE f_prixht INT;
+DECLARE f_prixht FLOAT;
 
 	-- Affectation du prix hors taxe
 SELECT prix_ht INTO f_prixht 
@@ -162,7 +162,7 @@ $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `before_ligne_update` BEFORE UPDATE ON `ligne` FOR EACH ROW BEGIN
-DECLARE f_prixht INT;
+DECLARE f_prixht FLOAT;
 
 	-- Affectation du prix hors taxe
 SELECT prix_ht INTO f_prixht 
