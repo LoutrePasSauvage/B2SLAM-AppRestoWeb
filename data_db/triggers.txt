@@ -8,10 +8,10 @@ DELIMITER |
 CREATE OR REPLACE TRIGGER before_ligne_insert BEFORE INSERT
 ON ligne FOR EACH ROW 
 BEGIN
-  DECLARE f_prixht INT;
+  DECLARE f_prixht FLOAT;
 
   -- Affectation du prix hors taxe
-  SELECT prix_ht INTO f_prixht 
+  SELECT prix_ht FLOATO f_prixht 
   FROM produit 
   WHERE produit.id_produit = NEW.id_produit; 
 	
@@ -28,10 +28,10 @@ DELIMITER |
 CREATE OR REPLACE TRIGGER before_ligne_update BEFORE UPDATE
 ON ligne FOR EACH ROW 
 BEGIN
-  DECLARE f_prixht INT;
+  DECLARE f_prixht FLOAT;
 
 	-- Affectation du prix hors taxe
-  SELECT prix_ht INTO f_prixht 
+  SELECT prix_ht FLOATO f_prixht 
   FROM produit 
   WHERE produit.id_produit = NEW.id_produit; 
 	
@@ -48,12 +48,12 @@ DELIMITER |
 CREATE OR REPLACE TRIGGER after_ligne_insert AFTER INSERT
 ON ligne FOR EACH ROW 
 BEGIN
-  DECLARE f_total_commande INT;
-  DECLARE f_type_conso INT;
-  DECLARE TVA INT;
+  DECLARE f_total_commande FLOAT;
+  DECLARE f_type_conso FLOAT;
+  DECLARE TVA FLOAT;
 
   -- Affectation type consommation
-  SELECT type_conso INTO f_type_conso
+  SELECT type_conso FLOATO f_type_conso
   FROM commande
   WHERE commande.id_commande = NEW.id_commande;
 
@@ -69,7 +69,7 @@ BEGIN
   END IF;
 
   -- Calcule total HT des lignes de la commande
-  SELECT SUM(total_ligne_ht) INTO f_total_commande
+  SELECT SUM(total_ligne_ht) FLOATO f_total_commande
   FROM ligne
   WHERE ligne.id_commande = NEW.id_commande;
 
@@ -89,12 +89,12 @@ DELIMITER |
 CREATE OR REPLACE TRIGGER after_ligne_update AFTER UPDATE
 ON ligne FOR EACH ROW 
 BEGIN
-  DECLARE f_total_commande INT;
-  DECLARE f_type_conso INT;
-  DECLARE TVA INT;
+  DECLARE f_total_commande FLOAT;
+  DECLARE f_type_conso FLOAT;
+  DECLARE TVA FLOAT;
 
   -- Affectation type consommation
-  SELECT type_conso INTO f_type_conso
+  SELECT type_conso FLOATO f_type_conso
   FROM commande
   WHERE commande.id_commande = NEW.id_commande;
 
@@ -110,7 +110,7 @@ BEGIN
   END IF;
 
   -- Calcule total HT des lignes de la commande
-  SELECT SUM(total_ligne_ht) INTO f_total_commande
+  SELECT SUM(total_ligne_ht) FLOATO f_total_commande
   FROM ligne
   WHERE ligne.id_commande = NEW.id_commande;
 
