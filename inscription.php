@@ -42,7 +42,7 @@
         }
         // le mdp est doit avoir plus de 12 caractères
         if (strlen($password) < 12) {
-            $messagesMDP[] = "le mot de passe doit avoir plus de 8 caractères";
+            $messagesMDP[] = "le mot de passe doit avoir plus de 12 caractères";
         }
         // Le mot de passe doit avoir un caractère spécial
         if (!preg_match('/\W/', $password)) 
