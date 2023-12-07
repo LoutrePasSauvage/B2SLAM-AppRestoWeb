@@ -10,7 +10,8 @@ $db = new Database($objetConnexion);
 //récupération des produits 
 
 $user = $_SESSION["user"];
-
+$first_commande = false;
+$commande_vide = false;
 $ajouter = isset($_POST['ajouter']) ? $_POST['ajouter'] : "";
 $supprimer = isset($_POST['supprimer']) ? $_POST['supprimer'] : "";
 $commander = isset($_POST['commander']) ? $_POST['commander'] : "";
@@ -37,7 +38,7 @@ if ($user) {
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
     //récupération des commande à partir de l'ID du l'utilisateur connectés 
     $commandes = $db->SelectDb("SELECT * FROM commande, user WHERE user.id_user = commande.id_user AND commande.id_user=:idUser;", [":idUser" => $user['id_user']]);
-  
+
     if (!empty($commandes)) {
         $lignes = $db->SelectDb("SELECT id_ligne,id_commande,id_produit,qte,total_ligne_ht FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
         $_SESSION['id_commande'] = $commandes[0]["id_commande"];
@@ -64,13 +65,21 @@ if ($supprimer) {
 }
 
 if ($commander) {
-
-    $db->InsertDb(
-        "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
-        [":id_etat" => "1", ":total_commande" => $_SESSION['totalTVA'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
-    );
     
-    header("Location: pay.php");
+    if (!empty($lignes) && $first_commande == false) {
+
+        $db->InsertDb(
+            "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
+            [":id_etat" => "1", ":total_commande" => $_SESSION['totalTVA'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
+        );
+
+        header("Location: pay.php");
+    } 
+    
+    
+    else {
+        $commande_vide = true;
+    }
 }
 
 if ($annuler) {
@@ -87,11 +96,17 @@ if ($annuler) {
 if ($ajouter) {
 
     // INSERT ligne
-    if (!empty($commandes[0]["id_commande"])) {
+    if (!empty($commandes)) {
         $db->InsertDb(
             "INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_ligne_ht`) VALUES (NULL, :id_commande, :id_produit, :qte, NULL);",
             [":id_commande" => $commandes[0]["id_commande"], ":id_produit" => $productID, ":qte" => '1']
         );
+    } else {
+        $db->InsertDb(
+            "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
+            [":id_etat" => "1", ":total_commande" => $_SESSION['totalTVA'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
+        );
+        $first_commande = true;
     }
 
     header("Refresh: 0");
@@ -161,7 +176,7 @@ if ($ajouter) {
                         $the_product[] = array();
                         $typeconso[] = array();
 
-                        $_SESSION["liste_ids"] =  $liste_ids;
+                        $_SESSION["liste_ids"] = $liste_ids;
 
                         if (!empty($lignes)) {
                             foreach ($lignes as $row) {
@@ -175,20 +190,20 @@ if ($ajouter) {
                             $array_id_produits = array_count_values($array_id_produits);
                             foreach ($lignes as $row) {
                                 $liste_ids[] = $row['id_produit'];
-                                if(!empty($liste_ids)) {
-                                if(!in_array($row['id_produit'], $_SESSION["liste_ids"])) {
-                                    $show = true;
-                                } elseif($row['id_produit'] == $previousID) {
-                                    $show = false;
+                                if (!empty($liste_ids)) {
+                                    if (!in_array($row['id_produit'], $_SESSION["liste_ids"])) {
+                                        $show = true;
+                                    } elseif ($row['id_produit'] == $previousID) {
+                                        $show = false;
+                                    }
                                 }
-                            }
                                 $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
 
                                 $typeconso = $db->SelectDb(
                                     "SELECT type_conso FROM `commande`, user WHERE commande.id_commande = :id_commande AND user.id_user = :id_user;",
                                     [":id_commande" => $row["id_commande"], ":id_user" => $user["id_user"]]
                                 );
-                             if($show) {
+                                if ($show) {
                                     echo '
                                 <form method="POST">
                                 <div class="card mb-2" style="max-width: 640px;">
@@ -214,16 +229,13 @@ if ($ajouter) {
                             </form>
                             ';
 
-                             }
-                                
-                          
-                            $_SESSION["liste_ids"] =  $liste_ids;
-                            $previousID = $row['id_produit'];
+                                }
+                                $_SESSION["liste_ids"] = $liste_ids;
+                                $previousID = $row['id_produit'];
 
                             }
                         }
-                        //print_r($array_id_produits);
-                        // print_r($array_id_produits);
+                    
                         ?>
 
                     </div>
@@ -231,14 +243,16 @@ if ($ajouter) {
                 <form method="POST">
 
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="0" name="typeconsommation" id="typeconsommation" checked>
+                        <input class="form-check-input" type="radio" value="0" name="typeconsommation"
+                            id="typeconsommation" checked>
                         <label class="form-check-label" for="flexRadioDefault1">
                             Sur place
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="1" name="typeconsommation" id="typeconsommation">
-                        <label class="form-check-label" for="flexRadioDefault2" >
+                        <input class="form-check-input" type="radio" value="1" name="typeconsommation"
+                            id="typeconsommation">
+                        <label class="form-check-label" for="flexRadioDefault2">
                             à emporter
                         </label>
                     </div>
@@ -247,15 +261,23 @@ if ($ajouter) {
                 </form>
                 <div class="text-dark">
                     <h1>Prix Total HT :
-                        <?php echo $_SESSION["total_commande"]; ?> €
+                        <?php echo $_SESSION["total_commande"]."€"; 
+                        if($commande_vide == true) {
+                           echo" <div class='form-check'>
+                           <div class='alert alert-danger' role='alert'>
+                             Commande Vide :(
+                        </div>
+                       </div>";   
+                             }
+                        ?> 
                     </h1>
-                    <!--<h1>Prix Total TVA :
-                        <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"] * 0.055;?>
+                  
+                    <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"] * 0.055; ?>
                        
                          
 
 
-                    </h1>-->
+                 
                 </div>
             </div>
         </div>
