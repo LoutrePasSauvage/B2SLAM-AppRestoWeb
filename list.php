@@ -15,25 +15,30 @@ $ajouter = isset($_POST['ajouter']) ? $_POST['ajouter'] : "";
 $supprimer = isset($_POST['supprimer']) ? $_POST['supprimer'] : "";
 $commander = isset($_POST['commander']) ? $_POST['commander'] : "";
 $annuler = isset($_POST['annuler']) ? $_POST['annuler'] : "";
-
 $deleteID = isset($_POST['deleteID']) ? $_POST['deleteID'] : "";
 $productID = isset($_POST['productID']) ? $_POST['productID'] : "";
 
 $typeConso = isset($_POST["typeconsommation"]) ? $_POST["typeconsommation"] : "0";
 
+//Si l'Utilisateur n'est pas connecter alors il est redirigé vers la page de connexion
 if (!$user) {
     header("Location: connexion.php");
 }
 
 if ($user) {
+
+    //Type Conso si 1 alors c'està emporter autrement c'est sur place 
     if ($typeConso == 1) {
         $_SESSION['typeConso'] = "à emporter";
     } else {
         $_SESSION['typeConso'] = "sur place";
     }
+    //récupération de la liste de tous les produits 
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
+    //récupération des commande à partir de l'ID du l'utilisateur connectés 
     $commandes = $db->SelectDb("SELECT * FROM commande, user WHERE user.id_user = commande.id_user AND commande.id_user=:idUser;", [":idUser" => $user['id_user']]);
-    if (!empty($commandes[0]["id_commande"])) {
+  
+    if (!empty($commandes)) {
         $lignes = $db->SelectDb("SELECT id_ligne,id_commande,id_produit,qte,total_ligne_ht FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
         $_SESSION['id_commande'] = $commandes[0]["id_commande"];
 
@@ -69,9 +74,7 @@ if ($commander) {
 }
 
 if ($annuler) {
-
-
-    if (!empty($lignes[0]['id_commande'])) {
+    if (!empty($lignes)) {
         $db->DeleteDb(
             "DELETE FROM ligne WHERE :id_commande",
             [":id_commande" => $lignes[0]['id_commande']]
@@ -247,7 +250,7 @@ if ($ajouter) {
                         <?php echo $_SESSION["total_commande"]; ?> €
                     </h1>
                     <!--<h1>Prix Total TVA :
-                        <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"] * 0.05;?>
+                        <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"] * 0.055;?>
                        
                          
 

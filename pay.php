@@ -39,7 +39,7 @@ if (empty($_SESSION["user"])) {
     header("Location: index.php");
 }
 
-//retour a la list.php si commande est annuler
+//retour a la list.php si commande est annuler supprime la commande et les lignes commande correspondante
 if (isset($_POST['Annuler'])) {
     if(!empty($_SESSION['id_commande'])) {
     $db->DeleteDb("DELETE FROM `ligne` WHERE id_commande=:id_commande", [":id_commande" => $_SESSION['id_commande']]);
