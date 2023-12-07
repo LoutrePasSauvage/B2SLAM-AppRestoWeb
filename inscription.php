@@ -149,6 +149,7 @@
             echo "</p>";
         }
         ?>
+        <br>
         <p><input class="btn btn-default btn-lg active" type='submit' name='submit' value='Envoyer' />&nbsp;&nbsp;<input class="btn btn-danger btn-lg active" type='reset' value='Réinitialiser' /></p>
 
 
