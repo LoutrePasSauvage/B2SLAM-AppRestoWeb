@@ -73,7 +73,7 @@ Exécuter le code SQL contenu dans
     B2SLAM-AppRestoWeb/data_db/db_restoweb.sql
 ```
 
-[Raccourci](B2SLAM-AppRestoWeb/data_db/db_restoweb.sql)
+[Raccourci](data_db/db_restoweb.sql)
 
 | **Installation terminée !** |
 
