@@ -55,7 +55,7 @@ if ($user) {
 if ($supprimer) {
     $db->DeleteDb("DELETE FROM ligne WHERE id_ligne=:deleteID", [":deleteID" => $deleteID]);
     $delete_c = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_ligne = :id_ligne", [":id_user" => $user['id_user'], ":id_ligne" => $deleteID + 1]);
-    header("Refresh:0");
+    header("Refresh: 0");
 }
 
 if ($commander) {
@@ -64,7 +64,7 @@ if ($commander) {
         "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
         [":id_etat" => "1", ":total_commande" => $_SESSION['totalTVA'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
     );
-
+    
     header("Location: pay.php");
 }
 
@@ -101,9 +101,6 @@ if ($ajouter) {
 <html lang="fr">
 
 <head>
-    <div class="text-dark">
-        <title>Liste des produits</title>
-    </div>
     <?php
     include('header.php');
     ?>

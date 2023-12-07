@@ -41,7 +41,10 @@ if (empty($_SESSION["user"])) {
 
 //retour a la list.php si commande est annuler
 if (isset($_POST['Annuler'])) {
-    $db->UpdateDb("UPDATE `commande` SET commande.id_etat = :id_etat WHERE id_user=:id_user AND id_commande = :id_commande;", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande'], ":id_etat" => 3]);
+    if(!empty($_SESSION['id_commande'])) {
+    $db->DeleteDb("DELETE FROM `ligne` WHERE id_commande=:id_commande", [":id_commande" => $_SESSION['id_commande']]);
+    $db->DeleteDb("DELETE FROM `commande` WHERE `commande`.`id_commande` = :id_commande ", [":id_commande" => $_SESSION['id_commande']]);
+    }
     header("Location: list.php");
 }
 
