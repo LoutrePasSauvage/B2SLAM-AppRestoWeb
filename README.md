@@ -4,6 +4,8 @@
 
 Travail de groupe : Ludovic BOUZAC, Hector CAILLEBOTTE et Sébastien VERCHERE.
 
+Pour l'installation, référez-vous au fichier documentation>Installation_application.txt
+
 === CONSIGNE : ===
 
 AppResto est une application de gestion de commandes dans un restaurant. Elle est découpée en deux parties :
