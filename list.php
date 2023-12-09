@@ -195,6 +195,8 @@ if ($ajouter) {
                                         $show = true;
                                     } elseif ($row['id_produit'] == $previousID) {
                                         $show = false;
+                                    }  elseif (in_array($row['id_produit'], $_SESSION["liste_ids"])) {
+                                        $show = false;
                                     }
                                 }
                                 $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
