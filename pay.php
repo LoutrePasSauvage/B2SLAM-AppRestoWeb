@@ -109,6 +109,7 @@ if (isset($_POST['submit'])) {
             
             header("Location: payPasConfirm.php");
         } else {
+            $db->DeleteDb("DELETE FROM `ligne` WHERE id_commande=:id_commande", [":id_commande" => $_SESSION['id_commande']]);
             header("Location: payConf.php");
         }
     }
