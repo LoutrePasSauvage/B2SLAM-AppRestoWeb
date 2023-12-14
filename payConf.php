@@ -64,8 +64,8 @@ if (empty($_SESSION["user"])) {
                         </div>
                     </div>
                 <ul class="list-group mb-3">
-                    <h4 class="mb-3">Commande N° <?= $lignes[0]['id_commande'] ?> </h4>
-                    <?php foreach ($lignes as $row) {
+                    <h4 class="mb-3">Commande N° <?= $_SESSION['id_commande'] ?> </h4>
+                    <?php /* foreach ($lignes as $row) {
                         $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
                         echo "<li class=' list-group-item d-flex justify-content-between lh-sm'>
                         <div>
@@ -73,9 +73,9 @@ if (empty($_SESSION["user"])) {
                             <small class='text-muted'>". $the_product[0]['descProduit'] ." </small>
                         </div>
                         <span class='text-muted'> ". $the_product[0]['prix_ht'] ." € </span>
-                    </li>"; }?>
+                    </li>"; } */?>
                     <li class='list-group-item d-flex justify-content-between'>
-                        <span>Total (en eur)</span>
+                        <span>Total (en eur) TTC</span>
                         <strong><?=  $_SESSION['totalTVA']  ?> €</strong>
                         <span> <?= $_SESSION['typeConso'] ?></span>
                     </li>
