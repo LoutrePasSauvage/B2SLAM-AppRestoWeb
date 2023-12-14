@@ -190,7 +190,33 @@ Bientôt disponible !
 
 
 
-## === DOCUMENTATION TECHNIQUE ===
+## === CONCEPTION DE L'APPLICATION ===
+## DOCUMENTATION TECHNIQUE
+## > RestoWeb
+
+### Diagramme des cas d'utilisation :
+
+![Logo](design/DiagrammeCasUtilisation_Groupe4.png)
+
+### Diagramme d'activité / SiteMap (enchaînement des pages):
+
+![Logo](design/DiagrammeActivite_DA_Groupe4_png.PNG)
+
+### Modèle conceptuel des données (MCD) :
+
+![Logo](data_db/MCD_RestoWeb.png)
+
+### Modèle logique des données (MLD) :
+
+![Logo](data_db/MLD_RestoWeb.png)
+
+### Modèle physique des données :
+
+Fichier : **[db_restoweb.sql](data_db/db_restoweb.sql)**
+
+### Maquette de l'IHM :
+
+Fichier : **[IHM_RestoWeb](design/AppResto.pdf)**
 
 ### 4 états d'une commande :
 
