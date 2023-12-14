@@ -21,10 +21,10 @@ Les deux applications serviront pour les situations professionnelles à présent
 
 ## === SOMMAIRE ===
 
- - [Présentation du projet](#-installatio-de-lapplication-)
+ - [Présentation du projet](#-presentation-)
  - [Installation de l'application](#-installation-de-lapplication-)
  - [Utilisation de l'application](#-utilisation-de-lapplication-)
- - [Concepton de l'application](#===_CONCEPTION_DE_L'APPLICATION_===)
+ - [Concepton de l'application](#-conception-de-lapplication-)
 
 ## === PRESENTATION ===
 
