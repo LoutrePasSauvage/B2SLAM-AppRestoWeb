@@ -21,10 +21,10 @@ Les deux applications serviront pour les situations professionnelles à présent
 
 ## === SOMMAIRE ===
 
- - [Présentation du projet](#===PRESENTATION===)
- - [Installation de l'application](#=== INSTALLATION DE L'APPLICATION ===)
- - [Utilisation de l'application](#=== UTILISATION DE L'APPLICATION ===)
- - [Concepton de l'application](#=== CONCEPTION DE L'APPLICATION ===)
+ - [Présentation du projet](#===_PRESENTATION_===)
+ - [Installation de l'application](#===_INSTALLATION_DE_L'APPLICATION_===)
+ - [Utilisation de l'application](#===_UTILISATION_DE_L'APPLICATION_===)
+ - [Concepton de l'application](#===_CONCEPTION_DE_L'APPLICATION_===)
 
 ## === PRESENTATION ===
 
