@@ -31,11 +31,12 @@
             
             $commande_refuser_end = $db->SelectDb($sql_select_commande_refuser, [":id_commande" => $_GET['id_commande']]);
                 
-
-            echo "<pre>";
-            print_r($commande_refuser_end);
-            echo "</pre>";
-
+            /*
+                echo "<pre>";
+                print_r($commande_refuser_end);
+                echo "</pre>";
+            */
+            
             $commande_refuser_json = json_encode($commande_refuser_end, JSON_PRETTY_PRINT);
 
             echo $commande_refuser_json;
