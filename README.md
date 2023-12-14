@@ -75,6 +75,13 @@ Exécuter le code SQL contenu dans
 
 fichier : [db_restoweb.sql](data_db/db_restoweb.sql)
 
+Sur cette base, par défaut les données suivantes :
+- des produits
+- un utilisateur de test
+- des commandes de tests
+
+-> Poursuivez la consultation du document pour plus d'informations.
+
 | **Installation terminée !** |
 
 ## > RestoSwing
