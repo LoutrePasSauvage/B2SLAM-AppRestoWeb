@@ -19,6 +19,12 @@ https://trello.com/b/XABrlGy9/projet-restoweb
 
 Les deux applications serviront pour les situations professionnelles à présenter à l'épreuve E5 du BTS. Chaque candidat apportera ses propres situations même si les applications ont été développées collectivement. Les applications et la documentation seront à fournir pour l'épreuve (préparation et déroulement).
 
+## === SOMMAIRE ===
+
+ - [Présentation du projet](# === PRESENTATION ===)
+ - [Installation de l'application](# === INSTALLATION DE L'APPLICATION ===)
+ - [Utilisation de l'application](# === UTILISATION DE L'APPLICATION ===)
+ - [Concepton de l'application](# === CONCEPTION DE L'APPLICATION ===)
 
 ## === PRESENTATION ===
 
