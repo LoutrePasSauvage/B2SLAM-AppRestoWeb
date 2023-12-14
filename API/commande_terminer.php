@@ -29,10 +29,11 @@
             $commande_terminer_end = $db->SelectDb($sql_select_commande_terminer, [":id_commande" => $_GET['id_commande']]);
                 
             //Pour voir le résultat de la commande :
+            /*
                 echo "<pre>";
                 print_r($commande_terminer_end);
                 echo "</pre>";
-            
+            */
             $commandes_terminer_json = json_encode($commande_terminer_end, JSON_PRETTY_PRINT);
 
             //Pour voir le résultat du fichier json de la commande
