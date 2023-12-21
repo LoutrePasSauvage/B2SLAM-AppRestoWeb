@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : jeu. 30 nov. 2023 à 11:40
--- Version du serveur : 10.4.24-MariaDB
--- Version de PHP : 8.1.6
+-- Host: localhost:3306
+-- Generation Time: Dec 21, 2023 at 02:21 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,26 +18,28 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `db_restoweb`
+-- Database: `db_restoweb`
 --
+CREATE DATABASE IF NOT EXISTS `db_restoweb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `db_restoweb`;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `commande`
+-- Table structure for table `commande`
 --
 
 CREATE TABLE `commande` (
-  `id_commande` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `id_etat` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp(),
-  `total_commande` decimal(10,2) DEFAULT 0.00,
+  `id_commande` int NOT NULL,
+  `id_user` int NOT NULL,
+  `id_etat` int NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `total_commande` decimal(10,2) DEFAULT '0.00',
   `type_conso` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
--- Déchargement des données de la table `commande`
+-- Dumping data for table `commande`
 --
 
 INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES
@@ -49,19 +51,19 @@ INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_comm
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ligne`
+-- Table structure for table `ligne`
 --
 
 CREATE TABLE `ligne` (
-  `id_ligne` int(11) NOT NULL,
-  `id_commande` int(11) NOT NULL,
-  `id_produit` int(11) NOT NULL,
-  `qte` int(11) NOT NULL DEFAULT 0,
-  `total_ligne_ht` decimal(10,2) NOT NULL DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_ligne` int NOT NULL,
+  `id_commande` int NOT NULL,
+  `id_produit` int NOT NULL,
+  `qte` int NOT NULL DEFAULT '0',
+  `total_ligne_ht` decimal(10,2) NOT NULL DEFAULT '0.00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
--- Déchargement des données de la table `ligne`
+-- Dumping data for table `ligne`
 --
 
 INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_ligne_ht`) VALUES
@@ -69,7 +71,7 @@ INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_lign
 (306, 192, 2, 1, '14.00');
 
 --
--- Déclencheurs `ligne`
+-- Triggers `ligne`
 --
 DELIMITER $$
 CREATE TRIGGER `after_ligne_insert` AFTER INSERT ON `ligne` FOR EACH ROW BEGIN
@@ -179,18 +181,18 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Structure de la table `produit`
+-- Table structure for table `produit`
 --
 
 CREATE TABLE `produit` (
-  `id_produit` int(11) NOT NULL,
+  `id_produit` int NOT NULL,
   `libelle` varchar(255) NOT NULL,
   `prix_ht` decimal(10,2) NOT NULL,
   `descProduit` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
--- Déchargement des données de la table `produit`
+-- Dumping data for table `produit`
 --
 
 INSERT INTO `produit` (`id_produit`, `libelle`, `prix_ht`, `descProduit`) VALUES
@@ -208,29 +210,29 @@ INSERT INTO `produit` (`id_produit`, `libelle`, `prix_ht`, `descProduit`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
-  `id_user` int(11) NOT NULL,
+  `id_user` int NOT NULL,
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
--- Déchargement des données de la table `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `login`, `password`, `email`) VALUES
 (4, 'a', '$2y$10$PzJDRtXjIeDHwSuoN24gAO8mA8xO5ENC5ci352fzWvpl4Y7RGQC4q', 'a@a.fr');
 
 --
--- Index pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `commande`
+-- Indexes for table `commande`
 --
 ALTER TABLE `commande`
   ADD PRIMARY KEY (`id_commande`),
@@ -238,7 +240,7 @@ ALTER TABLE `commande`
   ADD KEY `id_etat` (`id_etat`);
 
 --
--- Index pour la table `ligne`
+-- Indexes for table `ligne`
 --
 ALTER TABLE `ligne`
   ADD PRIMARY KEY (`id_ligne`),
@@ -246,57 +248,57 @@ ALTER TABLE `ligne`
   ADD KEY `id_produit` (`id_produit`);
 
 --
--- Index pour la table `produit`
+-- Indexes for table `produit`
 --
 ALTER TABLE `produit`
   ADD PRIMARY KEY (`id_produit`);
 
 --
--- Index pour la table `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `commande`
+-- AUTO_INCREMENT for table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_commande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
+  MODIFY `id_commande` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
 
 --
--- AUTO_INCREMENT pour la table `ligne`
+-- AUTO_INCREMENT for table `ligne`
 --
 ALTER TABLE `ligne`
-  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=307;
+  MODIFY `id_ligne` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=307;
 
 --
--- AUTO_INCREMENT pour la table `produit`
+-- AUTO_INCREMENT for table `produit`
 --
 ALTER TABLE `produit`
-  MODIFY `id_produit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_produit` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT pour la table `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Contraintes pour les tables déchargées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `commande`
+-- Constraints for table `commande`
 --
 ALTER TABLE `commande`
   ADD CONSTRAINT `commande_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
 
 --
--- Contraintes pour la table `ligne`
+-- Constraints for table `ligne`
 --
 ALTER TABLE `ligne`
   ADD CONSTRAINT `ligne_ibfk_1` FOREIGN KEY (`id_commande`) REFERENCES `commande` (`id_commande`),
