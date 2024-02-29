@@ -14,10 +14,16 @@
         // Pour Firefox et le formatage
         //header("Content-Type: application/json");
         $db = new Database($dbh);
-        
-        $sql_select_attente = "SELECT * FROM commande WHERE id_etat = 1 AND id_commande = :id_commande";
-        
-        $command_attente = $db->SelectDb($sql_select_attente, [":id_commande" => $_GET['id_commande']]);
+
+        if($_GET['id_commande'] != null)
+        {
+             $sql_select_attente = "SELECT * FROM commande WHERE id_etat = 1 AND id_commande = :id_commande";
+
+             $command_attente = $db->SelectDb($sql_select_attente, [":id_commande" => $_GET['id_commande']]);
+        } else {
+            echo "Erreur lors de la récupération de l'id de la commande";
+        }
+
 
         // Check if $row is not empty before accessing its elements
         if (!empty($command_attente) && isset($command_attente[0]['id_etat']) && $command_attente[0]['id_etat'] == 1) 
