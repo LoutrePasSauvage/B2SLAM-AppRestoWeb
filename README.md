@@ -73,7 +73,7 @@ Création d'une nouvelle base de donnée nommée **db_restoweb** avec l'encodage
 
 
 Dans la nouvelle base de donnée :
-Exécuter le code SQL contenu dans
+Exécuter le code SQL contenu dans ce fichier :
 
 ```
     B2SLAM-AppRestoWeb/data_db/db_restoweb.sql
