@@ -29,10 +29,15 @@ if (!$user) {
 if ($user) {
 
     //Type Conso si 1 alors c'està emporter autrement c'est sur place 
-    if ($typeConso == 1) {
+    if ($typeConso == 1) 
+    {
         $_SESSION['typeConso'] = "à emporter";
-    } else {
+        $valeur_tva = 0.055;
+    } 
+    else 
+    {
         $_SESSION['typeConso'] = "sur place";
+        $valeur_tva = 0.1;
     }
     //récupération de la liste de tous les produits 
     $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
@@ -274,11 +279,10 @@ if ($ajouter) {
                         ?> 
                     </h1>
                   
-                    <?php $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"] * 0.055; ?>
-                       
-                         
-
-
+                    <?php                   
+                    
+                        $_SESSION['totalTVA'] = $_SESSION["total_commande"] + $_SESSION["total_commande"] * $valeur_tva; 
+                    ?>
                  
                 </div>
             </div>
