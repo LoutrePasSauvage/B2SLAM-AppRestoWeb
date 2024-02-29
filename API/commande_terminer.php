@@ -6,11 +6,14 @@
 
         $objetConnexion = db_connect();
         $db = new Database($objetConnexion);
+    if ($_GET['id_commande'] != null) {
 
         $sql_select_commande_prep = "SELECT * FROM commande WHERE id_etat = 2 AND id_commande = :id_commande";
 
         $commande_prep = $db->SelectDb($sql_select_commande_prep, [":id_commande" => $_GET['id_commande']]);
-
+    } else {
+        echo "Erreur lors de la récupération de l'id de la commande";
+    }
         /*
             En terminer      -> 1
             En préparation  -> 2
