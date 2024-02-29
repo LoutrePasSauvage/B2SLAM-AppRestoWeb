@@ -40,6 +40,9 @@
             $commandes_terminer_json = json_encode($commande_terminer_end, JSON_PRETTY_PRINT);
 
             //Pour voir le résultat du fichier json de la commande
+
+            header("Content-type: application/json; charset=utf-8");
+            
             echo $commandes_terminer_json;
         }
     } 
