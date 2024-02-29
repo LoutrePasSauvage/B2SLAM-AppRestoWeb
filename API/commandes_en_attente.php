@@ -27,6 +27,8 @@
 
         $commandes_attente_json = json_encode($commande_attente, JSON_PRETTY_PRINT);
 
+        header("Content-type: application/json; charset=utf-8");
+
         echo $commandes_attente_json;
     } 
     catch (Exception $ex) 
