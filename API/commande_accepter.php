@@ -45,7 +45,10 @@
             
             $commande_refuser_json = json_encode($commande_refuser_end, JSON_PRETTY_PRINT);
 
+            header("Content-type: application/json; charset=utf-8");
+
             echo $commande_refuser_json;
+            
         }
     } 
     catch (PDOException $ex) 
