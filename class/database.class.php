@@ -14,8 +14,8 @@ class Database
         try {
             $sth = $this->dbh->prepare($sql);
             $sth->execute($champs);
-            $row = $sth->fetchAll();
-            return $row;
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC); // Utilisation de PDO::FETCH_ASSOC
+            return $rows;
         } catch (PDOException $e) {
             die("<p>Erreur lors de la requête SELECT SQL : " . $e->getMessage() . "</p>");
         }
