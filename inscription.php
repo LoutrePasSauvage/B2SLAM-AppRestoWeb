@@ -41,7 +41,7 @@
             $messagesMDP[] = "le mot de passe est obligatoire";
         }
         // le mdp est doit avoir plus de 12 caractères
-        if (strlen($password) < 12) {
+        if (strlen($password) <= 12) {
             $messagesMDP[] = "le mot de passe doit avoir plus de 12 caractères";
         }
         // Le mot de passe doit avoir un caractère spécial
