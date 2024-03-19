@@ -1,132 +1,132 @@
 <?php
-include_once "class/database.class.php";
-include "db_connect.php";
+    include_once "class/database.class.php";
+    include "db_connect.php";
 
-session_start();
+    session_start();
 
-$objetConnexion = db_connect();
-$db = new Database($objetConnexion);
+    $objetConnexion = db_connect();
+    $db = new Database($objetConnexion);
 
-//récupération des produits 
+    //récupération des produits 
 
-$user = $_SESSION["user"];
-$first_commande = false;
-$commande_vide = false;
-$ajouter = isset($_POST['ajouter']) ? $_POST['ajouter'] : "";
-$supprimer = isset($_POST['supprimer']) ? $_POST['supprimer'] : "";
-$commander = isset($_POST['commander']) ? $_POST['commander'] : "";
-$annuler = isset($_POST['annuler']) ? $_POST['annuler'] : "";
-$deleteID = isset($_POST['deleteID']) ? $_POST['deleteID'] : "";
-$productID = isset($_POST['productID']) ? $_POST['productID'] : "";
+    $user = $_SESSION["user"];
+    $first_commande = false;
+    $commande_vide = false;
+    $ajouter = isset($_POST['ajouter']) ? $_POST['ajouter'] : "";
+    $supprimer = isset($_POST['supprimer']) ? $_POST['supprimer'] : "";
+    $commander = isset($_POST['commander']) ? $_POST['commander'] : "";
+    $annuler = isset($_POST['annuler']) ? $_POST['annuler'] : "";
+    $deleteID = isset($_POST['deleteID']) ? $_POST['deleteID'] : "";
+    $productID = isset($_POST['productID']) ? $_POST['productID'] : "";
 
-$typeConso = isset($_POST["typeconsommation"]) ? $_POST["typeconsommation"] : "0";
+    $typeConso = isset($_POST["typeconsommation"]) ? $_POST["typeconsommation"] : "0";
 
-//Si l'Utilisateur n'est pas connecter alors il est redirigé vers la page de connexion
-if (!$user) {
-    header("Location: connexion.php");
-}
-
-if ($user) {
-
-    //Type Conso si 1 alors c'està emporter autrement c'est sur place 
-    if ($typeConso == 1) 
-    {
-        $_SESSION['typeConso'] = "à emporter";
-        $valeur_tva = 0.055;
-    } 
-    else 
-    {
-        $_SESSION['typeConso'] = "sur place";
-        $valeur_tva = 0.1;
+    //Si l'Utilisateur n'est pas connecter alors il est redirigé vers la page de connexion
+    if (!$user) {
+        header("Location: connexion.php");
     }
-    //récupération de la liste de tous les produits 
-    $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
-    //récupération des commande à partir de l'ID du l'utilisateur connectés 
-    $commandes = $db->SelectDb("SELECT * FROM commande, user WHERE user.id_user = commande.id_user AND commande.id_user=:idUser;", [":idUser" => $user['id_user']]);
 
-    if (!empty($commandes)) {
-        $lignes = $db->SelectDb("SELECT id_ligne,id_commande,id_produit,qte,total_ligne_ht FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
-        $_SESSION['id_commande'] = $commandes[0]["id_commande"];
+    if ($user) {
 
-        //Recup total ht de la commande grace au TRIGGER lors du SELECT
-        $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
+        //Type Conso si 1 alors c'està emporter autrement c'est sur place 
+        if ($typeConso == 1) 
+        {
+            $_SESSION['typeConso'] = "à emporter";
+            $valeur_tva = 0.055;
+        } 
+        else 
+        {
+            $_SESSION['typeConso'] = "sur place";
+            $valeur_tva = 0.1;
+        }
+        //récupération de la liste de tous les produits 
+        $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
+        //récupération des commande à partir de l'ID du l'utilisateur connectés 
+        $commandes = $db->SelectDb("SELECT * FROM commande, user WHERE user.id_user = commande.id_user AND commande.id_user=:idUser;", [":idUser" => $user['id_user']]);
+
+        if (!empty($commandes)) {
+            $lignes = $db->SelectDb("SELECT id_ligne,id_commande,id_produit,qte,total_ligne_ht FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
+            $_SESSION['id_commande'] = $commandes[0]["id_commande"];
+
+            //Recup total ht de la commande grace au TRIGGER lors du SELECT
+            $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
+        }
+        $total_ht = 0.0; //comme l'utilisateur peut avoir plusieurs ligne de commandes je lui fait un total
+
+        if (!empty($total_lignes)) {
+            foreach ($total_lignes as $value) {
+                $total_ht += $value['total_ligne_ht'];
+            }
+        }
+        $_SESSION["total_commande"] = $total_ht;
     }
-    $total_ht = 0.0; //comme l'utilisateur peut avoir plusieurs ligne de commandes je lui fait un total
+    //récupération du formulaire pour un INSERT dans commande 
 
-    if (!empty($total_lignes)) {
-        foreach ($total_lignes as $value) {
-            $total_ht += $value['total_ligne_ht'];
+
+    if ($supprimer) {
+        $db->DeleteDb("DELETE FROM ligne WHERE id_ligne=:deleteID", [":deleteID" => $deleteID]);
+        $delete_c = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_ligne = :id_ligne", [":id_user" => $user['id_user'], ":id_ligne" => $deleteID + 1]);
+        header("Refresh: 0");
+    }
+
+    if ($commander) {
+        
+        if (!empty($lignes) && $first_commande == false) {
+
+            $db->InsertDb(
+                "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
+                [":id_etat" => "1", ":total_commande" => $_SESSION['totalTVA'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
+            );
+
+            header("Location: pay.php");
+        } 
+        
+        
+        else {
+            $commande_vide = true;
         }
     }
-    $_SESSION["total_commande"] = $total_ht;
-}
-//récupération du formulaire pour un INSERT dans commande 
 
+    if ($annuler) {
+        if (!empty($lignes)) {
+            $db->DeleteDb(
+                "DELETE FROM ligne WHERE :id_commande",
+                [":id_commande" => $lignes[0]['id_commande']]
+            );
+        }
 
-if ($supprimer) {
-    $db->DeleteDb("DELETE FROM ligne WHERE id_ligne=:deleteID", [":deleteID" => $deleteID]);
-    $delete_c = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_ligne = :id_ligne", [":id_user" => $user['id_user'], ":id_ligne" => $deleteID + 1]);
-    header("Refresh: 0");
-}
-
-if ($commander) {
-    
-    if (!empty($lignes) && $first_commande == false) {
-
-        $db->InsertDb(
-            "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
-            [":id_etat" => "1", ":total_commande" => $_SESSION['totalTVA'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
-        );
-
-        header("Location: pay.php");
-    } 
-    
-    
-    else {
-        $commande_vide = true;
-    }
-}
-
-if ($annuler) {
-    if (!empty($lignes)) {
-        $db->DeleteDb(
-            "DELETE FROM ligne WHERE :id_commande",
-            [":id_commande" => $lignes[0]['id_commande']]
-        );
+        header("Refresh: 0");
     }
 
-    header("Refresh: 0");
-}
+    if ($ajouter) {
 
-if ($ajouter) {
+        // INSERT ligne
+        if (!empty($commandes)) {
+            $db->InsertDb(
+                "INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_ligne_ht`) VALUES (NULL, :id_commande, :id_produit, :qte, NULL);",
+                [":id_commande" => $commandes[0]["id_commande"], ":id_produit" => $productID, ":qte" => '1']
+            );
+        } else {
+            $db->InsertDb(
+                "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
+                [":id_etat" => "1", ":total_commande" => $_SESSION['totalTVA'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
+            );
+            $first_commande = true;
+        }
 
-    // INSERT ligne
-    if (!empty($commandes)) {
-        $db->InsertDb(
-            "INSERT INTO `ligne` (`id_ligne`, `id_commande`, `id_produit`, `qte`, `total_ligne_ht`) VALUES (NULL, :id_commande, :id_produit, :qte, NULL);",
-            [":id_commande" => $commandes[0]["id_commande"], ":id_produit" => $productID, ":qte" => '1']
-        );
-    } else {
-        $db->InsertDb(
-            "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
-            [":id_etat" => "1", ":total_commande" => $_SESSION['totalTVA'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
-        );
-        $first_commande = true;
+        header("Refresh: 0");
     }
-
-    header("Refresh: 0");
-}
-
-
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-
 <head>
+    <title>List</title>
+
     <?php
     include('header.php');
     ?>
+
     <div class="container">
 
         <div class="row">
