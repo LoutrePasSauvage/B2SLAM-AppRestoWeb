@@ -1,59 +1,59 @@
 <?php
-include "db_connect.php";
-// Connexion à la base de données
-$dbh = db_connect();
+    include "db_connect.php";
+    // Connexion à la base de données
+    $dbh = db_connect();
 
-$messages = array();  // Message d'erreur
-$messagesid = array();  // Message d'erreur Identifiant
-$messagesMDP = array();  // Message d'erreur MDP
+    $messages = array();  // Message d'erreur
+    $messagesid = array();  // Message d'erreur Identifiant
+    $messagesMDP = array();  // Message d'erreur MDP
 
-$submit = isset($_POST['submit']);
+    $submit = isset($_POST['submit']);
 
-// Vérifie le user
-if ($submit) {
+    // Vérifie le user
+    if ($submit) {
 
-    // Récupère le contenu du formulaire
-    $login = isset($_POST['login']) ? trim($_POST['login']) : '';
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
+        // Récupère le contenu du formulaire
+        $login = isset($_POST['login']) ? trim($_POST['login']) : '';
+        $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-    //verifie si le login est vide
-    if (empty($login)) {
-        $messagesid[] = "Le login est obligatoire";
-    }
-    //verifie si le mdp est vide
-    if (empty($password)) {
-        $messagesMDP[] = "Le mot de passe est obligatoire";
-    }
+        //verifie si le login est vide
+        if (empty($login)) {
+            $messagesid[] = "Le login est obligatoire";
+        }
+        //verifie si le mdp est vide
+        if (empty($password)) {
+            $messagesMDP[] = "Le mot de passe est obligatoire";
+        }
 
-    // Vérifie si le login et le mot de passe sont valides
-    if (empty($login) || empty($password)) {
-        $messages[] = "Le login ou le mot de passe n'est pas valide : $login";
-    }
+        // Vérifie si le login et le mot de passe sont valides
+        if (empty($login) || empty($password)) {
+            $messages[] = "Le login ou le mot de passe n'est pas valide : $login";
+        }
 
-    $sql = "SELECT * FROM user WHERE login=:login";
-    try {
-        $params = array(':login' => $login);
-        $sth = $dbh->prepare($sql);
-        $sth->execute($params);
-        $user = $sth->fetch(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM user WHERE login=:login";
+        try {
+            $params = array(':login' => $login);
+            $sth = $dbh->prepare($sql);
+            $sth->execute($params);
+            $user = $sth->fetch(PDO::FETCH_ASSOC);
 
-        if ($user) {
-            // Vérifie le mot de passe hashé
-            if (password_verify($password, $user['password'])) {
-                session_start();
-                $_SESSION['user'] = $user;
-                header("Location: list.php");
-                exit();
+            if ($user) {
+                // Vérifie le mot de passe hashé
+                if (password_verify($password, $user['password'])) {
+                    session_start();
+                    $_SESSION['user'] = $user;
+                    header("Location: list.php");
+                    exit();
+                } else {
+                    $messages[] = "Login ou mot de passe incorrect";
+                }
             } else {
                 $messages[] = "Login ou mot de passe incorrect";
             }
-        } else {
-            $messages[] = "Login ou mot de passe incorrect";
+        } catch (PDOException $ex) {
+            die("Erreur lors de la requête SQL : " . $ex->getMessage());
         }
-    } catch (PDOException $ex) {
-        die("Erreur lors de la requête SQL : " . $ex->getMessage());
     }
-}
 ?>
 
 <!DOCTYPE html>
