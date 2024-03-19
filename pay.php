@@ -32,7 +32,6 @@ if ($user) {
     if ($_SESSION['id_commande']) {
         $lignes = $db->SelectDb("SELECT * FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $_SESSION['id_commande']]);
     }
-
 }
 
 if (empty($_SESSION["user"])) {
@@ -57,34 +56,34 @@ if (isset($_POST['submit'])) {
     $cc_cvv = isset($_POST['cc_cvv']) ? $_POST['cc_cvv'] : '';
 
     if (empty($cc_name)) {
-        $messagesName[] = "le nom de la carte est obligatoire";
+        $messagesName[] = "Lee nom de la carte est obligatoire";
     }
     if (empty(trim($cc_number))) {
-        $messagesNumber[] = "le numéro de la carte est obligatoire";
+        $messagesNumber[] = "Le numéro de la carte est obligatoire";
     }
     if (empty(trim($cc_expirationMM)) && empty(trim($cc_expirationYY))) {
-        $messagesExpiration[] = "la date d'expiration est obligatoire";
+        $messagesExpiration[] = "La date d'expiration est obligatoire";
     }
     if (empty(trim($cc_cvv))) {
-        $messagesCVV[] = "le cvv est obligatoire";
+        $messagesCVV[] = "Le CVV est obligatoire";
     }
     if (strlen($cc_number) < 16) {
-        $messagesNumber[] = "le numéro de la carte doit avoir 16 chiffres";
+        $messagesNumber[] = "Le nombre de chiffre du numéro de la carte est de 16 chiffres";
     }
     if (strlen($cc_expirationMM) < 2 || strlen($cc_expirationMM) > 2) {
-        $messagesExpiration[] = "Le mois doit etre écrit en 2 chiffres";
+        $messagesExpiration[] = "Le mois est en 2 chiffres, ex : 05 pour mai";
     }
     if (strlen($cc_expirationYY) < 4 || strlen($cc_expirationYY) > 4) {
-        $messagesExpiration[] = "L'année doit etre écrit en 4 chiffres";
+        $messagesExpiration[] = "L'année est en 4 chiffres, ex : 2025";
     }
     if (strlen($cc_cvv) < 3) {
-        $messagesCVV[] = "le cvv doit avoir 3 chiffres";
+        $messagesCVV[] = "Le CVV est en 3 chiffres";
     }
     if (!preg_match('/^[0-9]*$/', $cc_cvv)) {
-        $messagesCVV[] = "le cvv doit être composé de chiffres";
+        $messagesCVV[] = "Le CVV est composé de chiffres";
     }
     if (strlen($cc_number) > 16) {
-        $messagesNumber[] = "le numéro de la carte doit avoir 16 chiffres maximum";
+        $messagesNumber[] = "Le nombre de chiffres du numéro de la carte n'excède pas 16";
     }
     if (strlen($cc_expirationMM) == 2 && strlen($cc_expirationYY) == 4) {
         $cc_expirationMM = intval($cc_expirationMM);
@@ -93,13 +92,13 @@ if (isset($_POST['submit'])) {
         $annee = $date['year'];
         $mois = $date['mon'];
         if ($cc_expirationYY < $annee) {
-            $messagesExpiration[] = "la date d'expiration est dépassée";
+            $messagesExpiration[] = "La date d'expiration est dépassée";
         }
         if ($cc_expirationYY == $annee && $cc_expirationMM < $mois) {
-            $messagesExpiration[] = "la date d'expiration est dépassée";
+            $messagesExpiration[] = "La date d'expiration est dépassée";
         }
         if ($cc_expirationMM < 1 || $cc_expirationMM > 12) {
-            $messagesExpiration[] = "le mois doit etre compris entre 1 et 12";
+            $messagesExpiration[] = "Le mois doit être compris entre 01 et 12";
         }
     }
 
@@ -127,7 +126,7 @@ if (isset($_POST['submit'])) {
 
         <div class="row g-5">
             <div class="col-md-5 col-lg-4 order-md-last">
-
+                <h4 class="mb-3">Récapitulatif de votre commande</h4>
                 <ul class="list-group mb-3">
                     <span>Commande N° <?= $lignes[0]['id_commande'] ?> </span>
                     <?php foreach ($lignes as $row) {
@@ -141,37 +140,28 @@ if (isset($_POST['submit'])) {
                     </li>";
                     } ?>
                     <li class='list-group-item d-flex justify-content-between'>
-                        <span>Total TTC (en eur)</span>
+                        <span>Total TTC (€)</span>
 
                         <strong><?= $_SESSION['totalTVA'] ?> € </strong>
                     </li>
                     <li class='list-group-item d-flex justify-content-between'>
-                        <?= "Votre commande est " . $_SESSION['typeConso'] ?>
+                        <?= "<strong>Votre commande est " . $_SESSION['typeConso'] . "</strong>" ?>
                     </li>
                 </ul>
 
             </div>
             <div class="col-md-7 col-lg-8">
-                <h4 class="mb-3">adresse de payement</h4>
+                <h4 class="mb-3">Adresse de paiement</h4>
                 <form class="needs-validation" method="post" id="paymentForm">
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label">Utilisateur</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="" value="<?= $login ?>"
-                                   required="">
-                            <div class="invalid-feedback">
-                                Prenom valide requis
-                            </div>
+                            <input type="text" class="form-control" id="firstName" placeholder="" value="<?= $login ?>" required="">
                         </div>
                         <div class="col-sm-6">
                             <label for="email" class="form-label">Email </label>
-                            <input type="email" class="form-control" id="email" placeholder="exemple@limayrac.fr"
-                                   value="<?= $email ?>">
-                            <div class="invalid-feedback">
-                                Entrez une e-mail valide
-                            </div>
+                            <input type="email" class="form-control" id="email" placeholder="exemple@limayrac.fr" value="<?= $email ?>">
                         </div>
-
                     </div>
 
                     <hr class="my-4">
@@ -194,7 +184,7 @@ if (isset($_POST['submit'])) {
                         </div>
 
                         <div class="col-md-6">
-                            <label for="cc_number" class="form-label">Numero carte de crédit</label>
+                            <label for="cc_number" class="form-label">Numéro de la carte de crédit</label>
 
                             <input name="cc_number" type="number" class="form-control" id="cc_number"
                                    value="<?= $cc_number ?>">
@@ -208,10 +198,10 @@ if (isset($_POST['submit'])) {
                                 "</p>";
                             }
                             ?>
-                            <p class="text-info"><i class="fas fa-level-up-alt fa-rotate-90"></i> &ensp; Faire <em
+                            <p class="text-info"><i class="fas fa-level-up-alt fa-rotate-90"></i> &ensp; Saisir <em
                                         class="text-secondary">0000 0000
-                                    0000 0000</em> pour payement pas confirmé ou <em class="text-secondary">1234 1234
-                                    1234 1234</em> pour confirmé le payement.</p>
+                                    0000 0000</em> pour avoir l'aperçu d'un paiement non confirmé ou <em class="text-secondary">1234 1234
+                                    1234 1234</em> pour avoir l'aperçu d'un paiement confirmé</p>
                         </div>
                         <div class="row-cols ">
                             <label for="cc_expiration" class="form-label">Expiration</label>
@@ -271,7 +261,8 @@ if (isset($_POST['submit'])) {
     ?>
 
     <script>
-        function confirmerPaiement() {
+        function confirmerPaiement() 
+        {
             var confirmer = confirm("Confirmez-vous le paiement ?");
             if (confirmer) {
                 // Si l'utilisateur clique sur OK, le formulaire sera soumis
