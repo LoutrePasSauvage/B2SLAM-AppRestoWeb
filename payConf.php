@@ -33,7 +33,7 @@ if (empty($_SESSION["user"])) {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Confirmation de payement</title>
+    <title>Confirmation de paiement</title>
 
     <?php
     include('header.php');
@@ -42,16 +42,16 @@ if (empty($_SESSION["user"])) {
     <main style="padding: 15%">
 
         <div class="container">
-            <h1 class="text-success">Confirmation de payement</h1>
+            <h1 class="text-success">Confirmation de paiement</h1>
 
-            <h4 class="mb-3">adresse de payement</h4>
+            <h4 class="mb-3">Adresse de paiement</h4>
                 <form class="needs-validation" novalidate="">
                     <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="firstName" class="form-label">Utilisateur</label>
                             <input type="text" class="form-control" id="firstName" placeholder="" value="<?= $login ?>" disabled required="">
                             <div class="invalid-feedback">
-                                Prenom valide requis
+                                Prénom valide requis
                             </div>
                         </div>
 
@@ -64,6 +64,7 @@ if (empty($_SESSION["user"])) {
                         </div>
                     </div>
                 <ul class="list-group mb-3">
+                    <br>
                     <h4 class="mb-3">Commande N° <?= $_SESSION['id_commande'] ?> </h4>
                     <?php /* foreach ($lignes as $row) {
                         $the_product = $db->SelectDb("SELECT * FROM produit WHERE id_produit=:id_produit", [':id_produit' => $row['id_produit']]);
@@ -75,7 +76,7 @@ if (empty($_SESSION["user"])) {
                         <span class='text-muted'> ". $the_product[0]['prix_ht'] ." € </span>
                     </li>"; } */?>
                     <li class='list-group-item d-flex justify-content-between'>
-                        <span>Total (en eur) TTC</span>
+                        <span>Total TTC (€)</span>
                         <strong><?=  $_SESSION['totalTVA']  ?> €</strong>
                         <span> <?= $_SESSION['typeConso'] ?></span>
                     </li>
