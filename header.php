@@ -26,21 +26,32 @@
                     <li class="nav-item">
                         <a href="index.php" class="nav-link">Accueil</a>    
                     </li>
-                    <li class="nav-item ">
-                        <a href="connexion.php" class="nav-link">Se connecter</a>
-                    </li>
-
+                    
                     <?php  
 
-                    if(isset($_SESSION['user']))
-                    echo '<li class="nav-item ">
-                        <a href="list.php" class="nav-link">Liste des produits</a>
-                    </li>';
+                        if(!(isset($_SESSION['user'])))
+                        {
+                            echo '<li class="nav-item ">
+                            <a href="connexion.php" class="nav-link">Se connecter</a>
+                            </li>';
+
+                            echo '<li class="nav-item ">
+                            <a href="inscription.php" class="nav-link">Inscription</a>
+                            </li>';
+                        }
+                        else
+                        {
+                            echo '<li class="nav-item ">
+                            <a href="list.php" class="nav-link">Liste des produits</a>
+                            </li>';
+
+                            echo '<li class="nav-item ">
+                            <a href="deconnexion.php" class="nav-link">Se déconnecter</a>
+                            </li>';
+                        }
 
                     ?>
-                    <li class="nav-item ">
-                        <a href="deconnexion.php" class="nav-link">Se déconnecter</a>
-                    </li>
+                    
                 </ul>
             </div>
         </div>
