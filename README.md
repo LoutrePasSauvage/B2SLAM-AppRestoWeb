@@ -204,9 +204,13 @@ Bientôt disponible !
 
 ![Logo](design/DiagrammeCasUtilisation_Groupe4.png)
 
-### Diagramme d'activité / SiteMap (enchaînement des pages):
+### Diagramme d'activité :
 
 ![Logo](design/DiagrammeActivite_DA_Groupe4_png.PNG)
+
+### SiteMap (enchaînement des pages):
+
+![Logo](design/SiteMap.PNG)
 
 ### Modèle conceptuel des données (MCD) :
 
