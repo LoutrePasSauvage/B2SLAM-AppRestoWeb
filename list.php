@@ -24,42 +24,41 @@
     //Si l'Utilisateur n'est pas connecter alors il est redirigé vers la page de connexion
     if (!$user) {
         header("Location: connexion.php");
+        die;
     }
 
-    if ($user) {
-
-        //Type Conso si 1 alors c'està emporter autrement c'est sur place 
-        if ($typeConso == 1) 
-        {
-            $_SESSION['typeConso'] = "à emporter";
-            $valeur_tva = 0.055;
-        } 
-        else 
-        {
-            $_SESSION['typeConso'] = "sur place";
-            $valeur_tva = 0.1;
-        }
-        //récupération de la liste de tous les produits 
-        $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
-        //récupération des commande à partir de l'ID du l'utilisateur connectés 
-        $commandes = $db->SelectDb("SELECT * FROM commande, user WHERE user.id_user = commande.id_user AND commande.id_user=:idUser;", [":idUser" => $user['id_user']]);
-
-        if (!empty($commandes)) {
-            $lignes = $db->SelectDb("SELECT id_ligne,id_commande,id_produit,qte,total_ligne_ht FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
-            $_SESSION['id_commande'] = $commandes[0]["id_commande"];
-
-            //Recup total ht de la commande grace au TRIGGER lors du SELECT
-            $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
-        }
-        $total_ht = 0.0; //comme l'utilisateur peut avoir plusieurs ligne de commandes je lui fait un total
-
-        if (!empty($total_lignes)) {
-            foreach ($total_lignes as $value) {
-                $total_ht += $value['total_ligne_ht'];
-            }
-        }
-        $_SESSION["total_commande"] = $total_ht;
+    //Type Conso si 1 alors c'està emporter autrement c'est sur place 
+    if ($typeConso == 1) 
+    {
+        $_SESSION['typeConso'] = "à emporter";
+        $valeur_tva = 0.055;
+    } 
+    else 
+    {
+        $_SESSION['typeConso'] = "sur place";
+        $valeur_tva = 0.1;
     }
+    //récupération de la liste de tous les produits 
+    $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
+    //récupération des commande à partir de l'ID du l'utilisateur connectés 
+    $commandes = $db->SelectDb("SELECT * FROM commande, user WHERE user.id_user = commande.id_user AND commande.id_user=:idUser;", [":idUser" => $user['id_user']]);
+
+    if (!empty($commandes)) {
+        $lignes = $db->SelectDb("SELECT id_ligne,id_commande,id_produit,qte,total_ligne_ht FROM `ligne`, user WHERE user.id_user = :id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
+        $_SESSION['id_commande'] = $commandes[0]["id_commande"];
+
+        //Recup total ht de la commande grace au TRIGGER lors du SELECT
+        $total_lignes = $db->SelectDb("SELECT total_ligne_ht FROM ligne, user WHERE user.id_user=:id_user AND ligne.id_commande = :id_commande", [":id_user" => $user['id_user'], ":id_commande" => $commandes[0]["id_commande"]]);
+    }
+    $total_ht = 0.0; //comme l'utilisateur peut avoir plusieurs ligne de commandes je lui fait un total
+
+    if (!empty($total_lignes)) {
+        foreach ($total_lignes as $value) {
+            $total_ht += $value['total_ligne_ht'];
+        }
+    }
+    $_SESSION["total_commande"] = $total_ht;
+
     //récupération du formulaire pour un INSERT dans commande 
 
 
@@ -71,18 +70,9 @@
 
     if ($commander) {
         
-        if (!empty($lignes) && $first_commande == false) {
-
-            $db->InsertDb(
-                "INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES (NULL, :id_user, :id_etat, NOW(), :total_commande, :type_conso);",
-                [":id_etat" => "1", ":total_commande" => $_SESSION['totalTVA'], ":type_conso" => $typeConso, ":id_user" => $user['id_user']]
-            );
-
+        if (!empty($lignes)) {            
             header("Location: pay.php");
-        } 
-        
-        
-        else {
+        }else {
             $commande_vide = true;
         }
     }
@@ -100,6 +90,8 @@
 
     if ($ajouter) {
 
+
+        //die($commandes);
         // INSERT ligne
         if (!empty($commandes)) {
             $db->InsertDb(
