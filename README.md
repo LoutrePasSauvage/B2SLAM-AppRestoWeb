@@ -210,7 +210,7 @@ Bientôt disponible !
 
 ### SiteMap (enchaînement des pages):
 
-![Logo](design/SiteMap.PNG)
+![Logo](design/SiteMap.png)
 
 ### Modèle conceptuel des données (MCD) :
 
