@@ -104,9 +104,9 @@ Bientôt disponible !
 
 Par défaut, vous pouvez vous connecter, depuis la page d'accueil, avec le compte de test avec les identifiants suivants :
 
-| Login      | Password   |
-| ---------- | ---------- |
-| a          | a          |
+| Login      | Password      |
+| ---------- | ----------    |
+| a          | Aa1234567890* |
 
 *Ou à l'URL suivante :*
 
