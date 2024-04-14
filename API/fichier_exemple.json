@@ -1,78 +1,78 @@
 [
-  {
-    "id_commande": 196,
-    "id_user": 5,
-    "id_etat": 1,
-    "date": "2024-04-14 23:09:27",
-    "total_commande": null,
-    "type_conso": 0,
-    "lignes": [
-      {
-        "id_ligne": 307,
-        "id_produit": 1,
-        "qte": 1,
-        "total_ligne_ht": "12.50",
-        "libelle": "pizza Margherita"
-      },
-      {
-        "id_ligne": 308,
-        "id_produit": 1,
-        "qte": 1,
-        "total_ligne_ht": "12.50",
-        "libelle": "pizza Margherita"
-      },
-      {
-        "id_ligne": 309,
-        "id_produit": 3,
-        "qte": 1,
-        "total_ligne_ht": "12.50",
-        "libelle": "assiette de charcuterie"
-      },
-      {
-        "id_ligne": 310,
-        "id_produit": 5,
-        "qte": 1,
-        "total_ligne_ht": "7.50",
-        "libelle": "hamburger viande"
-      }
-    ]
-  },
-  {
-    "id_commande": 197,
-    "id_user": 6,
-    "id_etat": 1,
-    "date": "2024-04-14 23:10:19",
-    "total_commande": null,
-    "type_conso": 0,
-    "lignes": [
-      {
-        "id_ligne": 311,
-        "id_produit": 10,
-        "qte": 1,
-        "total_ligne_ht": "5.00",
-        "libelle": "portion de frites"
-      },
-      {
-        "id_ligne": 312,
-        "id_produit": 9,
-        "qte": 1,
-        "total_ligne_ht": "9.00",
-        "libelle": "empanadas thon"
-      },
-      {
-        "id_ligne": 313,
-        "id_produit": 9,
-        "qte": 1,
-        "total_ligne_ht": "9.00",
-        "libelle": "empanadas thon"
-      },
-      {
-        "id_ligne": 314,
-        "id_produit": 2,
-        "qte": 1,
-        "total_ligne_ht": "14.00",
-        "libelle": "pizza Chorizo"
-      }
-    ]
-  }
-]
+    {
+      "id_commande": 196,
+      "id_user": 5,
+      "id_etat": 1,
+      "date": "2024-04-14 23:09:27",
+      "total_commande": 45.00,
+      "type_conso": 0,
+      "lignes": [
+        {
+          "id_ligne": 307,
+          "id_produit": 1,
+          "qte": 1,
+          "total_ligne_ht": "12.50",
+          "libelle": "pizza Margherita"
+        },
+        {
+          "id_ligne": 308,
+          "id_produit": 1,
+          "qte": 1,
+          "total_ligne_ht": "12.50",
+          "libelle": "pizza Margherita"
+        },
+        {
+          "id_ligne": 309,
+          "id_produit": 3,
+          "qte": 1,
+          "total_ligne_ht": "12.50",
+          "libelle": "assiette de charcuterie"
+        },
+        {
+          "id_ligne": 310,
+          "id_produit": 5,
+          "qte": 1,
+          "total_ligne_ht": "7.50",
+          "libelle": "hamburger viande"
+        }
+      ]
+    },
+    {
+      "id_commande": 197,
+      "id_user": 6,
+      "id_etat": 1,
+      "date": "2024-04-14 23:10:19",
+      "total_commande": 37.00,
+      "type_conso": 0,
+      "lignes": [
+        {
+          "id_ligne": 311,
+          "id_produit": 10,
+          "qte": 1,
+          "total_ligne_ht": "5.00",
+          "libelle": "portion de frites"
+        },
+        {
+          "id_ligne": 312,
+          "id_produit": 9,
+          "qte": 1,
+          "total_ligne_ht": "9.00",
+          "libelle": "empanadas thon"
+        },
+        {
+          "id_ligne": 313,
+          "id_produit": 9,
+          "qte": 1,
+          "total_ligne_ht": "9.00",
+          "libelle": "empanadas thon"
+        },
+        {
+          "id_ligne": 314,
+          "id_produit": 2,
+          "qte": 1,
+          "total_ligne_ht": "14.00",
+          "libelle": "pizza Chorizo"
+        }
+      ]
+    }
+  ]
