@@ -228,6 +228,13 @@ Fichier : **[db_restoweb.sql](data_db/db_restoweb.sql)**
 
 Fichier : **[IHM_RestoWeb](design/AppResto.pdf)**
 
+### Types consommations :
+
+| Valeur    | Consommation   |
+| --------- | -------------- |
+| 0         | Sur place      |
+| 1         | A emporter     |
+
 ### 4 états d'une commande :
 
 | Libellé de l'état | Valeur    | API correspondante       |
