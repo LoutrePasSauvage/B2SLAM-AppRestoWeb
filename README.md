@@ -146,8 +146,8 @@ Pour choisir un produit, cliquez sur le bouton **ajouter** du produit en questio
 Une fois la commande terminée :
 
 - Choisissez le type de consommation :
-  - **Sur place**
-  - **À emporter**
+  - **À emporter** (5,5 %)
+  - **Sur place** (10 %)
 - Confirmez la commande en cliquant sur le bouton **commander**
 
 Une fois la commande confirmé, vous serez dirigé vers l'URL suivante :
@@ -232,8 +232,8 @@ Fichier : **[IHM_RestoWeb](design/AppResto.pdf)**
 
 | Valeur    | Consommation   |
 | --------- | -------------- |
-| 0         | Sur place      |
-| 1         | A emporter     |
+| 0         | A emporter     |
+| 1         | Sur place      |
 
 ### 4 états d'une commande :
 
