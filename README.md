@@ -230,10 +230,10 @@ Fichier : **[IHM_RestoWeb](design/AppResto.pdf)**
 
 ### Types consommations :
 
-| Valeur    | Consommation   |
-| --------- | -------------- |
-| 0         | A emporter     |
-| 1         | Sur place      |
+| Valeur    | Consommation   | Taxe   |
+| --------- | -------------- | ------ |
+| 0         | A emporter     | 5,5 %  |
+| 1         | Sur place      | 10 %   |
 
 ### 4 états d'une commande :
 
