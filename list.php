@@ -260,14 +260,6 @@ if ($annuler) {
                         echo $_SESSION['totalTVA']."€"; 
                     }
                     ?></h3>
-
-                    <?php
-                    echo "<pre>";
-                    print_r($_SESSION);
-                    echo "</pre>";
-
-                    ?>
-
                 </div>
             </div>
         </div>
