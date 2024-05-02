@@ -253,9 +253,12 @@ if ($annuler) {
                     
                     </h1>
 
-                    <h3> <?php echo("Prix Total TVA ". $facteurConso["typeConso"]. " : ");
-                      $_SESSION['totalTVA'] = $_SESSION["total_commande"]  * $facteurConso["facteur"]; 
-                    echo $_SESSION['totalTVA']."€"; 
+                    <h3> <?php 
+                    if(isset($facteurConso["facteur"]) && isset($facteurConso["typeConso"])) {
+                        echo("Prix Total TVA ". $facteurConso["typeConso"]. " : ");
+                        $_SESSION['totalTVA'] = $_SESSION["total_commande"]  * $facteurConso["facteur"]; 
+                        echo $_SESSION['totalTVA']."€"; 
+                    }
                     ?></h3>
 
                     <?php
