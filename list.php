@@ -9,7 +9,16 @@
 
     //récupération des produits 
 
+    //$_SESSION["liste_lignes"][0] = ["id_ligne" => -1, "id_commande" => -1, "id_produit" => $productID, "qte" => 1, "totale_ligne_ht" => $total_ligne_ht];
+    //print_r($_SESSION["liste_lignes"]);
+    //print_r(count($_SESSION["liste_lignes"]));
+    //print_r($_SESSION["liste_lignes"][0]);
+
+
     $user = $_SESSION["user"];
+    
+    //print_r($_SESSION['user']['login']);
+
     $first_commande = false;
     $commande_vide = false;
     $ajouter = isset($_POST['ajouter']) ? $_POST['ajouter'] : "";
@@ -39,7 +48,7 @@
         $valeur_tva = 0.1;
     }
     //récupération de la liste de tous les produits 
-    $produits = $db->SelectDb("SELECT * FROM produit;", NULL);
+    $produits = $db->SelectDb("SELECT * FROM produit WHERE Rupture=0;", NULL);
     //récupération des commande à partir de l'ID du l'utilisateur connectés 
     $commandes = $db->SelectDb("SELECT * FROM commande, user WHERE user.id_user = commande.id_user AND commande.id_user=:idUser;", [":idUser" => $user['id_user']]);
 
@@ -127,6 +136,13 @@
                 <div class="text-dark">
                     <h1>Liste des produits</h1>
                 </div>
+
+                <?php
+                    if ($_SESSION['user']['admin'] == 1)
+                    {
+                        echo '<p>Gestion de la <a href="http://localhost/projets/B2SLAM-AppRestoWeb/GestionList.php">liste des produits</a></p>';
+                    }
+                ?>
 
                 <?php
 
