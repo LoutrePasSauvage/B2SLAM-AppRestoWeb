@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : dim. 14 avr. 2024 à 23:07
--- Version du serveur : 10.4.24-MariaDB
--- Version de PHP : 8.1.6
+-- Généré le : lun. 27 mai 2024 à 18:47
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,7 +34,14 @@ CREATE TABLE `commande` (
   `date` datetime NOT NULL DEFAULT current_timestamp(),
   `total_commande` decimal(10,2) DEFAULT 0.00,
   `type_conso` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Déchargement des données de la table `commande`
+--
+
+INSERT INTO `commande` (`id_commande`, `id_user`, `id_etat`, `date`, `total_commande`, `type_conso`) VALUES
+(198, 5, 1, '2024-05-27 13:10:22', 38.00, 0);
 
 -- --------------------------------------------------------
 
@@ -48,7 +55,7 @@ CREATE TABLE `ligne` (
   `id_produit` int(11) NOT NULL,
   `qte` int(11) NOT NULL DEFAULT 0,
   `total_ligne_ht` decimal(10,2) NOT NULL DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déclencheurs `ligne`
@@ -65,12 +72,12 @@ FROM commande
 WHERE commande.id_commande = NEW.id_commande;
 
 -- Calcul taux TVA
-IF f_type_conso = 1
+IF f_type_conso = 0
 THEN
 	SET TVA = 1.055;
 END IF;
 
-IF f_type_conso = 2
+IF f_type_conso = 1
 THEN
 	SET TVA = 1.1;
 END IF;
@@ -102,12 +109,12 @@ FROM commande
 WHERE commande.id_commande = NEW.id_commande;
 
 -- Calcul taux TVA
-IF f_type_conso = 1
+IF f_type_conso = 0
 THEN
 	SET TVA = 1.055;
 END IF;
 
-IF f_type_conso = 2
+IF f_type_conso = 1
 THEN
 	SET TVA = 1.1;
 END IF;
@@ -168,24 +175,26 @@ CREATE TABLE `produit` (
   `id_produit` int(11) NOT NULL,
   `libelle` varchar(255) NOT NULL,
   `prix_ht` decimal(10,2) NOT NULL,
-  `descProduit` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `descProduit` varchar(250) DEFAULT NULL,
+  `Rupture` int(11) NOT NULL DEFAULT 0,
+  `MotifRupture` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déchargement des données de la table `produit`
 --
 
-INSERT INTO `produit` (`id_produit`, `libelle`, `prix_ht`, `descProduit`) VALUES
-(1, 'pizza Margherita', '12.50', NULL),
-(2, 'pizza Chorizo', '14.00', NULL),
-(3, 'assiette de charcuterie', '12.50', NULL),
-(4, 'assiette de fromages', '10.50', NULL),
-(5, 'hamburger viande', '7.50', NULL),
-(6, 'hamburger vegan', '9.00', NULL),
-(7, 'hot dog', '5.00', NULL),
-(8, 'empanadas poulet', '11.00', NULL),
-(9, 'empanadas thon', '9.00', NULL),
-(10, 'portion de frites', '5.00', NULL);
+INSERT INTO `produit` (`id_produit`, `libelle`, `prix_ht`, `descProduit`, `Rupture`, `MotifRupture`) VALUES
+(1, 'pizza Margherita', 12.50, NULL, 0, ''),
+(2, 'pizza Chorizo', 14.00, NULL, 0, ''),
+(3, 'assiette de charcuterie', 12.50, NULL, 0, ''),
+(4, 'assiette de fromages', 10.50, NULL, 0, ''),
+(5, 'hamburger viande', 7.50, NULL, 0, ''),
+(6, 'hamburger vegan', 9.00, NULL, 0, ''),
+(7, 'hot dog', 5.00, NULL, 0, ''),
+(8, 'empanadas poulet', 11.00, NULL, 0, ''),
+(9, 'empanadas thon', 9.00, NULL, 0, ''),
+(10, 'portion de frites', 5.00, NULL, 0, '');
 
 -- --------------------------------------------------------
 
@@ -197,16 +206,17 @@ CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `email` varchar(255) NOT NULL,
+  `admin` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id_user`, `login`, `password`, `email`) VALUES
-(5, 'a', '$2y$10$g1/XXfIAwn7noqJljw6ehum8q5Ujj92rly7FBHNHGbqgoKrAoWwN.', 'a@restoweb.fr'),
-(6, 'b', '$2y$10$wOtRjRLbxXhUaMYbv/dw/eiKlU.NaLxFLJXZCoDi0UM8/jho9wC6i', 'b@restoweb.fr');
+INSERT INTO `user` (`id_user`, `login`, `password`, `email`, `admin`) VALUES
+(5, 'a', '$2y$10$g1/XXfIAwn7noqJljw6ehum8q5Ujj92rly7FBHNHGbqgoKrAoWwN.', 'a@restoweb.fr', 1),
+(6, 'b', '$2y$10$wOtRjRLbxXhUaMYbv/dw/eiKlU.NaLxFLJXZCoDi0UM8/jho9wC6i', 'b@restoweb.fr', 0);
 
 --
 -- Index pour les tables déchargées
@@ -248,13 +258,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_commande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
+  MODIFY `id_commande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=199;
 
 --
 -- AUTO_INCREMENT pour la table `ligne`
 --
 ALTER TABLE `ligne`
-  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=307;
+  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
 
 --
 -- AUTO_INCREMENT pour la table `produit`
