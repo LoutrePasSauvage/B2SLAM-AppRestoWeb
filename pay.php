@@ -1,5 +1,7 @@
 <?php
 include_once "class/database.class.php";
+include_once "class/commande.class.php";
+include_once "class/ligneCommande.class.php";
 include "db_connect.php";
 
 session_start();
