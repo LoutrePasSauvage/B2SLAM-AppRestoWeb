@@ -46,6 +46,10 @@
                             </li>';
 
                             echo '<li class="nav-item ">
+                            <a href="profil.php" class="nav-link">Modifier le profil</a>
+                            </li>';
+
+                            echo '<li class="nav-item ">
                             <a href="deconnexion.php" class="nav-link">Se déconnecter</a>
                             </li>';
                         }
