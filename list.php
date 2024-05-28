@@ -140,7 +140,7 @@
                 <?php
                     if ($_SESSION['user']['admin'] == 1)
                     {
-                        echo '<p>Gestion de la <a href="http://localhost/projets/B2SLAM-AppRestoWeb/GestionList.php">liste des produits</a></p>';
+                        echo '<p>Gestion de la <a href="./GestionList.php">liste des produits</a></p>';
                     }
                 ?>
 
@@ -296,7 +296,7 @@
             </div>
         </div>
     </div>
-    </div>
+    </head>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

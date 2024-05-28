@@ -1,6 +1,5 @@
 <?php
 include_once "class/database.class.php";
-include_once "class/ligneProduit.class.php";
 include "db_connect.php";
 
 session_start();

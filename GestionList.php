@@ -9,7 +9,7 @@
 
     <h1>Gestion liste produits</h1>
 
-    <p>Retour à la page des <a href="http://localhost/projets/B2SLAM-AppRestoWeb/list.php">commandes</a>
+    <p>Retour à la page des <a href="./list.php">commandes</a></p>
 
     <?php
         include_once "class/database.class.php";
@@ -82,6 +82,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    </body>
+    </head>
 
 </html>
